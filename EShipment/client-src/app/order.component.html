@@ -1,0 +1,32 @@
+
+<tr *ngIf="model">
+  <td>
+    {{model.number}}
+  </td>
+  <td>
+    {{model.companyName}}
+  </td>
+  <td>
+    {{model.mark}}
+  </td>
+  <td>
+    {{model.ETD}}
+  </td>
+  <td>
+    {{model.ETA}}
+  </td>
+  <td>
+    {{model.receiveOrderDate}}
+  </td>
+  <td>
+    <button type="button" class="btn btn-primary btn-sm" (click)="onEditClick(index)">
+      <i class="fa fa-check-circle-o" aria-hidden="true"></i>&nbsp;
+      Edit
+    </button>
+    <button type="button" class="btn btn-primary btn-sm" (click)="onDeleteClick(index)">
+      <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
+      Delete
+    </button>
+  </td>
+</tr>
+
