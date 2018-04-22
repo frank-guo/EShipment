@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using EShipment.Data;
 using EShipment.Models;
 using EShipment.Services;
+using EShipment.Repositories;
+using EShipment.UnitOfWorks;
 
 namespace EShipment
 {
@@ -37,7 +39,11 @@ namespace EShipment
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc();
-        }
+
+            services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IRepository<Order>, Repository<Order>>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+    }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

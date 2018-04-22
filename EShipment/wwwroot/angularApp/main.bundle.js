@@ -123,7 +123,7 @@ exports.AppModule = AppModule;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var Order = /** @class */ (function () {
-    function Order(number, companyName, mark, containerNumber, destination, dischargedPort, BLNumber, ETD, ETA, numOfGoods, weight, measurement, description, statuses, receiveOrderDate) {
+    function Order(number, companyName, mark, containerNumber, destination, dischargedPort, BLNumber, ETD, ETA, numOfGoods, weight, measurement, productDescription, statuses, receiveOrderDate) {
         this.number = number;
         this.companyName = companyName;
         this.mark = mark;
@@ -136,7 +136,7 @@ var Order = /** @class */ (function () {
         this.numOfGoods = numOfGoods;
         this.weight = weight;
         this.measurement = measurement;
-        this.description = description;
+        this.productDescription = productDescription;
         this.statuses = statuses;
         this.receiveOrderDate = receiveOrderDate;
     }

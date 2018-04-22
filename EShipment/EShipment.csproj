@@ -6,6 +6,13 @@
 	<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20180415203706_AddOrder.cs" />
+    <Compile Remove="Data\Migrations\20180415203706_AddOrder.Designer.cs" />
+    <Compile Remove="Data\Migrations\20180416045516_CompanyName.cs" />
+    <Compile Remove="Data\Migrations\20180416045516_CompanyName.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
