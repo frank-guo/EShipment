@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -13,6 +13,10 @@ using Microsoft.Extensions.Options;
 using EShipment.Models;
 using EShipment.Models.AccountViewModels;
 using EShipment.Services;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace EShipment.Controllers
 {
@@ -24,17 +28,20 @@ namespace EShipment.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly IConfiguration _config;
 
-        public AccountController(
+    public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            IConfiguration config)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _config = config;
         }
 
         [TempData]
@@ -87,7 +94,43 @@ namespace EShipment.Controllers
             return View(model);
         }
 
-        [HttpGet]
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> GenerateToken([FromBody] LoginViewModel model)
+        {
+          if (ModelState.IsValid)
+          {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+            if (user != null)
+            {
+              var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+              if (result.Succeeded)
+              {
+
+                var claims = new[]
+                {
+              new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+              new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            };
+
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
+                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+                var token = new JwtSecurityToken(_config["Tokens:Issuer"],
+                  _config["Tokens:Issuer"],
+                  claims,
+                  expires: DateTime.Now.AddMinutes(30),
+                  signingCredentials: creds);
+
+                return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+              }
+            }
+          }
+          return BadRequest("Could not create token");
+        }
+
+    [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> LoginWith2fa(bool rememberMe, string returnUrl = null)
         {

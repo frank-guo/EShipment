@@ -13,6 +13,8 @@ using EShipment.Models;
 using EShipment.Services;
 using EShipment.Repositories;
 using EShipment.UnitOfWorks;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace EShipment
 {
@@ -34,6 +36,22 @@ namespace EShipment
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddAuthentication()
+            .AddCookie(cfg => cfg.SlidingExpiration = true)
+            .AddJwtBearer(cfg =>
+            {
+              cfg.RequireHttpsMetadata = false;
+              cfg.SaveToken = true;
+
+              cfg.TokenValidationParameters = new TokenValidationParameters()
+              {
+                ValidIssuer = Configuration["Tokens:Issuer"],
+                ValidAudience = Configuration["Tokens:Issuer"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+              };
+
+            });
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
