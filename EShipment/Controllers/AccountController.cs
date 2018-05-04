@@ -102,6 +102,7 @@ namespace EShipment.Controllers
           {
             var user = await _userManager.FindByEmailAsync(model.Email);
 
+
             if (user != null)
             {
               var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);

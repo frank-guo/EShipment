@@ -4,11 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using EShipment.Services;
 using EShipment.ViewModels;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EShipment.Controllers
 {
+  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
   [Produces("application/json")]
   [Route("api/Order")]
   public class OrderController : Controller
