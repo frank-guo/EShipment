@@ -13,6 +13,11 @@
     <Compile Remove="Data\Migrations\20180416045516_CompanyName.Designer.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="client-src\app\auth.guard.ts" />
+    <None Remove="client-src\app\login.component.ts" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
@@ -24,6 +29,11 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.2" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.1" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="client-src\app\auth.guard.ts" />
+    <TypeScriptCompile Include="client-src\app\login.component.ts" />
   </ItemGroup>
 
 </Project>

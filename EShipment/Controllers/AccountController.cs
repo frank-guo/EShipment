@@ -72,7 +72,7 @@ namespace EShipment.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("GenerateToken", new { returnUrl });
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -94,26 +94,23 @@ namespace EShipment.Controllers
             return View(model);
         }
 
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+
         [AllowAnonymous]
-        [HttpPost]
-        public async Task<IActionResult> GenerateToken([FromBody] LoginViewModel model)
+        [HttpGet]
+        public async Task<IActionResult> GenerateToken(string returnUrl)
         {
-          if (ModelState.IsValid)
-          {
-            var user = await _userManager.FindByEmailAsync(model.Email);
 
-
-            if (user != null)
+            if (true)
             {
-              var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
-              if (result.Succeeded)
+              if (User.Identity.IsAuthenticated)
               {
-
+                var user = await GetCurrentUserAsync();
                 var claims = new[]
                 {
-              new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-              new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            };
+                  new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+                  new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                };
 
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -127,7 +124,6 @@ namespace EShipment.Controllers
                 return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
               }
             }
-          }
           return BadRequest("Could not create token");
         }
 
