@@ -12,6 +12,8 @@ namespace EShipment.ViewModels
 
     public string ApplicationUser_Id { get; set; }
 
+    public string CompanyName { get; set; }
+
     public string Number { get; set; }
 
     public string Mark { get; set; }

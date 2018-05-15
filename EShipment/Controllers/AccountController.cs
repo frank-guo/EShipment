@@ -100,30 +100,32 @@ namespace EShipment.Controllers
         [HttpGet]
         public async Task<IActionResult> GenerateToken(string returnUrl)
         {
+          if (User.Identity.IsAuthenticated)
+          {
+            var user = await GetCurrentUserAsync();
+        var claims = new[]
+        {
+              new Claim(ClaimTypes.NameIdentifier, user.Id),
+              new Claim(JwtRegisteredClaimNames.Email, user.Email),
+              new Claim(ClaimTypes.Name, user.UserName),
+              new Claim("companyName", user.CompanyName),
+              new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            };
 
-            if (true)
-            {
-              if (User.Identity.IsAuthenticated)
-              {
-                var user = await GetCurrentUserAsync();
-                var claims = new[]
-                {
-                  new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-                  new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                };
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var token = new JwtSecurityToken(_config["Tokens:Issuer"],
+              _config["Tokens:Issuer"],
+              claims,
+              expires: DateTime.Now.AddMinutes(30),
+              signingCredentials: creds);
 
-                var token = new JwtSecurityToken(_config["Tokens:Issuer"],
-                  _config["Tokens:Issuer"],
-                  claims,
-                  expires: DateTime.Now.AddMinutes(30),
-                  signingCredentials: creds);
-
-                return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
-              }
-            }
+            return Ok(new {
+              token = new JwtSecurityTokenHandler().WriteToken(token),
+              returnUrl
+            });
+          }
           return BadRequest("Could not create token");
         }
 

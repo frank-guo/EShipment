@@ -9,6 +9,10 @@ import { OrdersComponent } from './orders.component';
 import { OrderComponent } from './order.component';
 import { TableModule } from 'primeng/table';
 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './token.interceptor';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -21,6 +25,7 @@ import { TableModule } from 'primeng/table';
     FormsModule,
     HttpModule,
     TableModule,
+    HttpClientModule,
     RouterModule.forRoot([
       {
         path: 'angularApp',
@@ -28,7 +33,13 @@ import { TableModule } from 'primeng/table';
       }
     ])
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

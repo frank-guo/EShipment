@@ -23,67 +23,31 @@ export class OrdersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.params
-      .switchMap((params: Params) => this.ordersService.getOrders())
-      .subscribe(orders => this.orders = orders);
+    this.ordersService.getOrders().subscribe(resp => {
+      this.orders = resp;
+    });
     this.route.params.subscribe(params => {
     })
     this.onDelete = this.onDeleteClick.bind(this)
     this.onEdit = this.onEditClick.bind(this)
-    this.orders = [
-      {
-        number: "tttiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
-        companyName: "hhhh",
-        mark: "kkkk",
-        containerNumber: "ccc",
-        destination: "",
-        dischargedPort: "",
-        BLNumber: "",
-        ETD: null,
-        ETA: null,
-        numOfGoods: 1,
-        weight: 2,
-        measurement: 4,
-        description: "",
-        statuses: null,
-        receiveOrderDate: null
-      },
-      {
-        number: "tttiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
-        companyName: "hhhh",
-        mark: "kkkk",
-        containerNumber: "ccc",
-        destination: "",
-        dischargedPort: "",
-        BLNumber: "",
-        ETD: null,
-        ETA: null,
-        numOfGoods: 1,
-        weight: 2,
-        measurement: 4,
-        description: "",
-        statuses: null,
-        receiveOrderDate: null
-      }
-    ]
   }
 
   ngAfterViewChecked() {
   }
 
   public onSaveClick(customers: FormArray): void {
-    this.ordersService.saveOrders(this.orders)
+    //this.ordersService.saveOrders(this.orders)
   }
 
   public onAddClick(): void {
-    this.orders.push(new Order());
+    //this.orders.push(new Order());
   }
 
   public onDeleteClick(index): void {
-    this.orders.splice(index, 1)
+    //this.orders.splice(index, 1)
   }
 
   public onEditClick(index): void {
-    this.orders.splice(index, 1)
+    //this.orders.splice(index, 1)
   }
 }

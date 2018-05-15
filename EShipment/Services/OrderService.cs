@@ -31,9 +31,9 @@ namespace EShipment.Services
       return order;
     }
 
-    public IList<OrderViewModel> GetByUserId (string userId)
+    public IList<OrderViewModel> GetByUserId (UserInfo userInfo)
     {
-      IEnumerable<Order> orders = unitOfWork.Repository<Order>().Get(order => order.ApplicationUser_Id == userId);
+      IEnumerable<Order> orders = unitOfWork.Repository<Order>().Get(order => order.ApplicationUser_Id == userInfo.Id);
 
       IList<OrderViewModel> vOrders = new List<OrderViewModel>();
       foreach(Order order in orders)
@@ -41,6 +41,7 @@ namespace EShipment.Services
         OrderViewModel vOrder = new OrderViewModel();
         vOrder.ID = order.ID;
         vOrder.ApplicationUser_Id = order.ApplicationUser_Id;
+        vOrder.CompanyName = userInfo.Companyname;
         vOrder.Number = order.Number;
         vOrder.Mark = order.Mark;
         vOrder.ContainerNumber = order.ContainerNumber;

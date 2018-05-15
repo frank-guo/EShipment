@@ -83,6 +83,9 @@ var app_component_1 = __webpack_require__("./client-src/app/app.component.ts");
 var orders_component_1 = __webpack_require__("./client-src/app/orders.component.ts");
 var order_component_1 = __webpack_require__("./client-src/app/order.component.ts");
 var table_1 = __webpack_require__("./node_modules/primeng/table.js");
+var http_2 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+var token_interceptor_1 = __webpack_require__("./client-src/app/token.interceptor.ts");
+var http_3 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -98,6 +101,7 @@ var AppModule = /** @class */ (function () {
                 forms_1.FormsModule,
                 http_1.HttpModule,
                 table_1.TableModule,
+                http_3.HttpClientModule,
                 router_1.RouterModule.forRoot([
                     {
                         path: 'angularApp',
@@ -105,44 +109,19 @@ var AppModule = /** @class */ (function () {
                     }
                 ])
             ],
-            providers: [],
+            providers: [
+                {
+                    provide: http_2.HTTP_INTERCEPTORS,
+                    useClass: token_interceptor_1.TokenInterceptor,
+                    multi: true
+                }
+            ],
             bootstrap: [app_component_1.AppComponent]
         })
     ], AppModule);
     return AppModule;
 }());
 exports.AppModule = AppModule;
-
-
-/***/ }),
-
-/***/ "./client-src/app/model/order.ts":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var Order = /** @class */ (function () {
-    function Order(number, companyName, mark, containerNumber, destination, dischargedPort, BLNumber, ETD, ETA, numOfGoods, weight, measurement, productDescription, statuses, receiveOrderDate) {
-        this.number = number;
-        this.companyName = companyName;
-        this.mark = mark;
-        this.containerNumber = containerNumber;
-        this.destination = destination;
-        this.dischargedPort = dischargedPort;
-        this.BLNumber = BLNumber;
-        this.ETD = ETD;
-        this.ETA = ETA;
-        this.numOfGoods = numOfGoods;
-        this.weight = weight;
-        this.measurement = measurement;
-        this.productDescription = productDescription;
-        this.statuses = statuses;
-        this.receiveOrderDate = receiveOrderDate;
-    }
-    return Order;
-}());
-exports.Order = Order;
 
 
 /***/ }),
@@ -233,7 +212,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-var order_1 = __webpack_require__("./client-src/app/model/order.ts");
 var orders_service_1 = __webpack_require__("./client-src/app/service/orders.service.ts");
 var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var common_1 = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
@@ -247,63 +225,27 @@ var OrdersComponent = /** @class */ (function () {
     }
     OrdersComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.route.params
-            .switchMap(function (params) { return _this.ordersService.getOrders(); })
-            .subscribe(function (orders) { return _this.orders = orders; });
+        this.ordersService.getOrders().subscribe(function (resp) {
+            _this.orders = resp;
+        });
         this.route.params.subscribe(function (params) {
         });
         this.onDelete = this.onDeleteClick.bind(this);
         this.onEdit = this.onEditClick.bind(this);
-        this.orders = [
-            {
-                number: "tttiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
-                companyName: "hhhh",
-                mark: "kkkk",
-                containerNumber: "ccc",
-                destination: "",
-                dischargedPort: "",
-                BLNumber: "",
-                ETD: null,
-                ETA: null,
-                numOfGoods: 1,
-                weight: 2,
-                measurement: 4,
-                description: "",
-                statuses: null,
-                receiveOrderDate: null
-            },
-            {
-                number: "tttiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
-                companyName: "hhhh",
-                mark: "kkkk",
-                containerNumber: "ccc",
-                destination: "",
-                dischargedPort: "",
-                BLNumber: "",
-                ETD: null,
-                ETA: null,
-                numOfGoods: 1,
-                weight: 2,
-                measurement: 4,
-                description: "",
-                statuses: null,
-                receiveOrderDate: null
-            }
-        ];
     };
     OrdersComponent.prototype.ngAfterViewChecked = function () {
     };
     OrdersComponent.prototype.onSaveClick = function (customers) {
-        this.ordersService.saveOrders(this.orders);
+        //this.ordersService.saveOrders(this.orders)
     };
     OrdersComponent.prototype.onAddClick = function () {
-        this.orders.push(new order_1.Order());
+        //this.orders.push(new Order());
     };
     OrdersComponent.prototype.onDeleteClick = function (index) {
-        this.orders.splice(index, 1);
+        //this.orders.splice(index, 1)
     };
     OrdersComponent.prototype.onEditClick = function (index) {
-        this.orders.splice(index, 1);
+        //this.orders.splice(index, 1)
     };
     OrdersComponent = __decorate([
         core_1.Component({
@@ -341,38 +283,79 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var http_1 = __webpack_require__("./node_modules/@angular/http/esm5/http.js");
 __webpack_require__("./node_modules/rxjs/_esm5/add/operator/toPromise.js");
+__webpack_require__("./node_modules/rxjs/_esm5/add/operator/map.js");
+var http_2 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
 var OrdersService = /** @class */ (function () {
     function OrdersService(http) {
         this.http = http;
         this.baseUrl = '/api';
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         this.externalApi = '/api';
+        this.idKey = 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier';
     }
     OrdersService.prototype.getOrders = function () {
-        return this.http.get(this.baseUrl + '/orders').toPromise().then(function (response) {
-            var json = response.json();
-            return json;
-        }).catch(this.handleError);
+        var user = JSON.parse(localStorage.getItem('user'));
+        return this.http.get(this.baseUrl + '/user/' + user[this.idKey] + '/orders');
     };
-    OrdersService.prototype.saveOrders = function (orders) {
-        return this.http.post(this.baseUrl + '/orders', JSON.stringify(orders), { headers: this.headers })
-            .toPromise()
-            .then(function (response) {
-            var json = response.json();
-            return json;
-        }).catch(this.handleError);
-    };
+    //saveOrders(orders: any[]): Promise<Order[]> {
+    //  return this.http.post(this.baseUrl + '/orders', JSON.stringify(orders), { headers: this.headers })
+    //    .toPromise()
+    //    .then(response => {
+    //      let json = response.json();
+    //      return json as Order[]
+    //    }
+    //    ).catch(this.handleError);
+    //}
     OrdersService.prototype.handleError = function (error) {
         console.error('An error occcured', error);
         return Promise.reject(error.message || error);
     };
     OrdersService = __decorate([
         core_1.Injectable(),
-        __metadata("design:paramtypes", [http_1.Http])
+        __metadata("design:paramtypes", [http_2.HttpClient])
     ], OrdersService);
     return OrdersService;
 }());
 exports.OrdersService = OrdersService;
+
+
+/***/ }),
+
+/***/ "./client-src/app/token.interceptor.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var TokenInterceptor = /** @class */ (function () {
+    function TokenInterceptor() {
+    }
+    TokenInterceptor.prototype.intercept = function (request, next) {
+        var user = JSON.parse(localStorage.getItem('user'));
+        request = request.clone({
+            setHeaders: {
+                Authorization: "Bearer " + user.token
+            }
+        });
+        return next.handle(request);
+    };
+    TokenInterceptor = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [])
+    ], TokenInterceptor);
+    return TokenInterceptor;
+}());
+exports.TokenInterceptor = TokenInterceptor;
 
 
 /***/ }),
