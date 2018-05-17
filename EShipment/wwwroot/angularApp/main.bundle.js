@@ -27,7 +27,7 @@ module.exports = ""
 /***/ "./client-src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>\n\n"
+module.exports = "<div>\r\n  <nav class=\"navbar navbar-inverse navbar-fixed-top\">\r\n    <div class=\"container\">\r\n      <div class=\"navbar-header\">\r\n        <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-collapse\">\r\n          <span class=\"sr-only\">Toggle navigation</span>\r\n          <span class=\"icon-bar\"></span>\r\n          <span class=\"icon-bar\"></span>\r\n          <span class=\"icon-bar\"></span>\r\n        </button>\r\n        <a href=\"/\" class=\"navbar-brand\">EShipment</a>\r\n      </div>\r\n      <div class=\"navbar-collapse collapse\">\r\n        <ul class=\"nav navbar-nav\">\r\n          <li><a href=\"/\">Home</a></li>\r\n          <li><a href=\"angularHome/\">Order</a></li>\r\n          <li><a href=\"home/about\">About</a></li>\r\n          <li><a href=\"home/contact\">Contact</a></li>\r\n        </ul>\r\n        <ul class=\"nav navbar-nav navbar-right\">\r\n          <li>\r\n            <a asp-area=\"\" title=\"Manage\">Hello {{userName}}!</a>\r\n          </li>\r\n          <li>\r\n            <button type=\"submit\" class=\"btn btn-link navbar-btn navbar-link\">Log out</button>\r\n          </li>\r\n        </ul>\r\n      </div>\r\n    </div>\r\n  </nav>\r\n  <br/><br/>\r\n  <router-outlet></router-outlet>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -46,8 +46,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var AppComponent = /** @class */ (function () {
     function AppComponent() {
-        this.title = 'app';
     }
+    AppComponent.prototype.ngOnInit = function () {
+        var user = JSON.parse(localStorage.getItem('user'));
+        this.userName = user.email;
+    };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'app-root',
