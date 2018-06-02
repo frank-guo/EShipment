@@ -11,7 +11,6 @@ import * as _ from 'lodash';
 export class OrdersService {
   private baseUrl = '/api';
   private headers = new Headers({ 'Content-Type': 'application/json' });
-  private externalApi = '/api'
   private idKey = 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'
 
   constructor(private http: HttpClient) {

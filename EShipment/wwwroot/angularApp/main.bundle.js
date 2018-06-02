@@ -27,7 +27,7 @@ module.exports = ""
 /***/ "./client-src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div>\r\n  <nav class=\"navbar navbar-inverse navbar-fixed-top\">\r\n    <div class=\"container\">\r\n      <div class=\"navbar-header\">\r\n        <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-collapse\">\r\n          <span class=\"sr-only\">Toggle navigation</span>\r\n          <span class=\"icon-bar\"></span>\r\n          <span class=\"icon-bar\"></span>\r\n          <span class=\"icon-bar\"></span>\r\n        </button>\r\n        <a href=\"/\" class=\"navbar-brand\">EShipment</a>\r\n      </div>\r\n      <div class=\"navbar-collapse collapse\">\r\n        <ul class=\"nav navbar-nav\">\r\n          <li><a href=\"/\">Home</a></li>\r\n          <li><a href=\"angularHome/\">Order</a></li>\r\n          <li><a href=\"home/about\">About</a></li>\r\n          <li><a href=\"home/contact\">Contact</a></li>\r\n        </ul>\r\n        <ul class=\"nav navbar-nav navbar-right\">\r\n          <li>\r\n            <a asp-area=\"\" title=\"Manage\">Hello {{userName}}!</a>\r\n          </li>\r\n          <li>\r\n            <button type=\"submit\" class=\"btn btn-link navbar-btn navbar-link\">Log out</button>\r\n          </li>\r\n        </ul>\r\n      </div>\r\n    </div>\r\n  </nav>\r\n  <br/><br/>\r\n  <router-outlet></router-outlet>\r\n</div>\r\n"
+module.exports = "<div>\r\n  <nav class=\"navbar navbar-inverse navbar-fixed-top\">\r\n    <div class=\"container\">\r\n      <div class=\"navbar-header\">\r\n        <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-collapse\">\r\n          <span class=\"sr-only\">Toggle navigation</span>\r\n          <span class=\"icon-bar\"></span>\r\n          <span class=\"icon-bar\"></span>\r\n          <span class=\"icon-bar\"></span>\r\n        </button>\r\n        <a href=\"/\" class=\"navbar-brand\">EShipment</a>\r\n      </div>\r\n      <div class=\"navbar-collapse collapse\">\r\n        <ul class=\"nav navbar-nav\">\r\n          <li><a href=\"/\">Home</a></li>\r\n          <li><a href=\"angularHome/\">Order</a></li>\r\n          <li><a href=\"home/about\">About</a></li>\r\n          <li><a href=\"home/contact\">Contact</a></li>\r\n        </ul>\r\n        <ul class=\"nav navbar-nav navbar-right\">\r\n          <li>\r\n            <a asp-area=\"\" title=\"Manage\">Hello {{userName}}!</a>\r\n          </li>\r\n          <li>\r\n            <button type=\"button\" class=\"btn btn-link navbar-btn navbar-link\" (click)=\"onLogoutClick()\">\r\n              Log out\r\n            </button>\r\n          </li>\r\n        </ul>\r\n      </div>\r\n    </div>\r\n  </nav>\r\n  <br/><br/>\r\n  <router-outlet></router-outlet>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -42,21 +42,47 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var authentication_service_1 = __webpack_require__("./client-src/app/service/authentication.service.ts");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var common_1 = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
 var AppComponent = /** @class */ (function () {
-    function AppComponent() {
+    function AppComponent(authenticationService, route, location, cdRef) {
+        this.authenticationService = authenticationService;
+        this.route = route;
+        this.location = location;
+        this.cdRef = cdRef;
     }
     AppComponent.prototype.ngOnInit = function () {
         var user = JSON.parse(localStorage.getItem('user'));
-        this.userName = user.email;
+        this.userName = user ? user.email : null;
+    };
+    AppComponent.prototype.onLogoutClick = function () {
+        this.authenticationService.logout().subscribe(function (resp) {
+            document.open();
+            document.write(resp);
+            document.close();
+        });
+        //this.ordersService.getOrders().subscribe(resp => {
+        //  console.log(resp)
+        //});
+        //localStorage.clear()
     };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'app-root',
             template: __webpack_require__("./client-src/app/app.component.html"),
-            styles: [__webpack_require__("./client-src/app/app.component.css")]
-        })
+            styles: [__webpack_require__("./client-src/app/app.component.css")],
+            providers: [authentication_service_1.AuthenticationService]
+        }),
+        __metadata("design:paramtypes", [authentication_service_1.AuthenticationService,
+            router_1.ActivatedRoute,
+            common_1.Location,
+            core_1.ChangeDetectorRef])
     ], AppComponent);
     return AppComponent;
 }());
@@ -268,6 +294,80 @@ exports.OrdersComponent = OrdersComponent;
 
 /***/ }),
 
+/***/ "./client-src/app/service/authentication.service.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+__webpack_require__("./node_modules/rxjs/_esm5/add/operator/toPromise.js");
+__webpack_require__("./node_modules/rxjs/_esm5/add/operator/map.js");
+var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+var throw_1 = __webpack_require__("./node_modules/rxjs/_esm5/observable/throw.js");
+var AuthenticationService = /** @class */ (function () {
+    function AuthenticationService(http) {
+        this.http = http;
+    }
+    AuthenticationService.prototype.logout = function () {
+        var body = new http_1.HttpParams()
+            .set('__RequestVerificationToken', localStorage.getItem('verificationToken'));
+        var tokenJson = localStorage.getItem('user');
+        var user = JSON.parse(tokenJson);
+        var token = user.token;
+        localStorage.clear();
+        return this.http.post('/api/auth/logout', '', {
+            headers: new http_1.HttpHeaders({
+                'Authorization': "Bearer " + token,
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
+            }),
+            responseType: 'text'
+        });
+    };
+    //saveOrders(orders: any[]): Promise<Order[]> {
+    //  return this.http.post(this.baseUrl + '/orders', JSON.stringify(orders), { headers: this.headers })
+    //    .toPromise()
+    //    .then(response => {
+    //      let json = response.json();
+    //      return json as Order[]
+    //    }
+    //    ).catch(this.handleError);
+    //}
+    AuthenticationService.prototype.handleError = function (error) {
+        if (error.error instanceof ErrorEvent) {
+            // A client-side or network error occurred. Handle it accordingly.
+            console.error('An error occurred:', error.error.message);
+        }
+        else {
+            // The backend returned an unsuccessful response code.
+            // The response body may contain clues as to what went wrong,
+            console.error("Backend returned code " + error.status + ", " +
+                ("body was: " + error.error));
+        }
+        // return an observable with a user-facing error message
+        return throw_1._throw('Something bad happened; please try again later.');
+    };
+    ;
+    AuthenticationService = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [http_1.HttpClient])
+    ], AuthenticationService);
+    return AuthenticationService;
+}());
+exports.AuthenticationService = AuthenticationService;
+
+
+/***/ }),
+
 /***/ "./client-src/app/service/orders.service.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -293,7 +393,6 @@ var OrdersService = /** @class */ (function () {
         this.http = http;
         this.baseUrl = '/api';
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
-        this.externalApi = '/api';
         this.idKey = 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier';
     }
     OrdersService.prototype.getOrders = function () {
@@ -345,11 +444,11 @@ var TokenInterceptor = /** @class */ (function () {
     }
     TokenInterceptor.prototype.intercept = function (request, next) {
         var user = JSON.parse(localStorage.getItem('user'));
-        request = request.clone({
+        request = user != null ? request.clone({
             setHeaders: {
                 Authorization: "Bearer " + user.token
             }
-        });
+        }) : request;
         return next.handle(request);
     };
     TokenInterceptor = __decorate([
