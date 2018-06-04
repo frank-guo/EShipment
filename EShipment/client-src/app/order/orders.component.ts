@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, AfterViewChecked, ViewChild, SimpleChanges } from '@angular/core';
-import { Order } from './model/order';
-import { OrdersService } from './service/orders.service';
+import { Order } from '../model/order';
+import { OrdersService } from '../service/orders.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 import 'rxjs/add/operator/switchMap';
@@ -12,9 +12,12 @@ import { NgForm, FormArray } from '@angular/forms'
   providers: [OrdersService]
 })
 export class OrdersComponent implements OnInit {
-  orders: Order[];
+  private orders: Order[];
+  private showOrderModal: boolean;
+  private order: Order;
   public onDelete: Function;
   public onEdit: Function;
+  public closeModal: Function;
 
   constructor(private ordersService: OrdersService,
     private route: ActivatedRoute,
@@ -30,9 +33,11 @@ export class OrdersComponent implements OnInit {
     })
     this.onDelete = this.onDeleteClick.bind(this)
     this.onEdit = this.onEditClick.bind(this)
+    this.closeModal = this.onColseModalClick.bind(this)
   }
 
   ngAfterViewChecked() {
+    this.cdRef.detectChanges()
   }
 
   public onSaveClick(customers: FormArray): void {
@@ -48,6 +53,11 @@ export class OrdersComponent implements OnInit {
   }
 
   public onEditClick(index): void {
-    //this.orders.splice(index, 1)
+    this.showOrderModal = true;
+    this.order = this.orders[index]
+  }
+
+  public onColseModalClick(): void {
+    this.showOrderModal = false;
   }
 }

@@ -17,6 +17,8 @@
     <None Remove="client-src\app\auth.guard.ts" />
     <None Remove="client-src\app\layout.component.ts" />
     <None Remove="client-src\app\login.component.ts" />
+    <None Remove="client-src\app\order\orderModal.component.html" />
+    <None Remove="client-src\app\order\orderModal.component.ts" />
     <None Remove="client-src\app\service\authentication.service.ts" />
     <None Remove="client-src\app\token.interceptor.ts" />
   </ItemGroup>
@@ -37,6 +39,8 @@
   <ItemGroup>
     <TypeScriptCompile Include="client-src\app\auth.guard.ts" />
     <TypeScriptCompile Include="client-src\app\layout.component.ts" />
+    <TypeScriptCompile Include="client-src\app\order\orderModal.component.html" />
+    <TypeScriptCompile Include="client-src\app\order\orderModal.component.ts" />
     <TypeScriptCompile Include="client-src\app\service\authentication.service.ts" />
     <TypeScriptCompile Include="client-src\app\token.interceptor.ts" />
   </ItemGroup>

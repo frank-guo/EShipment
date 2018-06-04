@@ -27,7 +27,7 @@ module.exports = ""
 /***/ "./client-src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div>\r\n  <nav class=\"navbar navbar-inverse navbar-fixed-top\">\r\n    <div class=\"container\">\r\n      <div class=\"navbar-header\">\r\n        <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-collapse\">\r\n          <span class=\"sr-only\">Toggle navigation</span>\r\n          <span class=\"icon-bar\"></span>\r\n          <span class=\"icon-bar\"></span>\r\n          <span class=\"icon-bar\"></span>\r\n        </button>\r\n        <a href=\"/\" class=\"navbar-brand\">EShipment</a>\r\n      </div>\r\n      <div class=\"navbar-collapse collapse\">\r\n        <ul class=\"nav navbar-nav\">\r\n          <li><a href=\"/\">Home</a></li>\r\n          <li><a href=\"angularHome/\">Order</a></li>\r\n          <li><a href=\"home/about\">About</a></li>\r\n          <li><a href=\"home/contact\">Contact</a></li>\r\n        </ul>\r\n        <ul class=\"nav navbar-nav navbar-right\">\r\n          <li>\r\n            <a asp-area=\"\" title=\"Manage\">Hello {{userName}}!</a>\r\n          </li>\r\n          <li>\r\n            <button type=\"button\" class=\"btn btn-link navbar-btn navbar-link\" (click)=\"onLogoutClick()\">\r\n              Log out\r\n            </button>\r\n          </li>\r\n        </ul>\r\n      </div>\r\n    </div>\r\n  </nav>\r\n  <br/><br/>\r\n  <router-outlet></router-outlet>\r\n</div>\r\n"
+module.exports = "<div>\r\n  <nav class=\"navbar navbar-inverse navbar-fixed-top\">\r\n    <div class=\"container\">\r\n      <div class=\"navbar-header\">\r\n        <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-collapse\">\r\n          <span class=\"sr-only\">Toggle navigation</span>\r\n          <span class=\"icon-bar\"></span>\r\n          <span class=\"icon-bar\"></span>\r\n          <span class=\"icon-bar\"></span>\r\n        </button>\r\n        <a href=\"/\" class=\"navbar-brand\">EShipment</a>\r\n      </div>\r\n      <div class=\"navbar-collapse collapse\">\r\n        <ul class=\"nav navbar-nav\">\r\n          <li><a href=\"/\">Home</a></li>\r\n          <li><a href=\"angularHome/\">Order</a></li>\r\n          <li><a href=\"home/about\">About</a></li>\r\n          <li><a href=\"home/contact\">Contact</a></li>\r\n        </ul>\r\n        <ul class=\"nav navbar-nav navbar-right\">\r\n          <li>\r\n            <a asp-area=\"\" title=\"Manage\">Hello {{userName}}!</a>\r\n          </li>\r\n          <li>\r\n            <button type=\"button\" class=\"btn btn-link navbar-btn navbar-link\" (click)=\"onLogoutClick()\">\r\n              Log out\r\n            </button>\r\n          </li>\r\n        </ul>\r\n      </div>\r\n    </div>\r\n  </nav>\r\n  <br /><br />\r\n  <div class=\"container body-content\">\r\n    <router-outlet></router-outlet>\r\n  </div>\r\n  </div>\r\n"
 
 /***/ }),
 
@@ -109,8 +109,9 @@ var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js")
 var http_1 = __webpack_require__("./node_modules/@angular/http/esm5/http.js");
 var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var app_component_1 = __webpack_require__("./client-src/app/app.component.ts");
-var orders_component_1 = __webpack_require__("./client-src/app/orders.component.ts");
-var order_component_1 = __webpack_require__("./client-src/app/order.component.ts");
+var orders_component_1 = __webpack_require__("./client-src/app/order/orders.component.ts");
+var order_component_1 = __webpack_require__("./client-src/app/order/order.component.ts");
+var orderModal_component_1 = __webpack_require__("./client-src/app/order/orderModal.component.ts");
 var table_1 = __webpack_require__("./node_modules/primeng/table.js");
 var http_2 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
 var token_interceptor_1 = __webpack_require__("./client-src/app/token.interceptor.ts");
@@ -123,7 +124,8 @@ var AppModule = /** @class */ (function () {
             declarations: [
                 app_component_1.AppComponent,
                 orders_component_1.OrdersComponent,
-                order_component_1.OrderComponent
+                order_component_1.OrderComponent,
+                orderModal_component_1.OrderModalComponent
             ],
             imports: [
                 platform_browser_1.BrowserModule,
@@ -155,14 +157,45 @@ exports.AppModule = AppModule;
 
 /***/ }),
 
-/***/ "./client-src/app/order.component.html":
+/***/ "./client-src/app/model/order.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Order = /** @class */ (function () {
+    function Order(number, companyName, mark, containerNumber, destination, dischargedPort, BLNumber, ETD, ETA, numOfGoods, weight, measurement, productDescription, statuses, receiveOrderDate) {
+        this.number = number;
+        this.companyName = companyName;
+        this.mark = mark;
+        this.containerNumber = containerNumber;
+        this.destination = destination;
+        this.dischargedPort = dischargedPort;
+        this.BLNumber = BLNumber;
+        this.ETD = ETD;
+        this.ETA = ETA;
+        this.numOfGoods = numOfGoods;
+        this.weight = weight;
+        this.measurement = measurement;
+        this.productDescription = productDescription;
+        this.statuses = statuses;
+        this.receiveOrderDate = receiveOrderDate;
+    }
+    return Order;
+}());
+exports.Order = Order;
+
+
+/***/ }),
+
+/***/ "./client-src/app/order/order.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "\r\n<tr *ngIf=\"model\">\r\n  <td>\r\n    {{model.number}}\r\n  </td>\r\n  <td>\r\n    {{model.companyName}}\r\n  </td>\r\n  <td>\r\n    {{model.mark}}\r\n  </td>\r\n  <td>\r\n    {{model.ETD}}\r\n  </td>\r\n  <td>\r\n    {{model.ETA}}\r\n  </td>\r\n  <td>\r\n    {{model.receiveOrderDate}}\r\n  </td>\r\n  <td>\r\n    <button type=\"button\" class=\"btn btn-primary btn-sm\" (click)=\"onEditClick(index)\">\r\n      <i class=\"fa fa-check-circle-o\" aria-hidden=\"true\"></i>&nbsp;\r\n      Edit\r\n    </button>\r\n    <button type=\"button\" class=\"btn btn-primary btn-sm\" (click)=\"onDeleteClick(index)\">\r\n      <i class=\"fa fa-trash\" aria-hidden=\"true\"></i>&nbsp;\r\n      Delete\r\n    </button>\r\n  </td>\r\n</tr>\r\n\r\n"
 
 /***/ }),
 
-/***/ "./client-src/app/order.component.ts":
+/***/ "./client-src/app/order/order.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -208,7 +241,7 @@ var OrderComponent = /** @class */ (function () {
     OrderComponent = __decorate([
         core_1.Component({
             selector: 'order',
-            template: __webpack_require__("./client-src/app/order.component.html")
+            template: __webpack_require__("./client-src/app/order/order.component.html")
         })
     ], OrderComponent);
     return OrderComponent;
@@ -218,14 +251,78 @@ exports.OrderComponent = OrderComponent;
 
 /***/ }),
 
-/***/ "./client-src/app/orders.component.html":
+/***/ "./client-src/app/order/orderModal.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<br/>\r\n<div>\r\n  <div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n      <h4 style=\"display: inline\">Orders:&nbsp;&nbsp;&nbsp;</h4>\r\n      <button type=\"button\" class=\"btn btn-primary btn-sm\" (click)=\"onAddClick()\">\r\n        <i class=\"fa fa-plus\" aria-hidden=\"true\">&nbsp;</i>\r\n        Add\r\n      </button>\r\n    </div>\r\n  </div>\r\n  <br/>\r\n  <p-table [value]=\"orders\">\r\n    <ng-template pTemplate=\"header\">\r\n      <tr>\r\n        <th>No.</th>\r\n        <th>Company</th>\r\n        <th>Mark</th>\r\n        <th>ETD</th>\r\n        <th>ETA</th>\r\n        <th>Receive Date</th>\r\n        <th></th>\r\n      </tr>\r\n    </ng-template>\r\n    <ng-template pTemplate=\"body\" let-order>\r\n      <tr>\r\n        <td>\r\n          {{order.number}}\r\n        </td>\r\n        <td>\r\n          {{order.companyName}}\r\n        </td>\r\n        <td>\r\n          {{order.mark}}\r\n        </td>\r\n        <td>\r\n          {{order.ETD}}\r\n        </td>\r\n        <td>\r\n          {{order.ETA}}\r\n        </td>\r\n        <td>\r\n          {{order.receiveOrderDate}}\r\n        </td>\r\n        <td>\r\n          <button type=\"button\" class=\"btn btn-primary btn-sm\" (click)=\"onEditClick(i)\">\r\n            <i class=\"fa fa-check-circle-o\" aria-hidden=\"true\"></i>&nbsp;\r\n            Edit\r\n          </button>\r\n          <button type=\"button\" class=\"btn btn-primary btn-sm\" (click)=\"onDeleteClick(i)\">\r\n            <i class=\"fa fa-trash\" aria-hidden=\"true\"></i>&nbsp;\r\n            Delete\r\n          </button>\r\n        </td>\r\n      </tr>\r\n    </ng-template>\r\n  </p-table>\r\n</div>\r\n\r\n\r\n"
+module.exports = "<div class=\"modal\" id=\"exampleModal\" tabindex=\"-1\" role=\"dialog\"\r\n     aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" [style.display]=\"this.showModal ? 'block' : 'none'\">\r\n  <div class=\"modal-dialog\" role=\"document\" style=\"\">\r\n    <div class=\"modal-content\">\r\n      <div class=\"modal-header\">\r\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Modal title</h5>\r\n      </div>\r\n      <div class=\"modal-body\">\r\n        <form *ngIf=\"order\">\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Order Number\r\n              </label>\r\n              <br />\r\n              <input type=\"number\" [(ngModel)]=\"order.number\" name=\"number\" />\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Mark\r\n              </label>\r\n              <br/>\r\n              <input type=\"number\" [(ngModel)]=\"order.mark\" name=\"mark\"/>\r\n            </div>\r\n          </div>\r\n        </form>\r\n      </div>\r\n      <div class=\"modal-footer\">\r\n        <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"closeModal()\">Close</button>\r\n        <button type=\"button\" class=\"btn btn-primary\">Save changes</button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n"
 
 /***/ }),
 
-/***/ "./client-src/app/orders.component.ts":
+/***/ "./client-src/app/order/orderModal.component.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var order_1 = __webpack_require__("./client-src/app/model/order.ts");
+var OrderModalComponent = /** @class */ (function () {
+    function OrderModalComponent(cdRef) {
+        this.cdRef = cdRef;
+        this.submitted = false;
+    }
+    OrderModalComponent.prototype.onSubmit = function () { this.submitted = true; };
+    OrderModalComponent.prototype.ngOnInit = function () {
+    };
+    OrderModalComponent.prototype.ngOnChanges = function (changes) {
+    };
+    OrderModalComponent.prototype.ngAfterContentChecked = function () {
+    };
+    OrderModalComponent.prototype.ngAfterViewChecked = function () {
+    };
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", order_1.Order)
+    ], OrderModalComponent.prototype, "order", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], OrderModalComponent.prototype, "showModal", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Function)
+    ], OrderModalComponent.prototype, "closeModal", void 0);
+    OrderModalComponent = __decorate([
+        core_1.Component({
+            selector: 'orderModal',
+            template: __webpack_require__("./client-src/app/order/orderModal.component.html")
+        }),
+        __metadata("design:paramtypes", [core_1.ChangeDetectorRef])
+    ], OrderModalComponent);
+    return OrderModalComponent;
+}());
+exports.OrderModalComponent = OrderModalComponent;
+
+
+/***/ }),
+
+/***/ "./client-src/app/order/orders.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<br/>\r\n<div>\r\n  <orderModal [showModal]=\"showOrderModal\" [closeModal]=\"closeModal\" [order]=\"order\"></orderModal>\r\n  <div class=\"row\">\r\n    <div class=\"col-md-6\">\r\n      <h4 style=\"display: inline\">Orders:&nbsp;&nbsp;&nbsp;</h4>\r\n      <button type=\"button\" class=\"btn btn-primary btn-sm\" (click)=\"onAddClick()\">\r\n        <i class=\"fa fa-plus\" aria-hidden=\"true\">&nbsp;</i>\r\n        Add\r\n      </button>\r\n    </div>\r\n  </div>\r\n  <br/>\r\n  <p-table [value]=\"orders\">\r\n    <ng-template pTemplate=\"header\">\r\n      <tr>\r\n        <th>No.</th>\r\n        <th>Company</th>\r\n        <th>Mark</th>\r\n        <th>ETD</th>\r\n        <th>ETA</th>\r\n        <th>Receive Date</th>\r\n        <th></th>\r\n      </tr>\r\n    </ng-template>\r\n    <ng-template pTemplate=\"body\" let-order let-i=\"rowIndex\">\r\n      <tr>\r\n        <td>\r\n          {{order.number}}\r\n        </td>\r\n        <td>\r\n          {{order.companyName}}\r\n        </td>\r\n        <td>\r\n          {{order.mark}}\r\n        </td>\r\n        <td>\r\n          {{order.ETD}}\r\n        </td>\r\n        <td>\r\n          {{order.ETA}}\r\n        </td>\r\n        <td>\r\n          {{order.receiveOrderDate}}\r\n        </td>\r\n        <td>\r\n          <button type=\"button\" class=\"btn btn-primary btn-sm\" (click)=\"onEdit(i)\">\r\n            <i class=\"fa fa-check-circle-o\" aria-hidden=\"true\"></i>&nbsp;\r\n            Edit\r\n          </button>\r\n          <button type=\"button\" class=\"btn btn-primary btn-sm\" (click)=\"onDeleteClick(i)\">\r\n            <i class=\"fa fa-trash\" aria-hidden=\"true\"></i>&nbsp;\r\n            Delete\r\n          </button>\r\n        </td>\r\n      </tr>\r\n    </ng-template>\r\n  </p-table>\r\n</div>\r\n\r\n\r\n"
+
+/***/ }),
+
+/***/ "./client-src/app/order/orders.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -261,8 +358,10 @@ var OrdersComponent = /** @class */ (function () {
         });
         this.onDelete = this.onDeleteClick.bind(this);
         this.onEdit = this.onEditClick.bind(this);
+        this.closeModal = this.onColseModalClick.bind(this);
     };
     OrdersComponent.prototype.ngAfterViewChecked = function () {
+        this.cdRef.detectChanges();
     };
     OrdersComponent.prototype.onSaveClick = function (customers) {
         //this.ordersService.saveOrders(this.orders)
@@ -274,12 +373,16 @@ var OrdersComponent = /** @class */ (function () {
         //this.orders.splice(index, 1)
     };
     OrdersComponent.prototype.onEditClick = function (index) {
-        //this.orders.splice(index, 1)
+        this.showOrderModal = true;
+        this.order = this.orders[index];
+    };
+    OrdersComponent.prototype.onColseModalClick = function () {
+        this.showOrderModal = false;
     };
     OrdersComponent = __decorate([
         core_1.Component({
             selector: 'orders',
-            template: __webpack_require__("./client-src/app/orders.component.html"),
+            template: __webpack_require__("./client-src/app/order/orders.component.html"),
             providers: [orders_service_1.OrdersService]
         }),
         __metadata("design:paramtypes", [orders_service_1.OrdersService,

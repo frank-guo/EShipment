@@ -1,5 +1,5 @@
 import { Component, Input, SimpleChanges, forwardRef, OnInit } from '@angular/core';
-import { Order } from './model/order';
+import { Order } from '../model/order';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, NG_VALIDATORS, FormControl, Validator } from '@angular/forms';
 
 @Component({

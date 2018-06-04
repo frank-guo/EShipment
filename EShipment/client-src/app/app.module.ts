@@ -5,8 +5,9 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { OrdersComponent } from './orders.component';
-import { OrderComponent } from './order.component';
+import { OrdersComponent } from './order/orders.component';
+import { OrderComponent } from './order/order.component';
+import { OrderModalComponent } from './order/orderModal.component';
 import { TableModule } from 'primeng/table';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -18,7 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
   declarations: [
     AppComponent,
     OrdersComponent,
-    OrderComponent
+    OrderComponent,
+    OrderModalComponent
   ],
   imports: [
     BrowserModule,
