@@ -54,7 +54,12 @@ namespace EShipment.Controllers
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            ViewData["ReturnUrl"] = returnUrl;
+            //If the user clicks "log in" link, the returnUrl will be null.
+            //Only if order link is clicked and the user hasn't yet signed in, returnUrl will be set to /angularHome.
+            //Accordingly, in order to make a user be redirected to agunlar app home after signing in through "log in",
+            //regardless of how the user gets to this method, e.g. order or "log in" links,
+            //set ViewData["ReturnUrl"] to  /angularHome anyway
+            ViewData["ReturnUrl"] = "/angularHome";
             return View();
         }
 
@@ -103,8 +108,8 @@ namespace EShipment.Controllers
           if (User.Identity.IsAuthenticated)
           {
             var user = await GetCurrentUserAsync();
-        var claims = new[]
-        {
+            var claims = new[]
+            {
               new Claim(ClaimTypes.NameIdentifier, user.Id),
               new Claim(JwtRegisteredClaimNames.Email, user.Email),
               new Claim(ClaimTypes.Name, user.UserName),
@@ -118,7 +123,7 @@ namespace EShipment.Controllers
             var token = new JwtSecurityToken(_config["Tokens:Issuer"],
               _config["Tokens:Issuer"],
               claims,
-              expires: DateTime.Now.AddMinutes(30),
+              expires: DateTime.Now.AddMinutes(5),
               signingCredentials: creds);
 
             return Ok(new {

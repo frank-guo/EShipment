@@ -36,6 +36,7 @@ namespace EShipment
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+            services.ConfigureApplicationCookie(options => { options.ExpireTimeSpan = TimeSpan.FromMinutes(5); });
 
             services.AddAuthentication()
             .AddCookie(cfg => cfg.SlidingExpiration = true)
