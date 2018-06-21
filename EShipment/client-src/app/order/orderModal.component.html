@@ -13,14 +13,31 @@
                 Order Number
               </label>
               <br />
-              <input type="number" [(ngModel)]="order.number" name="number" />
+              <input type="text" pInputText [(ngModel)]="order.number" name="number" />
             </div>
             <div class="col-md-6">
               <label>
-                Mark
+                Company Name
               </label>
-              <br/>
-              <input type="number" [(ngModel)]="order.mark" name="mark"/>
+              <br />
+              <input type="text" pInputText [(ngModel)]="order.companyName" name="companyName" />
+            </div>
+          </div>
+          <br/>
+          <div class="row">
+            <div class="col-md-6">
+              <label>
+                mark
+              </label>
+              <br />
+              <input type="text" pInputText [(ngModel)]="order.mark" name="mark" />
+            </div>
+            <div class="col-md-6">
+              <label>
+                Container Number
+              </label>
+              <br />
+              <input type="text" pInputText [(ngModel)]="order.containerNumber" name="containerNumber" />
             </div>
           </div>
         </form>

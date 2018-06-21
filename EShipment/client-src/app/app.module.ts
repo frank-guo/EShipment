@@ -9,6 +9,7 @@ import { OrdersComponent } from './order/orders.component';
 import { OrderComponent } from './order/order.component';
 import { OrderModalComponent } from './order/orderModal.component';
 import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './token.interceptor';
@@ -27,6 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpModule,
     TableModule,
+    InputTextModule,
     HttpClientModule,
     RouterModule.forRoot([
       {

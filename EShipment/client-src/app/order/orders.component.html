@@ -11,19 +11,48 @@
     </div>
   </div>
   <br/>
-  <p-table [value]="orders">
-    <ng-template pTemplate="header">
+  <p-table [value]="orders" [scrollable]="true" [style]="{width:'1200px'}" scrollHeight="900px">
+    <ng-template pTemplate="colgroup" let-orders>
+      <colgroup>
+        <col style="width:50px">
+        <col style="width:150px">
+        <col style="width:150px">
+        <col style="width:150px">
+        <col style="width:150px">
+        <col style="width:150px">
+        <col style="width:150px">
+        <col style="width:150px">
+        <col style="width:150px">
+        <col style="width:150px">
+        <col style="width:150px">
+        <col style="width:150px">
+        <col style="width:150px">
+        <col style="width:150px">
+        <col style="width:150px">
+        <col style="width:150px">
+      </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header" let-order>
       <tr>
         <th>No.</th>
         <th>Company</th>
         <th>Mark</th>
+        <th>Container</th>
+        <th>Destination</th>
+        <th>Discharged Port</th>
+        <th>BL</th>
         <th>ETD</th>
         <th>ETA</th>
-        <th>Receive Date</th>
+        <th>Num Of Goods</th>
+        <th>Weight</th>
+        <th>Measurement</th>
+        <th>Product Description</th>
+        <th>Status</th>
+        <th>Receive Order Date</th>
         <th></th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-order let-i="rowIndex">
+    <ng-template pTemplate="body" let-order let-columns="columns" let-i="rowIndex">
       <tr>
         <td>
           {{order.number}}
@@ -35,13 +64,43 @@
           {{order.mark}}
         </td>
         <td>
+          {{order.containerNumber}}
+        </td>
+        <td>
+          {{order.destination}}
+        </td>
+        <td>
+          {{order.BLNumber}}
+        </td>
+        <td>
           {{order.ETD}}
         </td>
         <td>
           {{order.ETA}}
         </td>
         <td>
+          {{order.numOfGoods}}
+        </td>
+        <td>
+          {{order.weight}}
+        </td>
+        <td>
+          {{order.measurement}}
+        </td>
+        <td>
+          {{order.productDescription}}
+        </td>
+        <td>
+          {{order.OrderStatus}}
+        </td>
+        <td>
           {{order.receiveOrderDate}}
+        </td>
+        <td>
+          <button type="button" class="btn btn-primary btn-xs" (click)="onEdit(i)">
+            <i class="fa fa-edit" aria-hidden="true"></i>&nbsp;
+            Open
+          </button>
         </td>
         <td>
           <button type="button" class="btn btn-primary btn-xs" (click)="onEdit(i)">
