@@ -117,6 +117,8 @@ var inputtext_1 = __webpack_require__("./node_modules/primeng/inputtext.js");
 var http_2 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
 var token_interceptor_1 = __webpack_require__("./client-src/app/token.interceptor.ts");
 var http_3 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+var auth_guard_service_1 = __webpack_require__("./client-src/app/service/auth-guard.service.ts");
+var authentication_service_1 = __webpack_require__("./client-src/app/service/authentication.service.ts");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -138,11 +140,14 @@ var AppModule = /** @class */ (function () {
                 router_1.RouterModule.forRoot([
                     {
                         path: 'angularApp',
-                        component: orders_component_1.OrdersComponent
+                        component: orders_component_1.OrdersComponent,
+                        canActivate: [auth_guard_service_1.AuthGuardService]
                     }
                 ])
             ],
             providers: [
+                auth_guard_service_1.AuthGuardService,
+                authentication_service_1.AuthenticationService, ,
                 {
                     provide: http_2.HTTP_INTERCEPTORS,
                     useClass: token_interceptor_1.TokenInterceptor,
@@ -256,7 +261,7 @@ exports.OrderComponent = OrderComponent;
 /***/ "./client-src/app/order/orderModal.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"modal\" id=\"exampleModal\" tabindex=\"-1\" role=\"dialog\"\r\n     aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" [style.display]=\"this.showModal ? 'block' : 'none'\">\r\n  <div class=\"modal-dialog\" role=\"document\" style=\"\">\r\n    <div class=\"modal-content\">\r\n      <div class=\"modal-header\">\r\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Modal title</h5>\r\n      </div>\r\n      <div class=\"modal-body\">\r\n        <form *ngIf=\"order\">\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Order Number\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" pInputText [(ngModel)]=\"order.number\" name=\"number\" />\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Company Name\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" pInputText [(ngModel)]=\"order.companyName\" name=\"companyName\" />\r\n            </div>\r\n          </div>\r\n          <br/>\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                mark\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" pInputText [(ngModel)]=\"order.mark\" name=\"mark\" />\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Container Number\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" pInputText [(ngModel)]=\"order.containerNumber\" name=\"containerNumber\" />\r\n            </div>\r\n          </div>\r\n        </form>\r\n      </div>\r\n      <div class=\"modal-footer\">\r\n        <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"closeModal()\">Close</button>\r\n        <button type=\"button\" class=\"btn btn-primary\">Save changes</button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"modal\" id=\"exampleModal\" tabindex=\"-1\" role=\"dialog\"\r\n     aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" [style.display]=\"this.showModal ? 'block' : 'none'\">\r\n  <div class=\"modal-dialog\" role=\"document\" style=\"\">\r\n    <div class=\"modal-content\">\r\n      <div class=\"modal-header\">\r\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Edit Order</h5>\r\n      </div>\r\n      <div class=\"modal-body\">\r\n        <form *ngIf=\"order\">\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Order Number\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" pInputText [(ngModel)]=\"order.number\" name=\"number\" />\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Company Name\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" pInputText [(ngModel)]=\"order.companyName\" name=\"companyName\" />\r\n            </div>\r\n          </div>\r\n          <br />\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                mark\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" pInputText [(ngModel)]=\"order.mark\" name=\"mark\" />\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Container Number\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" pInputText [(ngModel)]=\"order.containerNumber\" name=\"containerNumber\" />\r\n            </div>\r\n          </div>\r\n          <br />\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Destination\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" pInputText [(ngModel)]=\"order.destination\" name=\"destination\" />\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Discharged Port\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" pInputText [(ngModel)]=\"order.dischargedPort\" name=\"dischargedPort\" />\r\n            </div>\r\n          </div>\r\n          <br />\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                BL Number\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" pInputText [(ngModel)]=\"order.BLNumber\" name=\"BLNumber\" />\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                ETD\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" pInputText [(ngModel)]=\"order.ETD\" name=\"ETD\" />\r\n            </div>\r\n          </div>\r\n          <br />\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                ETA\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" pInputText [(ngModel)]=\"order.ETA\" name=\"ETA\" />\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Num Of Goods\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" pInputText [(ngModel)]=\"order.numOfGoods\" name=\"numOfGoods\" />\r\n            </div>\r\n          </div>\r\n          <br />\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Weight\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" pInputText [(ngModel)]=\"order.weight\" name=\"weight\" />\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Measurement\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" pInputText [(ngModel)]=\"order.measurement\" name=\"measurement\" />\r\n            </div>\r\n          </div>\r\n          <br />\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Product Description\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" pInputText [(ngModel)]=\"order.productDescription\" name=\"productDescription\" />\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Receive Order Date\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" pInputText [(ngModel)]=\"order.receiveOrderDate\" name=\"receiveOrderDate\" />\r\n            </div>\r\n          </div>\r\n        </form>\r\n      </div>\r\n      <div class=\"modal-footer\">\r\n        <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"closeModal()\">Close</button>\r\n        <button type=\"button\" class=\"btn btn-primary\">Save changes</button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -320,7 +325,7 @@ exports.OrderModalComponent = OrderModalComponent;
 /***/ "./client-src/app/order/orders.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<br/>\r\n<div>\r\n  <orderModal [showModal]=\"showOrderModal\" [closeModal]=\"closeModal\" [order]=\"order\"></orderModal>\r\n  <div class=\"row\">\r\n    <div class=\"col-md-6\">\r\n      <h4 style=\"display: inline\">Orders:&nbsp;&nbsp;&nbsp;</h4>\r\n      <button type=\"button\" class=\"btn btn-primary btn-sm\" (click)=\"onAddClick()\">\r\n        <i class=\"fa fa-plus\" aria-hidden=\"true\">&nbsp;</i>\r\n        Add\r\n      </button>\r\n    </div>\r\n  </div>\r\n  <br/>\r\n  <p-table [value]=\"orders\" [scrollable]=\"true\" [style]=\"{width:'1200px'}\" scrollHeight=\"900px\">\r\n    <ng-template pTemplate=\"colgroup\" let-orders>\r\n      <colgroup>\r\n        <col style=\"width:50px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n      </colgroup>\r\n    </ng-template>\r\n    <ng-template pTemplate=\"header\" let-order>\r\n      <tr>\r\n        <th>No.</th>\r\n        <th>Company</th>\r\n        <th>Mark</th>\r\n        <th>Container</th>\r\n        <th>Destination</th>\r\n        <th>Discharged Port</th>\r\n        <th>BL</th>\r\n        <th>ETD</th>\r\n        <th>ETA</th>\r\n        <th>Num Of Goods</th>\r\n        <th>Weight</th>\r\n        <th>Measurement</th>\r\n        <th>Product Description</th>\r\n        <th>Status</th>\r\n        <th>Receive Order Date</th>\r\n        <th></th>\r\n      </tr>\r\n    </ng-template>\r\n    <ng-template pTemplate=\"body\" let-order let-columns=\"columns\" let-i=\"rowIndex\">\r\n      <tr>\r\n        <td>\r\n          {{order.number}}\r\n        </td>\r\n        <td>\r\n          {{order.companyName}}\r\n        </td>\r\n        <td>\r\n          {{order.mark}}\r\n        </td>\r\n        <td>\r\n          {{order.containerNumber}}\r\n        </td>\r\n        <td>\r\n          {{order.destination}}\r\n        </td>\r\n        <td>\r\n          {{order.BLNumber}}\r\n        </td>\r\n        <td>\r\n          {{order.ETD}}\r\n        </td>\r\n        <td>\r\n          {{order.ETA}}\r\n        </td>\r\n        <td>\r\n          {{order.numOfGoods}}\r\n        </td>\r\n        <td>\r\n          {{order.weight}}\r\n        </td>\r\n        <td>\r\n          {{order.measurement}}\r\n        </td>\r\n        <td>\r\n          {{order.productDescription}}\r\n        </td>\r\n        <td>\r\n          {{order.OrderStatus}}\r\n        </td>\r\n        <td>\r\n          {{order.receiveOrderDate}}\r\n        </td>\r\n        <td>\r\n          <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"onEdit(i)\">\r\n            <i class=\"fa fa-edit\" aria-hidden=\"true\"></i>&nbsp;\r\n            Open\r\n          </button>\r\n        </td>\r\n        <td>\r\n          <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"onEdit(i)\">\r\n            <i class=\"fa fa-edit\" aria-hidden=\"true\"></i>&nbsp;\r\n            Edit\r\n          </button>\r\n          <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"onDeleteClick(i)\">\r\n            <i class=\"fa fa-trash\" aria-hidden=\"true\"></i>&nbsp;\r\n            Delete\r\n          </button>\r\n        </td>\r\n      </tr>\r\n    </ng-template>\r\n  </p-table>\r\n</div>\r\n\r\n\r\n"
+module.exports = "<br/>\r\n<div>\r\n  <orderModal [showModal]=\"showOrderModal\" [closeModal]=\"closeModal\" [order]=\"order\"></orderModal>\r\n  <div class=\"row\">\r\n    <div class=\"col-md-6\">\r\n      <h4 style=\"display: inline\">Orders:&nbsp;&nbsp;&nbsp;</h4>\r\n      <button type=\"button\" class=\"btn btn-primary btn-sm\" (click)=\"onAddClick()\">\r\n        <i class=\"fa fa-plus\" aria-hidden=\"true\">&nbsp;</i>\r\n        Add\r\n      </button>\r\n    </div>\r\n  </div>\r\n  <br/>\r\n  <p-table [value]=\"orders\" [scrollable]=\"true\" [style]=\"{width:'1140'}\" scrollHeight=\"900px\">\r\n    <ng-template pTemplate=\"colgroup\" let-orders>\r\n      <colgroup>\r\n        <col style=\"width:50px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n      </colgroup>\r\n    </ng-template>\r\n    <ng-template pTemplate=\"header\" let-order>\r\n      <tr>\r\n        <th>No.</th>\r\n        <th>Company</th>\r\n        <th>Mark</th>\r\n        <th>Container</th>\r\n        <th>Destination</th>\r\n        <th>Discharged Port</th>\r\n        <th>BL</th>\r\n        <th>ETD</th>\r\n        <th>ETA</th>\r\n        <th>Num Of Goods</th>\r\n        <th>Weight</th>\r\n        <th>Measurement</th>\r\n        <th>Product Description</th>\r\n        <th>Status</th>\r\n        <th>Receive Order Date</th>\r\n        <th></th>\r\n      </tr>\r\n    </ng-template>\r\n    <ng-template pTemplate=\"body\" let-order let-columns=\"columns\" let-i=\"rowIndex\">\r\n      <tr>\r\n        <td>\r\n          {{order.number}}\r\n        </td>\r\n        <td>\r\n          {{order.companyName}}\r\n        </td>\r\n        <td>\r\n          {{order.mark}}\r\n        </td>\r\n        <td>\r\n          {{order.containerNumber}}\r\n        </td>\r\n        <td>\r\n          {{order.destination}}\r\n        </td>\r\n        <td>\r\n          {{order.BLNumber}}\r\n        </td>\r\n        <td>\r\n          {{order.ETD}}\r\n        </td>\r\n        <td>\r\n          {{order.ETA}}\r\n        </td>\r\n        <td>\r\n          {{order.numOfGoods}}\r\n        </td>\r\n        <td>\r\n          {{order.weight}}\r\n        </td>\r\n        <td>\r\n          {{order.measurement}}\r\n        </td>\r\n        <td>\r\n          {{order.productDescription}}\r\n        </td>\r\n        <td>\r\n          {{order.OrderStatus}}\r\n        </td>\r\n        <td>\r\n          {{order.receiveOrderDate}}\r\n        </td>\r\n        <td>\r\n          <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"onEdit(i)\">\r\n            <i class=\"fa fa-edit\" aria-hidden=\"true\"></i>&nbsp;\r\n            Open\r\n          </button>\r\n        </td>\r\n        <td>\r\n          <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"onEdit(i)\">\r\n            <i class=\"fa fa-edit\" aria-hidden=\"true\"></i>&nbsp;\r\n            Edit\r\n          </button>\r\n          <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"onDeleteClick(i)\">\r\n            <i class=\"fa fa-trash\" aria-hidden=\"true\"></i>&nbsp;\r\n            Delete\r\n          </button>\r\n        </td>\r\n      </tr>\r\n    </ng-template>\r\n  </p-table>\r\n</div>\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -399,6 +404,47 @@ exports.OrdersComponent = OrdersComponent;
 
 /***/ }),
 
+/***/ "./client-src/app/service/auth-guard.service.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var authentication_service_1 = __webpack_require__("./client-src/app/service/authentication.service.ts");
+var AuthGuardService = /** @class */ (function () {
+    function AuthGuardService(auth, router) {
+        this.auth = auth;
+        this.router = router;
+    }
+    AuthGuardService.prototype.canActivate = function () {
+        if (!this.auth.isAuthenticated()) {
+            window.location.href = 'account/login';
+            return false;
+        }
+        return true;
+    };
+    AuthGuardService = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [authentication_service_1.AuthenticationService, router_1.Router])
+    ], AuthGuardService);
+    return AuthGuardService;
+}());
+exports.AuthGuardService = AuthGuardService;
+
+
+/***/ }),
+
 /***/ "./client-src/app/service/authentication.service.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -419,6 +465,7 @@ __webpack_require__("./node_modules/rxjs/_esm5/add/operator/toPromise.js");
 __webpack_require__("./node_modules/rxjs/_esm5/add/operator/map.js");
 var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
 var throw_1 = __webpack_require__("./node_modules/rxjs/_esm5/observable/throw.js");
+var angular_jwt_1 = __webpack_require__("./node_modules/@auth0/angular-jwt/index.js");
 var AuthenticationService = /** @class */ (function () {
     function AuthenticationService(http) {
         this.http = http;
@@ -438,15 +485,18 @@ var AuthenticationService = /** @class */ (function () {
             responseType: 'text'
         });
     };
-    //saveOrders(orders: any[]): Promise<Order[]> {
-    //  return this.http.post(this.baseUrl + '/orders', JSON.stringify(orders), { headers: this.headers })
-    //    .toPromise()
-    //    .then(response => {
-    //      let json = response.json();
-    //      return json as Order[]
-    //    }
-    //    ).catch(this.handleError);
-    //}
+    AuthenticationService.prototype.isAuthenticated = function () {
+        var jwtHelper = new angular_jwt_1.JwtHelperService();
+        var userJson = localStorage.getItem('user');
+        if (userJson != null) {
+            var user = JSON.parse(userJson);
+            var token = user.token;
+            return !jwtHelper.isTokenExpired(token);
+        }
+        else {
+            return false;
+        }
+    };
     AuthenticationService.prototype.handleError = function (error) {
         if (error.error instanceof ErrorEvent) {
             // A client-side or network error occurred. Handle it accordingly.

@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes, CanActivate } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { OrdersComponent } from './order/orders.component';
@@ -14,6 +14,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './token.interceptor';
 import { HttpClientModule } from '@angular/common/http';
+
+import {
+  AuthGuardService
+} from './service/auth-guard.service';
+import { AuthenticationService } from './service/authentication.service';
 
 
 @NgModule({
@@ -33,11 +38,14 @@ import { HttpClientModule } from '@angular/common/http';
     RouterModule.forRoot([
       {
         path: 'angularApp',
-        component: OrdersComponent
+        component: OrdersComponent,
+        canActivate: [AuthGuardService] 
       }
     ])
   ],
   providers: [
+    AuthGuardService,
+    AuthenticationService,,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

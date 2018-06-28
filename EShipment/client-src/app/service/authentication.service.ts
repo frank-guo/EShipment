@@ -10,6 +10,7 @@ import {  Observable } from "rxjs";
 import { _throw } from 'rxjs/observable/throw';
 import { catchError, retry } from 'rxjs/operators';
 import * as _ from 'lodash';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class AuthenticationService {
@@ -33,15 +34,17 @@ export class AuthenticationService {
     })
   }
 
-  //saveOrders(orders: any[]): Promise<Order[]> {
-  //  return this.http.post(this.baseUrl + '/orders', JSON.stringify(orders), { headers: this.headers })
-  //    .toPromise()
-  //    .then(response => {
-  //      let json = response.json();
-  //      return json as Order[]
-  //    }
-  //    ).catch(this.handleError);
-  //}
+  public isAuthenticated(): boolean {
+    let jwtHelper: JwtHelperService = new JwtHelperService();
+    let userJson = localStorage.getItem('user');
+    if (userJson != null) {
+      let user = JSON.parse(userJson);
+      let token = user.token;
+      return !jwtHelper.isTokenExpired(token);
+    } else {
+      return false
+    }
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
