@@ -16,7 +16,7 @@ namespace EShipment.Models
       {
       }
 
-    public UserInfo(string id, string email, string userName, string companyname)
+      public UserInfo(string id, string email, string userName, string companyname)
       {
         Id = id;
         Email = email;

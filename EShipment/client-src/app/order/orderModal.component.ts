@@ -10,6 +10,7 @@ export class OrderModalComponent implements OnInit {
   @Input() public order: Order;
   @Input() public showModal: boolean
   @Input() public closeModal: Function
+  @Input() public saveOrder: Function
   private displayValue: string;
 
   submitted = false;

@@ -2,6 +2,7 @@ using EShipment.Models;
 using EShipment.Repositories;
 using EShipment.UnitOfWorks;
 using EShipment.ViewModels;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,5 +61,26 @@ namespace EShipment.Services
 
       return vOrders;
     }
+
+    public long Save(Order order)
+    {
+      if (order == null)
+      {
+        return 0;
+      }
+
+      long retId = order.ID;
+
+      if (order.ID != 0)
+      {
+        unitOfWork.Repository<Order>().Update(order);
+      } else
+      {
+        EntityEntry<Order> retOrder = unitOfWork.Repository<Order>().InsertAndReturn(order);
+        retId = retOrder.Entity.ID;
+      }
+
+      return retId;
     }
+  }
 }

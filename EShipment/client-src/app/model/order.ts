@@ -1,6 +1,8 @@
 import { OrderStatus } from './orderStatus';
 
 export class Order {
+  ID: number;
+  applicationUser_Id: string;
   number: string;
   companyName: string;
   mark: string;

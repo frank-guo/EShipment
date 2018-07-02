@@ -12,5 +12,6 @@ namespace EShipment.Services
     void Update(Order order);
     Order GetById(long id);
     IList<OrderViewModel> GetByUserId(UserInfo userInfo);
+    long Save(Order order);
   }
 }

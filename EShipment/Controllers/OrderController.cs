@@ -46,6 +46,54 @@ namespace EShipment.Controllers
       return orderService.GetByUserId(userInfo);
     }
 
+    [Route("user/{userId}/order")]
+    [HttpPost]
+    public async Task<IActionResult> Save([FromBody] OrderViewModel orderVM)
+    {
+      var user = HttpContext.User;
+      var userId = user.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+      if (userId != orderVM.ApplicationUser_Id)
+      {
+        return BadRequest("Could not save order");
+      }
+
+      long orderId = orderVM.ID;
+      Order order;
+      if ( orderId != 0)
+      {
+         order = orderService.GetById(orderVM.ID);
+      } else
+      {
+        order = new Order();
+      }
+
+      setOrder(order, orderVM);
+      orderId = orderService.Save(order);
+
+      return Ok(orderId);
+    }
+
+    private void setOrder(Order order, OrderViewModel orderVM)
+    {
+      order.ApplicationUser_Id = orderVM.ApplicationUser_Id;
+      order.BLNumber = orderVM.BLNumber;
+      order.ContainerNumber = orderVM.ContainerNumber;
+      order.ContainerNumber = orderVM.ContainerNumber;
+      order.Destination = orderVM.Destination;
+      order.DischargedPort = orderVM.DischargedPort;
+      order.ETA = orderVM.ETA;
+      order.ETD = orderVM.ETD;
+      order.Mark = orderVM.Mark;
+      order.Measurement = orderVM.Measurement;
+      order.Number = orderVM.Number;
+      order.NumbOfGoods = orderVM.NumbOfGoods;
+      order.ProductDescription = orderVM.ProductDescription;
+      order.ReceiveOrderDate = orderVM.ReceiveOrderDate;
+      order.Statuses = orderVM.statuses;
+      order.Weight = orderVM.Weight;
+    }
+
     private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
   }
 }

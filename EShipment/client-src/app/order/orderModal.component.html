@@ -3,7 +3,7 @@
   <div class="modal-dialog" role="document" style="">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Order</h5>
+        <h4 class="modal-title" id="exampleModalLabel">Edit Order</h4>
       </div>
       <div class="modal-body">
         <form *ngIf="order">
@@ -129,7 +129,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" (click)="saveOrder()">Save changes</button>
       </div>
     </div>
   </div>

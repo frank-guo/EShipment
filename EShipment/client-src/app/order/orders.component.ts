@@ -18,6 +18,7 @@ export class OrdersComponent implements OnInit {
   public onDelete: Function;
   public onEdit: Function;
   public closeModal: Function;
+  public saveOrder: Function;
 
   constructor(private ordersService: OrdersService,
     private route: ActivatedRoute,
@@ -34,14 +35,17 @@ export class OrdersComponent implements OnInit {
     this.onDelete = this.onDeleteClick.bind(this)
     this.onEdit = this.onEditClick.bind(this)
     this.closeModal = this.onColseModalClick.bind(this)
+    this.saveOrder = this.onSaveChangeClick.bind(this)
   }
 
   ngAfterViewChecked() {
     this.cdRef.detectChanges()
   }
 
-  public onSaveClick(customers: FormArray): void {
-    //this.ordersService.saveOrders(this.orders)
+  public onSaveChangeClick(): void {
+    this.ordersService.saveOrder(this.order).subscribe(resp => {
+      this.order.ID = resp;
+    })
   }
 
   public onAddClick(): void {
