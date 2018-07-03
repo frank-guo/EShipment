@@ -44,13 +44,17 @@ export class OrdersComponent implements OnInit {
 
   public onSaveChangeClick(): void {
     this.ordersService.saveOrder(this.order).subscribe(resp => {
-      this.order.id = resp;
+      if (this.order.id == null) {
+        this.order.id = resp;
+        this.orders.push(this.order);
+      }
       this.showOrderModal = false;
     })
   }
 
   public onAddClick(): void {
     this.showOrderModal = true;
+    this.order = new Order()
     //this.orders.push(new Order());
   }
 

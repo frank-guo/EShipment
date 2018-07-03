@@ -349,6 +349,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var order_1 = __webpack_require__("./client-src/app/model/order.ts");
 var orders_service_1 = __webpack_require__("./client-src/app/service/orders.service.ts");
 var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var common_1 = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
@@ -378,12 +379,16 @@ var OrdersComponent = /** @class */ (function () {
     OrdersComponent.prototype.onSaveChangeClick = function () {
         var _this = this;
         this.ordersService.saveOrder(this.order).subscribe(function (resp) {
-            _this.order.id = resp;
+            if (_this.order.id == null) {
+                _this.order.id = resp;
+                _this.orders.push(_this.order);
+            }
             _this.showOrderModal = false;
         });
     };
     OrdersComponent.prototype.onAddClick = function () {
         this.showOrderModal = true;
+        this.order = new order_1.Order();
         //this.orders.push(new Order());
     };
     OrdersComponent.prototype.onDeleteClick = function (index) {
