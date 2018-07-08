@@ -60,15 +60,16 @@ namespace EShipment.Repositories
       return ret_entity;
     }
 
-    public void Delete(long id)
+    public bool Delete(long id)
     {
       TEntity entity = dbSet.Find(id);
       if (entity == null)
       {
-        return;
+        return false;
       }
       dbSet.Remove(entity);
       context.SaveChanges();
+      return true;
     }
 
     public void Update(TEntity entity)

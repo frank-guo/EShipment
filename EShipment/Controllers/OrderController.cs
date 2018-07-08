@@ -95,5 +95,19 @@ namespace EShipment.Controllers
     }
 
     private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+
+    [Route("user/{userId}/order/{orderId}")]
+    [HttpDelete]
+    public async Task<IActionResult> Delete(long orderId)
+    {
+      bool deleted = orderService.Delete(orderId);
+      if (deleted)
+      {
+        return Ok();
+      } else
+      {
+        return BadRequest("Could not delete the order.");
+      }
+    }
   }
 }

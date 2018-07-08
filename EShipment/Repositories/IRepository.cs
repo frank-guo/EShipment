@@ -13,7 +13,7 @@ namespace EShipment.Repositories
     TEntity GetByID(long id);
     void Insert(TEntity entity);
     EntityEntry<TEntity> InsertAndReturn(TEntity entity);
-    void Delete(long id);
+    bool Delete(long id);
     void Update(TEntity entityToUpdate);
   }
 }

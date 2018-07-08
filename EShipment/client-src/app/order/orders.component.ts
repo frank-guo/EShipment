@@ -55,11 +55,14 @@ export class OrdersComponent implements OnInit {
   public onAddClick(): void {
     this.showOrderModal = true;
     this.order = new Order()
-    //this.orders.push(new Order());
+    let user = JSON.parse(localStorage.getItem('user'))
+    this.order.companyName = user.companyName
   }
 
   public onDeleteClick(index): void {
-    //this.orders.splice(index, 1)
+    this.ordersService.deleteOrder(this.orders[index].id).subscribe(resp => {
+      this.orders.splice(index, 1)
+    })
   }
 
   public onEditClick(index): void {

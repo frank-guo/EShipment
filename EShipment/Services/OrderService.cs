@@ -82,5 +82,16 @@ namespace EShipment.Services
 
       return retId;
     }
+
+    public bool Delete(long orderId)
+    {
+      if (orderId > 0)
+      {
+        unitOfWork.Repository<Order>().Delete(orderId);
+        return true;       
+      }
+
+      return false;
+    }
   }
 }

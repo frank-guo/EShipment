@@ -34,10 +34,17 @@ export class OrdersService {
     let user = JSON.parse(localStorage.getItem('user'))
     order.applicationUser_Id = user[this.idKey]
 
-    return this.http.post<Order>(this.baseUrl + '/user/' + user[this.idKey] + '/order', order, httpOptions)
-      .pipe(
+    return this.http.post<Order>(this.baseUrl + '/user/' + user[this.idKey] + '/order', order, httpOptions).pipe(
       catchError(this.handleError)
       )
+  }
+
+  deleteOrder(id: number): Observable<any> {
+    let user = JSON.parse(localStorage.getItem('user'))
+
+    return this.http.delete(this.baseUrl + '/user/' + user[this.idKey] + '/order/' + id).pipe(
+      catchError(this.handleError)
+    )
   }
 
   private handleError(error: HttpErrorResponse) {

@@ -13,5 +13,6 @@ namespace EShipment.Services
     Order GetById(long id);
     IList<OrderViewModel> GetByUserId(UserInfo userInfo);
     long Save(Order order);
+    bool Delete(long orderId);
   }
 }
