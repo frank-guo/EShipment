@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { OrdersComponent } from './order/orders.component';
 import { OrderComponent } from './order/order.component';
 import { OrderModalComponent } from './order/orderModal.component';
+import { OrderStatusesModalComponent } from './order/OrderStatusesModal.component';
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 
@@ -19,6 +20,7 @@ import {
   AuthGuardService
 } from './service/auth-guard.service';
 import { AuthenticationService } from './service/authentication.service';
+import { OrderStatus } from './model/orderStatus';
 
 
 @NgModule({
@@ -26,7 +28,8 @@ import { AuthenticationService } from './service/authentication.service';
     AppComponent,
     OrdersComponent,
     OrderComponent,
-    OrderModalComponent
+    OrderModalComponent,
+    OrderStatusesModalComponent
   ],
   imports: [
     BrowserModule,

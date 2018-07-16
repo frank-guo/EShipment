@@ -38,7 +38,7 @@ namespace EShipment.ViewModels
 
     public string ProductDescription { get; set; }
 
-    public List<OrderStatus> statuses { get; set; }
+    public IList<OrderStatusViewModel> statuses { get; set; }
 
     public DateTime? ReceiveOrderDate { get; set; }
   }

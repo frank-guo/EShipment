@@ -90,7 +90,7 @@ namespace EShipment.Controllers
       order.NumbOfGoods = orderVM.NumbOfGoods;
       order.ProductDescription = orderVM.ProductDescription;
       order.ReceiveOrderDate = orderVM.ReceiveOrderDate;
-      order.Statuses = orderVM.statuses;
+      order.Statuses = null;
       order.Weight = orderVM.Weight;
     }
 

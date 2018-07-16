@@ -7,7 +7,7 @@ namespace EShipment.ViewModels
 {
     public class OrderStatusViewModel
     {
-        public DateTime date;
+        public String date;
         public string description;
     }
 }

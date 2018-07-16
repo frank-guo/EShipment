@@ -61,6 +61,7 @@ namespace EShipment
 
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IRepository<Order>, Repository<Order>>();
+            services.AddTransient<IRepository<OrderStatus>, Repository<OrderStatus>>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
     }
 

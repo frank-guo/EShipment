@@ -13,7 +13,7 @@ namespace EShipment.Models
       [ForeignKey("order")]
       public long Order_Id { get; set; }
 
-      public virtual Order order { get; set; }
+      public Order order { get; set; }
 
       public DateTime? date { get; set; }
 

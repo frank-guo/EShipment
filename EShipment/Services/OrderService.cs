@@ -36,6 +36,8 @@ namespace EShipment.Services
     {
       IEnumerable<Order> orders = unitOfWork.Repository<Order>().Get(order => order.ApplicationUser_Id == userInfo.Id);
 
+      IEnumerable<OrderStatus> orderStatuses = unitOfWork.Repository<OrderStatus>().Get(orderstatus => orderstatus.Order_Id == 1);
+
       IList<OrderViewModel> vOrders = new List<OrderViewModel>();
       foreach(Order order in orders)
       {
@@ -56,6 +58,21 @@ namespace EShipment.Services
         vOrder.Measurement = order.Measurement;
         vOrder.ProductDescription = order.ProductDescription;
         vOrder.ReceiveOrderDate = order.ReceiveOrderDate;
+
+        if (order.Statuses != null)
+        {
+          IList<OrderStatusViewModel> vOrderStatuses = new List<OrderStatusViewModel>();
+          foreach (OrderStatus status in order.Statuses) {
+            var vOrderStatus = new OrderStatusViewModel
+            {
+              date = status.date.ToString(),
+              description = status.description
+            };
+            vOrderStatuses.Add(vOrderStatus);
+          }
+          vOrder.statuses = vOrderStatuses;
+        }
+
         vOrders.Add(vOrder);
       }
 

@@ -16,6 +16,7 @@ namespace EShipment.Data
         }
 
         public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderStatus> OrderStatuses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -23,6 +24,9 @@ namespace EShipment.Data
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
-        }
+
+            builder.Entity<Order>().ToTable("Orders");
+            builder.Entity<OrderStatus>().ToTable("OrderStatus");
+    }
     }
 }

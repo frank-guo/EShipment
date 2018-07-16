@@ -5,6 +5,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 import 'rxjs/add/operator/switchMap';
 import { NgForm, FormArray } from '@angular/forms'
+import { OrderStatus } from '../model/orderStatus';
 
 @Component({
   selector: 'orders',
@@ -19,6 +20,10 @@ export class OrdersComponent implements OnInit {
   public onEdit: Function;
   public closeModal: Function;
   public saveOrder: Function;
+  private showOrderStatusesModal: boolean;
+  private openStatusesModal: Function;
+  private closeStatusModal: Function;
+  private addStatus: Function;
 
   constructor(private ordersService: OrdersService,
     private route: ActivatedRoute,
@@ -36,6 +41,9 @@ export class OrdersComponent implements OnInit {
     this.onEdit = this.onEditClick.bind(this)
     this.closeModal = this.onColseModalClick.bind(this)
     this.saveOrder = this.onSaveChangeClick.bind(this)
+    this.openStatusesModal = this.onOpenStatusesClick.bind(this);
+    this.closeStatusModal = this.onCloseStatusClick.bind(this);
+    this.addStatus = this.onAddStatusClick.bind(this);
   }
 
   ngAfterViewChecked() {
@@ -65,12 +73,30 @@ export class OrdersComponent implements OnInit {
     })
   }
 
-  public onEditClick(index): void {
+  public onEditClick(index: number): void {
     this.showOrderModal = true;
     this.order = this.orders[index]
   }
 
   public onColseModalClick(): void {
     this.showOrderModal = false;
+  }
+
+  public onOpenStatusesClick(index: number): void {
+    this.showOrderStatusesModal = true;
+    this.order = this.orders[index];
+  }
+
+  public onCloseStatusClick(): void {
+    this.showOrderStatusesModal = false;
+  }
+
+  public onAddStatusClick(): void {
+    let orderStatuses: OrderStatus[] = this.order.statuses;
+    orderStatuses.push({
+      date: new Date(),
+      description: ""
+    })
+    console.log("statuses=", orderStatuses)
   }
 }

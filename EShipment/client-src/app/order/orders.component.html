@@ -1,6 +1,7 @@
 <br/>
 <div>
   <orderModal [showModal]="showOrderModal" [closeModal]="closeModal" [saveOrder]="saveOrder" [order]="order"></orderModal>
+  <orderStatusesModal [showModal]="showOrderStatusesModal" [closeModal]="closeStatusModal" [addStatus]="addStatus" [orderStatuses]="order != null ? order.statuses : null"></orderStatusesModal>
   <div class="row">
     <div class="col-md-6">
       <h4 style="display: inline">Orders:&nbsp;&nbsp;&nbsp;</h4>
@@ -10,7 +11,7 @@
       </button>
     </div>
   </div>
-  <br/>
+  <br />
   <p-table [value]="orders" [scrollable]="true" [style]="{width:'1140'}" scrollHeight="900px">
     <ng-template pTemplate="colgroup" let-orders>
       <colgroup>
@@ -97,7 +98,7 @@
           {{order.receiveOrderDate}}
         </td>
         <td>
-          <button type="button" class="btn btn-primary btn-xs" (click)="onEdit(i)">
+          <button type="button" class="btn btn-primary btn-xs" (click)="openStatusesModal(i)">
             <i class="fa fa-edit" aria-hidden="true"></i>&nbsp;
             Open
           </button>

@@ -40,7 +40,7 @@ namespace EShipment.Models
 
       public string ProductDescription { get; set; }
 
-      public List<OrderStatus> Statuses { get; set; }
+      public virtual IList<OrderStatus> Statuses { get; set; }
 
       public DateTime? ReceiveOrderDate { get; set; }
   }
