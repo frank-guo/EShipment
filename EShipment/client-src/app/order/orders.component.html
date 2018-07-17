@@ -1,7 +1,7 @@
 <br/>
 <div>
   <orderModal [showModal]="showOrderModal" [closeModal]="closeModal" [saveOrder]="saveOrder" [order]="order"></orderModal>
-  <orderStatusesModal [showModal]="showOrderStatusesModal" [closeModal]="closeStatusModal" [addStatus]="addStatus" [orderStatuses]="order != null ? order.statuses : null"></orderStatusesModal>
+  <orderStatusesModal [showModal]="showOrderStatusesModal" [closeModal]="closeStatusModal" [orderStatuses]="order != null ? order.statuses : null"></orderStatusesModal>
   <div class="row">
     <div class="col-md-6">
       <h4 style="display: inline">Orders:&nbsp;&nbsp;&nbsp;</h4>
@@ -95,13 +95,13 @@
           {{order.OrderStatus}}
         </td>
         <td>
-          {{order.receiveOrderDate}}
-        </td>
-        <td>
           <button type="button" class="btn btn-primary btn-xs" (click)="openStatusesModal(i)">
             <i class="fa fa-edit" aria-hidden="true"></i>&nbsp;
             Open
           </button>
+        </td>
+        <td>
+          {{order.receiveOrderDate}}
         </td>
         <td>
           <button type="button" class="btn btn-primary btn-xs" (click)="onEdit(i)">

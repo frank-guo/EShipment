@@ -23,7 +23,6 @@ export class OrdersComponent implements OnInit {
   private showOrderStatusesModal: boolean;
   private openStatusesModal: Function;
   private closeStatusModal: Function;
-  private addStatus: Function;
 
   constructor(private ordersService: OrdersService,
     private route: ActivatedRoute,
@@ -43,7 +42,6 @@ export class OrdersComponent implements OnInit {
     this.saveOrder = this.onSaveChangeClick.bind(this)
     this.openStatusesModal = this.onOpenStatusesClick.bind(this);
     this.closeStatusModal = this.onCloseStatusClick.bind(this);
-    this.addStatus = this.onAddStatusClick.bind(this);
   }
 
   ngAfterViewChecked() {
@@ -85,18 +83,10 @@ export class OrdersComponent implements OnInit {
   public onOpenStatusesClick(index: number): void {
     this.showOrderStatusesModal = true;
     this.order = this.orders[index];
+    console.log(this.order)
   }
 
   public onCloseStatusClick(): void {
     this.showOrderStatusesModal = false;
-  }
-
-  public onAddStatusClick(): void {
-    let orderStatuses: OrderStatus[] = this.order.statuses;
-    orderStatuses.push({
-      date: new Date(),
-      description: ""
-    })
-    console.log("statuses=", orderStatuses)
   }
 }

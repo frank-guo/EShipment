@@ -11,12 +11,16 @@ export class OrderStatusesModalComponent implements OnInit {
   @Input() public orderStatuses: OrderStatus[];
   @Input() public showModal: boolean
   @Input() public closeModal: Function
-  @Input() public addStatus: Function
+
+  private addStatus: Function;
+  private deleteStatus: Function;
 
   constructor(private cdRef: ChangeDetectorRef) {
   }
 
   ngOnInit() {
+    this.addStatus = this.onAddStatusClick.bind(this)
+    this.deleteStatus = this.onDeleteStatusClick.bind(this)
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -26,5 +30,17 @@ export class OrderStatusesModalComponent implements OnInit {
   }
 
   ngAfterViewChecked() {
+  }
+
+  public onAddStatusClick(): void {
+    this.orderStatuses.push({
+      date: null,
+      description: null
+    })
+    console.log("statuses=", this.orderStatuses)
+  }
+
+  public onDeleteStatusClick(i): void {
+    this.orderStatuses.splice(i, 1);
   }
 }
