@@ -1,13 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EShipment.ViewModels
 {
     public class OrderStatusViewModel
     {
+        public long Id;
         public String date;
-        public string description;
+        public String description;
     }
 }

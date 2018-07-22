@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Order } from '../model/order';
+import { OrderStatus } from '../model/orderStatus';
 import { Headers, Http } from '@angular/http';
 import { HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';

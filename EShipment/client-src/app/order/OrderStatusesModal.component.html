@@ -1,27 +1,27 @@
-<div class="modal" id="orderStatusesModal" tabindex="-1" role="dialog"
-     aria-labelledby="exampleModalLabel" aria-hidden="true" [style.display]="this.showModal ? 'block' : 'none'">
-  <div class="modal-dialog" role="document" style="">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Order Status</h4>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-6">
-            <button type="button" class="btn btn-primary btn-sm" (click)="addStatus()">
-              <i class="fa fa-plus" aria-hidden="true">&nbsp;</i>
-              Add
-            </button>
-          </div>
+<form *ngIf="orderStatuses" (ngSubmit)="saveOrder()" #orderStatusesForm="ngForm">
+  <div class="modal" tabindex="-1" role="dialog"
+       aria-labelledby="exampleModalLabel" aria-hidden="true" [style.display]="this.showModal ? 'block' : 'none'">
+    <div class="modal-dialog" role="document" style="">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Order Status</h4>
         </div>
-        <br />
-        <form *ngIf="orderStatuses">
-          <div class="row" *ngFor="let orderStatus of orderStatuses; let i=index">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <button type="button" class="btn btn-primary btn-sm" (click)="addStatus()">
+                <i class="fa fa-plus" aria-hidden="true">&nbsp;</i>
+                Add
+              </button>
+            </div>
+          </div>
+          <br />
+          <div class="row" *ngFor="let orderStatus of orderStatuses; let i=index; trackBy:customTrackBy">
             <div class="col-md-4">
               <input type="text" pInputText [(ngModel)]="orderStatus.date" name="statusDate{{i}}">
             </div>
             <div class="col-md-4">
-              <input type="text" pInputText [(ngModel)]="orderStatus.description" name="statusDescritpion{{i}}"/>
+              <input type="text" pInputText [(ngModel)]="orderStatus.description" name="statusDescritpion{{i}}" />
             </div>
             <div class="col-md-4">
               <button type="button" class="btn btn-primary btn-xs" (click)="deleteStatus(i)">
@@ -29,16 +29,16 @@
                 Delete
               </button>
             </div>
-            <br/><br/>
+            <br /><br />
           </div>
-         </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!orderStatusesForm.form.valid">Save</button>
+        </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
-        <button type="button" class="btn btn-primary" (click)="saveOrder()">Save changes</button>
-      </div>
-    </div>
   </div>
 </div>
+</form>
 
 

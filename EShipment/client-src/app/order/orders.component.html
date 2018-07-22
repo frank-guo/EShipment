@@ -1,7 +1,9 @@
 <br/>
 <div>
   <orderModal [showModal]="showOrderModal" [closeModal]="closeModal" [saveOrder]="saveOrder" [order]="order"></orderModal>
-  <orderStatusesModal [showModal]="showOrderStatusesModal" [closeModal]="closeStatusModal" [orderStatuses]="order != null ? order.statuses : null"></orderStatusesModal>
+  <orderStatusesModal [showModal]="showOrderStatusesModal" [closeModal]="closeStatusModal"
+                      [orderStatuses]="order != null ? order.statuses : null" [saveOrder]="saveOrder">
+  </orderStatusesModal>
   <div class="row">
     <div class="col-md-6">
       <h4 style="display: inline">Orders:&nbsp;&nbsp;&nbsp;</h4>

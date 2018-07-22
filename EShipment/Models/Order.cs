@@ -9,7 +9,11 @@ namespace EShipment.Models
 {
     public class Order
     {
-      public long ID { get; set; }
+      public Order()
+      {
+      }
+
+    public long ID { get; set; }
 
       [ForeignKey("ApplicationUser")]
       public String ApplicationUser_Id { get; set; }
@@ -40,7 +44,8 @@ namespace EShipment.Models
 
       public string ProductDescription { get; set; }
 
-      public virtual IList<OrderStatus> Statuses { get; set; }
+      private IList<OrderStatus> statuses = new List<OrderStatus>();
+      public virtual IList<OrderStatus> Statuses { get { return statuses; } set { statuses = value; } }
 
       public DateTime? ReceiveOrderDate { get; set; }
   }

@@ -1,6 +1,7 @@
 using EShipment.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -38,7 +39,8 @@ namespace EShipment.ViewModels
 
     public string ProductDescription { get; set; }
 
-    public IList<OrderStatusViewModel> statuses { get; set; }
+    private IList<OrderStatusViewModel> statuses = new List<OrderStatusViewModel>();
+    public IList<OrderStatusViewModel> Statuses { get { return statuses; } set { statuses = value; } }
 
     public DateTime? ReceiveOrderDate { get; set; }
   }

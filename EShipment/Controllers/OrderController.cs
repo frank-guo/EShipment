@@ -58,18 +58,7 @@ namespace EShipment.Controllers
         return BadRequest("Could not save order");
       }
 
-      long orderId = orderVM.ID;
-      Order order;
-      if ( orderId != 0)
-      {
-         order = orderService.GetById(orderVM.ID);
-      } else
-      {
-        order = new Order();
-      }
-
-      setOrder(order, orderVM);
-      orderId = orderService.Save(order);
+      var orderId = orderService.Save(orderVM);
 
       return Ok(orderId);
     }
@@ -90,8 +79,51 @@ namespace EShipment.Controllers
       order.NumbOfGoods = orderVM.NumbOfGoods;
       order.ProductDescription = orderVM.ProductDescription;
       order.ReceiveOrderDate = orderVM.ReceiveOrderDate;
-      order.Statuses = null;
+
+      IList<OrderStatus> orderStatuses = new List<OrderStatus>();
+      foreach(OrderStatusViewModel orderStatusVM in orderVM.Statuses) {
+        if (orderStatusVM.date == null && orderStatusVM.description == null)
+        {
+          continue;
+        }
+        OrderStatus orderStatus;
+        if (orderStatusVM.Id == 0)
+        {
+          orderStatus = new OrderStatus();
+        } else
+        {
+          orderStatus = getOrderStatus(orderStatusVM.Id, order.Statuses);
+        }
+
+        if (orderStatus == null)
+        {
+          continue;
+        }
+        orderStatus.date = orderStatusVM.date == null ? (DateTime?)null : DateTime.Parse(orderStatusVM.date);
+        orderStatus.description = orderStatus.description;
+        orderStatuses.Add(orderStatus);
+      }
+      order.Statuses = orderStatuses;
+
       order.Weight = orderVM.Weight;
+    }
+
+    private OrderStatus getOrderStatus(long? Id, IList<OrderStatus> orderStatuses)
+    {
+      if (Id == null || orderStatuses == null)
+      {
+        return null;
+      }
+
+      foreach(OrderStatus status in orderStatuses)
+      {
+        if (status.ID == Id)
+        {
+          return status;
+        }
+      }
+
+      return null;
     }
 
     private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);

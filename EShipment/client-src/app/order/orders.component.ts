@@ -55,6 +55,7 @@ export class OrdersComponent implements OnInit {
         this.orders.push(this.order);
       }
       this.showOrderModal = false;
+      this.showOrderStatusesModal = false;
     })
   }
 

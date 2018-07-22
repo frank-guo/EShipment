@@ -12,6 +12,8 @@ namespace EShipment.Services
 {
   public class OrderService : IOrderService
   {
+    private const long NOTHING_SAVE = 0;
+    private const long INVALID_ID = 0;
     private readonly IUnitOfWork unitOfWork = null;
 
     public OrderService(IUnitOfWork unitOfWork)
@@ -36,11 +38,10 @@ namespace EShipment.Services
     {
       IEnumerable<Order> orders = unitOfWork.Repository<Order>().Get(order => order.ApplicationUser_Id == userInfo.Id);
 
-      IEnumerable<OrderStatus> orderStatuses = unitOfWork.Repository<OrderStatus>().Get(orderstatus => orderstatus.Order_Id == 1);
-
       IList<OrderViewModel> vOrders = new List<OrderViewModel>();
       foreach(Order order in orders)
       {
+        //IEnumerable<OrderStatus> orderStatuses = unitOfWork.Repository<OrderStatus>().Get(orderstatus => orderstatus.Order_Id == order.ID);
         OrderViewModel vOrder = new OrderViewModel();
         vOrder.ID = order.ID;
         vOrder.ApplicationUser_Id = order.ApplicationUser_Id;
@@ -65,12 +66,13 @@ namespace EShipment.Services
           foreach (OrderStatus status in order.Statuses) {
             var vOrderStatus = new OrderStatusViewModel
             {
+              Id = status.ID,
               date = status.date.ToString(),
               description = status.description
             };
             vOrderStatuses.Add(vOrderStatus);
           }
-          vOrder.statuses = vOrderStatuses;
+          vOrder.Statuses = vOrderStatuses;
         }
 
         vOrders.Add(vOrder);
@@ -79,16 +81,34 @@ namespace EShipment.Services
       return vOrders;
     }
 
-    public long Save(Order order)
+    public long Save(OrderViewModel orderVM)
     {
+      if (orderVM == null)
+      {
+        return NOTHING_SAVE;
+      }
+
+      long orderId = orderVM.ID;
+      Order order;
+      if (orderId != INVALID_ID)
+      {
+        order = GetById(orderVM.ID);
+      }
+      else
+      {
+        order = new Order();
+      }
+
       if (order == null)
       {
-        return 0;
+        return NOTHING_SAVE;
       }
+
+      setOrder(order, orderVM);
 
       long retId = order.ID;
 
-      if (order.ID != 0)
+      if (order.ID != INVALID_ID)
       {
         unitOfWork.Repository<Order>().Update(order);
       } else
@@ -98,6 +118,75 @@ namespace EShipment.Services
       }
 
       return retId;
+    }
+
+    private void setOrder(Order order, OrderViewModel orderVM)
+    {
+      order.ApplicationUser_Id = orderVM.ApplicationUser_Id;
+      order.BLNumber = orderVM.BLNumber;
+      order.ContainerNumber = orderVM.ContainerNumber;
+      order.ContainerNumber = orderVM.ContainerNumber;
+      order.Destination = orderVM.Destination;
+      order.DischargedPort = orderVM.DischargedPort;
+      order.ETA = orderVM.ETA;
+      order.ETD = orderVM.ETD;
+      order.Mark = orderVM.Mark;
+      order.Measurement = orderVM.Measurement;
+      order.Number = orderVM.Number;
+      order.NumbOfGoods = orderVM.NumbOfGoods;
+      order.ProductDescription = orderVM.ProductDescription;
+      order.ReceiveOrderDate = orderVM.ReceiveOrderDate;
+
+      var newOrderStatuses = new List<OrderStatus>();
+      foreach (OrderStatusViewModel orderStatusVM in orderVM.Statuses)
+      {
+        if (orderStatusVM.date == null && orderStatusVM.description == null)
+        {
+          continue;
+        }
+        OrderStatus orderStatus;
+        if (orderStatusVM.Id == 0)
+        {
+          orderStatus = new OrderStatus();
+        }
+        else
+        {
+          orderStatus = getOrderStatus(orderStatusVM.Id, order.Statuses);
+        }
+
+        orderStatus.date = orderStatusVM.date == null || orderStatusVM.date.Equals("") ? (DateTime?)null : DateTime.Parse(orderStatusVM.date);
+        orderStatus.description = orderStatusVM.description;
+        newOrderStatuses.Add(orderStatus);
+      }
+
+      var statuses = order.Statuses;
+      if (statuses != null && statuses.GetType() == typeof(List<OrderStatus>))
+      {
+        order.Statuses.Clear();
+        ((List<OrderStatus>)statuses).AddRange(newOrderStatuses);
+      }
+      
+      order.Weight = orderVM.Weight;
+    }
+
+    private OrderStatus getOrderStatus(long Id, IList<OrderStatus> orderStatuses)
+    {
+      var newStatus = new OrderStatus();
+      if (Id == 0 || orderStatuses == null)
+      {
+        return newStatus;
+      }
+
+      for(int i = orderStatuses.Count - 1; i>=0; i--)
+      {
+        var status = orderStatuses[i];
+        if (status.ID == Id)
+        {
+          return status;
+        }
+      }
+
+      return newStatus;
     }
 
     public bool Delete(long orderId)
