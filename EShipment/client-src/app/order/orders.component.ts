@@ -23,6 +23,7 @@ export class OrdersComponent implements OnInit {
   private showOrderStatusesModal: boolean;
   private openStatusesModal: Function;
   private closeStatusModal: Function;
+  private orderStatusDates: Date[];
 
   constructor(private ordersService: OrdersService,
     private route: ActivatedRoute,
@@ -49,11 +50,21 @@ export class OrdersComponent implements OnInit {
   }
 
   public onSaveChangeClick(): void {
+    //Convert status Date to string
+    if (this.orderStatusDates != null) {
+      this.orderStatusDates.map((orderStatusDate, idx) => {
+        if (this.order != null && this.order.statuses != null) {
+          this.order.statuses[idx].date = orderStatusDate.toDateString();
+        }
+      })
+    }
+
     this.ordersService.saveOrder(this.order).subscribe(resp => {
       if (this.order.id == null) {
         this.order.id = resp;
         this.orders.push(this.order);
       }
+
       this.showOrderModal = false;
       this.showOrderStatusesModal = false;
     })
@@ -84,6 +95,14 @@ export class OrdersComponent implements OnInit {
   public onOpenStatusesClick(index: number): void {
     this.showOrderStatusesModal = true;
     this.order = this.orders[index];
+
+    if (this.order.statuses != null) {
+      this.orderStatusDates = []
+      this.order.statuses.map(orderStatus => {
+        this.orderStatusDates.push(new Date(orderStatus.date))
+      })
+      console.log(this.orderStatusDates)
+    }
     console.log(this.order)
   }
 

@@ -114,7 +114,9 @@ var order_component_1 = __webpack_require__("./client-src/app/order/order.compon
 var orderModal_component_1 = __webpack_require__("./client-src/app/order/orderModal.component.ts");
 var OrderStatusesModal_component_1 = __webpack_require__("./client-src/app/order/OrderStatusesModal.component.ts");
 var table_1 = __webpack_require__("./node_modules/primeng/table.js");
+var calendar_1 = __webpack_require__("./node_modules/primeng/calendar.js");
 var inputtext_1 = __webpack_require__("./node_modules/primeng/inputtext.js");
+var animations_1 = __webpack_require__("./node_modules/@angular/platform-browser/esm5/animations.js");
 var http_2 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
 var token_interceptor_1 = __webpack_require__("./client-src/app/token.interceptor.ts");
 var http_3 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
@@ -137,8 +139,10 @@ var AppModule = /** @class */ (function () {
                 forms_1.FormsModule,
                 http_1.HttpModule,
                 table_1.TableModule,
+                calendar_1.CalendarModule,
                 inputtext_1.InputTextModule,
                 http_3.HttpClientModule,
+                animations_1.BrowserAnimationsModule,
                 router_1.RouterModule.forRoot([
                     {
                         path: 'angularApp',
@@ -278,6 +282,10 @@ var OrderStatusesModalComponent = /** @class */ (function () {
         core_1.Input(),
         __metadata("design:type", Function)
     ], OrderStatusesModalComponent.prototype, "saveOrder", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Array)
+    ], OrderStatusesModalComponent.prototype, "orderStatusDates", void 0);
     OrderStatusesModalComponent = __decorate([
         core_1.Component({
             selector: 'orderStatusesModal',
@@ -426,14 +434,14 @@ exports.OrderModalComponent = OrderModalComponent;
 /***/ "./client-src/app/order/orderStatusesModal.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form *ngIf=\"orderStatuses\" (ngSubmit)=\"saveOrder()\" #orderStatusesForm=\"ngForm\">\r\n  <div class=\"modal\" tabindex=\"-1\" role=\"dialog\"\r\n       aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" [style.display]=\"this.showModal ? 'block' : 'none'\">\r\n    <div class=\"modal-dialog\" role=\"document\" style=\"\">\r\n      <div class=\"modal-content\">\r\n        <div class=\"modal-header\">\r\n          <h4 class=\"modal-title\">Order Status</h4>\r\n        </div>\r\n        <div class=\"modal-body\">\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <button type=\"button\" class=\"btn btn-primary btn-sm\" (click)=\"addStatus()\">\r\n                <i class=\"fa fa-plus\" aria-hidden=\"true\">&nbsp;</i>\r\n                Add\r\n              </button>\r\n            </div>\r\n          </div>\r\n          <br />\r\n          <div class=\"row\" *ngFor=\"let orderStatus of orderStatuses; let i=index; trackBy:customTrackBy\">\r\n            <div class=\"col-md-4\">\r\n              <input type=\"text\" pInputText [(ngModel)]=\"orderStatus.date\" name=\"statusDate{{i}}\">\r\n            </div>\r\n            <div class=\"col-md-4\">\r\n              <input type=\"text\" pInputText [(ngModel)]=\"orderStatus.description\" name=\"statusDescritpion{{i}}\" />\r\n            </div>\r\n            <div class=\"col-md-4\">\r\n              <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"deleteStatus(i)\">\r\n                <i class=\"fa fa-trash\" aria-hidden=\"true\"></i>&nbsp;\r\n                Delete\r\n              </button>\r\n            </div>\r\n            <br /><br />\r\n          </div>\r\n        </div>\r\n        <div class=\"modal-footer\">\r\n          <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"closeModal()\">Close</button>\r\n          <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"!orderStatusesForm.form.valid\">Save</button>\r\n        </div>\r\n      </div>\r\n  </div>\r\n</div>\r\n</form>\r\n\r\n\r\n"
+module.exports = "<form *ngIf=\"orderStatuses\" (ngSubmit)=\"saveOrder()\" #orderStatusesForm=\"ngForm\">\r\n  <div class=\"modal\" tabindex=\"-1\" role=\"dialog\"\r\n       aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\" [style.display]=\"this.showModal ? 'block' : 'none'\">\r\n    <div class=\"modal-dialog\" role=\"document\" style=\"\">\r\n      <div class=\"modal-content\">\r\n        <div class=\"modal-header\">\r\n          <h4 class=\"modal-title\">Order Status</h4>\r\n        </div>\r\n        <div class=\"modal-body\">\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <button type=\"button\" class=\"btn btn-primary btn-sm\" (click)=\"addStatus()\">\r\n                <i class=\"fa fa-plus\" aria-hidden=\"true\">&nbsp;</i>\r\n                Add\r\n              </button>\r\n            </div>\r\n          </div>\r\n          <br />\r\n          <div class=\"row\" *ngFor=\"let orderStatus of orderStatuses; let i=index; trackBy:customTrackBy\">\r\n            <div class=\"col-md-5\">\r\n              <p-calendar [(ngModel)]=\"orderStatusDates[i]\" [monthNavigator]=\"true\" [showIcon]=\"true\"\r\n                          [yearNavigator]=\"true\" yearRange=\"1950:2030\" name=\"statusDate{{i}}\">\r\n              </p-calendar>\r\n            </div>\r\n            <div class=\"col-md-4\">\r\n              <input type=\"text\" pInputText [(ngModel)]=\"orderStatus.description\" name=\"statusDescritpion{{i}}\" />\r\n            </div>\r\n            <div class=\"col-md-3\">\r\n              <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"deleteStatus(i)\">\r\n                <i class=\"fa fa-trash\" aria-hidden=\"true\"></i>&nbsp;\r\n                Delete\r\n              </button>\r\n            </div>\r\n            <br /><br />\r\n          </div>\r\n        </div>\r\n        <div class=\"modal-footer\">\r\n          <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"closeModal()\">Close</button>\r\n          <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"!orderStatusesForm.form.valid\">Save</button>\r\n        </div>\r\n      </div>\r\n  </div>\r\n</div>\r\n</form>\r\n\r\n\r\n"
 
 /***/ }),
 
 /***/ "./client-src/app/order/orders.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<br/>\r\n<div>\r\n  <orderModal [showModal]=\"showOrderModal\" [closeModal]=\"closeModal\" [saveOrder]=\"saveOrder\" [order]=\"order\"></orderModal>\r\n  <orderStatusesModal [showModal]=\"showOrderStatusesModal\" [closeModal]=\"closeStatusModal\"\r\n                      [orderStatuses]=\"order != null ? order.statuses : null\" [saveOrder]=\"saveOrder\">\r\n  </orderStatusesModal>\r\n  <div class=\"row\">\r\n    <div class=\"col-md-6\">\r\n      <h4 style=\"display: inline\">Orders:&nbsp;&nbsp;&nbsp;</h4>\r\n      <button type=\"button\" class=\"btn btn-primary btn-sm\" (click)=\"onAddClick()\">\r\n        <i class=\"fa fa-plus\" aria-hidden=\"true\">&nbsp;</i>\r\n        Add\r\n      </button>\r\n    </div>\r\n  </div>\r\n  <br />\r\n  <p-table [value]=\"orders\" [scrollable]=\"true\" [style]=\"{width:'1140'}\" scrollHeight=\"900px\">\r\n    <ng-template pTemplate=\"colgroup\" let-orders>\r\n      <colgroup>\r\n        <col style=\"width:50px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n      </colgroup>\r\n    </ng-template>\r\n    <ng-template pTemplate=\"header\" let-order>\r\n      <tr>\r\n        <th>No.</th>\r\n        <th>Company</th>\r\n        <th>Mark</th>\r\n        <th>Container</th>\r\n        <th>Destination</th>\r\n        <th>Discharged Port</th>\r\n        <th>BL</th>\r\n        <th>ETD</th>\r\n        <th>ETA</th>\r\n        <th>Num Of Goods</th>\r\n        <th>Weight</th>\r\n        <th>Measurement</th>\r\n        <th>Product Description</th>\r\n        <th>Status</th>\r\n        <th>Receive Order Date</th>\r\n        <th></th>\r\n      </tr>\r\n    </ng-template>\r\n    <ng-template pTemplate=\"body\" let-order let-columns=\"columns\" let-i=\"rowIndex\">\r\n      <tr>\r\n        <td>\r\n          {{order.number}}\r\n        </td>\r\n        <td>\r\n          {{order.companyName}}\r\n        </td>\r\n        <td>\r\n          {{order.mark}}\r\n        </td>\r\n        <td>\r\n          {{order.containerNumber}}\r\n        </td>\r\n        <td>\r\n          {{order.destination}}\r\n        </td>\r\n        <td>\r\n          {{order.BLNumber}}\r\n        </td>\r\n        <td>\r\n          {{order.ETD}}\r\n        </td>\r\n        <td>\r\n          {{order.ETA}}\r\n        </td>\r\n        <td>\r\n          {{order.numOfGoods}}\r\n        </td>\r\n        <td>\r\n          {{order.weight}}\r\n        </td>\r\n        <td>\r\n          {{order.measurement}}\r\n        </td>\r\n        <td>\r\n          {{order.productDescription}}\r\n        </td>\r\n        <td>\r\n          {{order.OrderStatus}}\r\n        </td>\r\n        <td>\r\n          <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"openStatusesModal(i)\">\r\n            <i class=\"fa fa-edit\" aria-hidden=\"true\"></i>&nbsp;\r\n            Open\r\n          </button>\r\n        </td>\r\n        <td>\r\n          {{order.receiveOrderDate}}\r\n        </td>\r\n        <td>\r\n          <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"onEdit(i)\">\r\n            <i class=\"fa fa-edit\" aria-hidden=\"true\"></i>&nbsp;\r\n            Edit\r\n          </button>\r\n          <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"onDelete(i)\">\r\n            <i class=\"fa fa-trash\" aria-hidden=\"true\"></i>&nbsp;\r\n            Delete\r\n          </button>\r\n        </td>\r\n      </tr>\r\n    </ng-template>\r\n  </p-table>\r\n</div>\r\n\r\n\r\n"
+module.exports = "<br/>\r\n<div>\r\n  <orderModal [showModal]=\"showOrderModal\" [closeModal]=\"closeModal\" [saveOrder]=\"saveOrder\" [order]=\"order\"></orderModal>\r\n  <orderStatusesModal [showModal]=\"showOrderStatusesModal\" [closeModal]=\"closeStatusModal\"\r\n                      [orderStatuses]=\"order != null ? order.statuses : null\" [saveOrder]=\"saveOrder\"\r\n                      [orderStatusDates]=\"orderStatusDates\">\r\n  </orderStatusesModal>\r\n  <div class=\"row\">\r\n    <div class=\"col-md-6\">\r\n      <h4 style=\"display: inline\">Orders:&nbsp;&nbsp;&nbsp;</h4>\r\n      <button type=\"button\" class=\"btn btn-primary btn-sm\" (click)=\"onAddClick()\">\r\n        <i class=\"fa fa-plus\" aria-hidden=\"true\">&nbsp;</i>\r\n        Add\r\n      </button>\r\n    </div>\r\n  </div>\r\n  <br />\r\n  <p-table [value]=\"orders\" [scrollable]=\"true\" [style]=\"{width:'1140'}\" scrollHeight=\"900px\">\r\n    <ng-template pTemplate=\"colgroup\" let-orders>\r\n      <colgroup>\r\n        <col style=\"width:50px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n      </colgroup>\r\n    </ng-template>\r\n    <ng-template pTemplate=\"header\" let-order>\r\n      <tr>\r\n        <th>No.</th>\r\n        <th>Company</th>\r\n        <th>Mark</th>\r\n        <th>Container</th>\r\n        <th>Destination</th>\r\n        <th>Discharged Port</th>\r\n        <th>BL</th>\r\n        <th>ETD</th>\r\n        <th>ETA</th>\r\n        <th>Num Of Goods</th>\r\n        <th>Weight</th>\r\n        <th>Measurement</th>\r\n        <th>Product Description</th>\r\n        <th>Status</th>\r\n        <th>Receive Order Date</th>\r\n        <th></th>\r\n      </tr>\r\n    </ng-template>\r\n    <ng-template pTemplate=\"body\" let-order let-columns=\"columns\" let-i=\"rowIndex\">\r\n      <tr>\r\n        <td>\r\n          {{order.number}}\r\n        </td>\r\n        <td>\r\n          {{order.companyName}}\r\n        </td>\r\n        <td>\r\n          {{order.mark}}\r\n        </td>\r\n        <td>\r\n          {{order.containerNumber}}\r\n        </td>\r\n        <td>\r\n          {{order.destination}}\r\n        </td>\r\n        <td>\r\n          {{order.BLNumber}}\r\n        </td>\r\n        <td>\r\n          {{order.ETD}}\r\n        </td>\r\n        <td>\r\n          {{order.ETA}}\r\n        </td>\r\n        <td>\r\n          {{order.numOfGoods}}\r\n        </td>\r\n        <td>\r\n          {{order.weight}}\r\n        </td>\r\n        <td>\r\n          {{order.measurement}}\r\n        </td>\r\n        <td>\r\n          {{order.productDescription}}\r\n        </td>\r\n        <td>\r\n          {{order.OrderStatus}}\r\n        </td>\r\n        <td>\r\n          <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"openStatusesModal(i)\">\r\n            <i class=\"fa fa-edit\" aria-hidden=\"true\"></i>&nbsp;\r\n            Open\r\n          </button>\r\n        </td>\r\n        <td>\r\n          {{order.receiveOrderDate}}\r\n        </td>\r\n        <td>\r\n          <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"onEdit(i)\">\r\n            <i class=\"fa fa-edit\" aria-hidden=\"true\"></i>&nbsp;\r\n            Edit\r\n          </button>\r\n          <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"onDelete(i)\">\r\n            <i class=\"fa fa-trash\" aria-hidden=\"true\"></i>&nbsp;\r\n            Delete\r\n          </button>\r\n        </td>\r\n      </tr>\r\n    </ng-template>\r\n  </p-table>\r\n</div>\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -484,6 +492,14 @@ var OrdersComponent = /** @class */ (function () {
     };
     OrdersComponent.prototype.onSaveChangeClick = function () {
         var _this = this;
+        //Convert status Date to string
+        if (this.orderStatusDates != null) {
+            this.orderStatusDates.map(function (orderStatusDate, idx) {
+                if (_this.order != null && _this.order.statuses != null) {
+                    _this.order.statuses[idx].date = orderStatusDate.toDateString();
+                }
+            });
+        }
         this.ordersService.saveOrder(this.order).subscribe(function (resp) {
             if (_this.order.id == null) {
                 _this.order.id = resp;
@@ -513,8 +529,16 @@ var OrdersComponent = /** @class */ (function () {
         this.showOrderModal = false;
     };
     OrdersComponent.prototype.onOpenStatusesClick = function (index) {
+        var _this = this;
         this.showOrderStatusesModal = true;
         this.order = this.orders[index];
+        if (this.order.statuses != null) {
+            this.orderStatusDates = [];
+            this.order.statuses.map(function (orderStatus) {
+                _this.orderStatusDates.push(new Date(orderStatus.date));
+            });
+            console.log(this.orderStatusDates);
+        }
         console.log(this.order);
     };
     OrdersComponent.prototype.onCloseStatusClick = function () {

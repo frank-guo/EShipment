@@ -2,7 +2,8 @@
 <div>
   <orderModal [showModal]="showOrderModal" [closeModal]="closeModal" [saveOrder]="saveOrder" [order]="order"></orderModal>
   <orderStatusesModal [showModal]="showOrderStatusesModal" [closeModal]="closeStatusModal"
-                      [orderStatuses]="order != null ? order.statuses : null" [saveOrder]="saveOrder">
+                      [orderStatuses]="order != null ? order.statuses : null" [saveOrder]="saveOrder"
+                      [orderStatusDates]="orderStatusDates">
   </orderStatusesModal>
   <div class="row">
     <div class="col-md-6">

@@ -13,6 +13,7 @@ export class OrderStatusesModalComponent implements OnInit {
   @Input() public showModal: boolean
   @Input() public closeModal: Function
   @Input() public saveOrder: Function
+  @Input() public orderStatusDates: Date[]
 
   private addStatus: Function;
   private deleteStatus: Function;

@@ -10,7 +10,9 @@ import { OrderComponent } from './order/order.component';
 import { OrderModalComponent } from './order/orderModal.component';
 import { OrderStatusesModalComponent } from './order/OrderStatusesModal.component';
 import { TableModule } from 'primeng/table';
+import { CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './token.interceptor';
@@ -36,8 +38,10 @@ import { OrderStatus } from './model/orderStatus';
     FormsModule,
     HttpModule,
     TableModule,
+    CalendarModule,
     InputTextModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot([
       {
         path: 'angularApp',
