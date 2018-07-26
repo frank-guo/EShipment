@@ -41,12 +41,10 @@ export class OrderStatusesModalComponent implements OnInit {
       null,
       null
     ))
-    console.log(this.orderStatuses)
   }
 
   public onDeleteStatusClick(i): void {
     this.orderStatuses.splice(i, 1);
-    console.log(this.orderStatuses)
   }
 
   // This function is to fix the issue that the UI display doesn't correctly reflect orderStatuses

@@ -31,6 +31,7 @@ namespace EShipment.Controllers
 
     [Route("user/{userId}/orders")]
     [HttpGet]
+    //ToDo: Verify user
     public async Task<IList<OrderViewModel>> Get(string userId)
     {
       var user = HttpContext.User;
@@ -43,11 +44,13 @@ namespace EShipment.Controllers
         user.FindFirst("companyName").Value
         );
 
-      return orderService.GetByUserId(userInfo);
+      return await orderService.GetByUserId(userInfo);
     }
 
     [Route("user/{userId}/order")]
     [HttpPost]
+    //ToDo: Create a BaseController which contains a property of SecurityAccessVerifier to verify user
+    //ToDo: Make this method a real async one.
     public async Task<IActionResult> Save([FromBody] OrderViewModel orderVM)
     {
       var user = HttpContext.User;

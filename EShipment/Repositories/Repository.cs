@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using EShipment.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -21,7 +22,7 @@ namespace EShipment.Repositories
       this.dbSet = context.Set<TEntity>();
     }
 
-    public virtual IEnumerable<TEntity> Get(
+    public virtual async Task<IEnumerable<TEntity>> Get(
         Expression<Func<TEntity, bool>> filter = null,
         string includeProperties = "")
     {
@@ -29,7 +30,7 @@ namespace EShipment.Repositories
 
       if (filter != null)
       {
-        query = query.Where(filter);
+        query = dbSet.Where(filter);
       }
 
       foreach (var includeProperty in includeProperties.Split
@@ -38,7 +39,7 @@ namespace EShipment.Repositories
         query = query.Include(includeProperty);
       }
 
-      return query.ToList<TEntity>();
+      return await query.ToListAsync();
     }
 
     public TEntity GetByID(long id)

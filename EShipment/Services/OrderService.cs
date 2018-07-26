@@ -34,9 +34,9 @@ namespace EShipment.Services
       return order;
     }
 
-    public IList<OrderViewModel> GetByUserId (UserInfo userInfo)
+    public async Task<IList<OrderViewModel>> GetByUserId (UserInfo userInfo)
     {
-      IEnumerable<Order> orders = unitOfWork.Repository<Order>().Get(order => order.ApplicationUser_Id == userInfo.Id);
+      IEnumerable<Order> orders = await unitOfWork.Repository<Order>().Get(order => order.ApplicationUser_Id == userInfo.Id);
 
       IList<OrderViewModel> vOrders = new List<OrderViewModel>();
       foreach(Order order in orders)

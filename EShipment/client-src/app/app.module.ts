@@ -13,6 +13,7 @@ import { TableModule } from 'primeng/table';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { DropdownModule } from 'primeng/dropdown';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './token.interceptor';
@@ -42,6 +43,7 @@ import { OrderStatus } from './model/orderStatus';
     InputTextModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    DropdownModule,
     RouterModule.forRoot([
       {
         path: 'angularApp',

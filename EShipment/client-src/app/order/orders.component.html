@@ -5,10 +5,16 @@
                       [orderStatuses]="order != null ? order.statuses : null" [saveOrder]="saveOrder"
                       [orderStatusDates]="orderStatusDates">
   </orderStatusesModal>
+  <h4 style="display: inline">Orders:</h4>
   <div class="row">
     <div class="col-md-6">
-      <h4 style="display: inline">Orders:&nbsp;&nbsp;&nbsp;</h4>
-      <button type="button" class="btn btn-primary btn-sm" (click)="onAddClick()">
+      <p-dropdown [options]="users" [(ngModel)]="selectedUser" [filter]="true"
+                  filterBy="value" placeholder="User Name">
+
+      </p-dropdown>
+    </div>
+    <div class="col-md-6">
+      <button type="button" class="btn btn-primary btn-sm pull-right" (click)="onAddClick()">
         <i class="fa fa-plus" aria-hidden="true">&nbsp;</i>
         Add
       </button>
