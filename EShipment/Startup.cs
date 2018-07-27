@@ -54,6 +54,11 @@ namespace EShipment
 
             });
 
+            services.AddAuthorization(options =>
+            {
+               options.AddPolicy("adminUser", policy => policy.RequireClaim(Constant.String.JwtClaimIdentifier.Role, Constant.String.JwtClaim.Admin));
+            });
+
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
@@ -66,7 +71,7 @@ namespace EShipment
     }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider services)
         {
             if (env.IsDevelopment())
             {
@@ -90,6 +95,35 @@ namespace EShipment
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            CreateUserRoles(services).Wait();
         }
-    }
+
+        private async Task CreateUserRoles(IServiceProvider serviceProvider)
+        {
+          var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+          var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+          IdentityResult roleResult;
+          //Adding Addmin Role    
+          var roleCheck = await RoleManager.RoleExistsAsync(Constant.String.JwtClaim.Admin);
+          if (!roleCheck)
+          {
+            //create the roles and seed them to the database    
+            roleResult = await RoleManager.CreateAsync(new IdentityRole(Constant.String.JwtClaim.Admin));
+          }
+
+          roleCheck = await RoleManager.RoleExistsAsync(Constant.String.JwtClaim.Regular);
+          if (!roleCheck)
+          {
+            //create the roles and seed them to the database    
+            roleResult = await RoleManager.CreateAsync(new IdentityRole(Constant.String.JwtClaim.Regular));
+          }
+
+          //Assign Admin role to the main User here we have given our newly registered login id for admin management    
+          ApplicationUser user = await UserManager.FindByEmailAsync("frank@hotmail.com");
+          var User = new ApplicationUser();
+          await UserManager.AddToRoleAsync(user, Constant.String.JwtClaim.Admin);
+        }
+  }
 }
