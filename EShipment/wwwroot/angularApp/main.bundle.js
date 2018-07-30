@@ -463,12 +463,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var order_1 = __webpack_require__("./client-src/app/model/order.ts");
 var orders_service_1 = __webpack_require__("./client-src/app/service/orders.service.ts");
+var user_service_1 = __webpack_require__("./client-src/app/service/user.service.ts");
 var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var common_1 = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
 __webpack_require__("./node_modules/rxjs/_esm5/add/operator/switchMap.js");
 var OrdersComponent = /** @class */ (function () {
-    function OrdersComponent(ordersService, route, location, cdRef) {
+    function OrdersComponent(ordersService, userService, route, location, cdRef) {
         this.ordersService = ordersService;
+        this.userService = userService;
         this.route = route;
         this.location = location;
         this.cdRef = cdRef;
@@ -477,6 +479,10 @@ var OrdersComponent = /** @class */ (function () {
         var _this = this;
         this.ordersService.getOrders().subscribe(function (resp) {
             _this.orders = resp;
+        });
+        this.userService.getUsers().subscribe(function (resp) {
+            _this.users = resp;
+            console.log(_this.users);
         });
         this.route.params.subscribe(function (params) {
         });
@@ -548,9 +554,10 @@ var OrdersComponent = /** @class */ (function () {
         core_1.Component({
             selector: 'orders',
             template: __webpack_require__("./client-src/app/order/orders.component.html"),
-            providers: [orders_service_1.OrdersService]
+            providers: [orders_service_1.OrdersService, user_service_1.UserService]
         }),
         __metadata("design:paramtypes", [orders_service_1.OrdersService,
+            user_service_1.UserService,
             router_1.ActivatedRoute,
             common_1.Location,
             core_1.ChangeDetectorRef])
@@ -681,6 +688,39 @@ exports.AuthenticationService = AuthenticationService;
 
 /***/ }),
 
+/***/ "./client-src/app/service/error.handler.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var throw_1 = __webpack_require__("./node_modules/rxjs/_esm5/observable/throw.js");
+var ErrorHandler = /** @class */ (function () {
+    function ErrorHandler() {
+    }
+    ErrorHandler.handleError = function (error) {
+        if (error.error instanceof ErrorEvent) {
+            // A client-side or network error occurred. Handle it accordingly.
+            console.error('An error occurred:', error.error.error.message);
+        }
+        else {
+            // The backend returned an unsuccessful response code.
+            // The response body may contain clues as to what went wrong,
+            console.error("Backend returned code " + error.status + ", " +
+                ("body was: " + error.error.error.message + " " + error.error.error.stack));
+        }
+        document.write(error.error.text);
+        // return an observable with a user-facing error message
+        return throw_1._throw('Something bad happened; please try again later.');
+    };
+    ;
+    return ErrorHandler;
+}());
+exports.ErrorHandler = ErrorHandler;
+
+
+/***/ }),
+
 /***/ "./client-src/app/service/orders.service.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -702,8 +742,8 @@ var http_2 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
 __webpack_require__("./node_modules/rxjs/_esm5/add/operator/toPromise.js");
 __webpack_require__("./node_modules/rxjs/_esm5/add/operator/map.js");
 var http_3 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
-var throw_1 = __webpack_require__("./node_modules/rxjs/_esm5/observable/throw.js");
 var operators_1 = __webpack_require__("./node_modules/rxjs/_esm5/operators.js");
+var error_handler_1 = __webpack_require__("./client-src/app/service/error.handler.ts");
 var OrdersService = /** @class */ (function () {
     function OrdersService(http) {
         this.http = http;
@@ -713,7 +753,7 @@ var OrdersService = /** @class */ (function () {
     }
     OrdersService.prototype.getOrders = function () {
         var user = JSON.parse(localStorage.getItem('user'));
-        return this.http.get(this.baseUrl + '/user/' + user[this.idKey] + '/orders');
+        return this.http.get(this.baseUrl + '/user/' + user[this.idKey] + '/orders').pipe(operators_1.catchError(error_handler_1.ErrorHandler.handleError));
     };
     OrdersService.prototype.saveOrder = function (order) {
         var httpOptions = {
@@ -723,27 +763,12 @@ var OrdersService = /** @class */ (function () {
         };
         var user = JSON.parse(localStorage.getItem('user'));
         order.applicationUser_Id = user[this.idKey];
-        return this.http.post(this.baseUrl + '/user/' + user[this.idKey] + '/order', order, httpOptions).pipe(operators_1.catchError(this.handleError));
+        return this.http.post(this.baseUrl + '/user/' + user[this.idKey] + '/order', order, httpOptions).pipe(operators_1.catchError(error_handler_1.ErrorHandler.handleError));
     };
     OrdersService.prototype.deleteOrder = function (id) {
         var user = JSON.parse(localStorage.getItem('user'));
-        return this.http.delete(this.baseUrl + '/user/' + user[this.idKey] + '/order/' + id).pipe(operators_1.catchError(this.handleError));
+        return this.http.delete(this.baseUrl + '/user/' + user[this.idKey] + '/order/' + id).pipe(operators_1.catchError(error_handler_1.ErrorHandler.handleError));
     };
-    OrdersService.prototype.handleError = function (error) {
-        if (error.error instanceof ErrorEvent) {
-            // A client-side or network error occurred. Handle it accordingly.
-            console.error('An error occurred:', error.error.message);
-        }
-        else {
-            // The backend returned an unsuccessful response code.
-            // The response body may contain clues as to what went wrong,
-            console.error("Backend returned code " + error.status + ", " +
-                ("body was: " + error.error));
-        }
-        // return an observable with a user-facing error message
-        return throw_1._throw('Something bad happened; please try again later.');
-    };
-    ;
     OrdersService = __decorate([
         core_1.Injectable(),
         __metadata("design:paramtypes", [http_3.HttpClient])
@@ -751,6 +776,50 @@ var OrdersService = /** @class */ (function () {
     return OrdersService;
 }());
 exports.OrdersService = OrdersService;
+
+
+/***/ }),
+
+/***/ "./client-src/app/service/user.service.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var http_1 = __webpack_require__("./node_modules/@angular/http/esm5/http.js");
+__webpack_require__("./node_modules/rxjs/_esm5/add/operator/toPromise.js");
+__webpack_require__("./node_modules/rxjs/_esm5/add/operator/map.js");
+var http_2 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+var operators_1 = __webpack_require__("./node_modules/rxjs/_esm5/operators.js");
+var error_handler_1 = __webpack_require__("./client-src/app/service/error.handler.ts");
+var UserService = /** @class */ (function () {
+    function UserService(http) {
+        this.http = http;
+        this.baseUrl = '/api';
+        this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        this.idKey = 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier';
+    }
+    UserService.prototype.getUsers = function () {
+        var user = JSON.parse(localStorage.getItem('user'));
+        return this.http.get(this.baseUrl + '/user/' + user[this.idKey] + '/users').pipe(operators_1.catchError(error_handler_1.ErrorHandler.handleError));
+    };
+    UserService = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [http_2.HttpClient])
+    ], UserService);
+    return UserService;
+}());
+exports.UserService = UserService;
 
 
 /***/ }),

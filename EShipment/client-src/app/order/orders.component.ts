@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef, AfterViewChecked, ViewChild, SimpleChanges } from '@angular/core';
 import { Order } from '../model/order';
 import { OrdersService } from '../service/orders.service';
+import { UserService } from '../service/user.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 import 'rxjs/add/operator/switchMap';
@@ -10,12 +11,13 @@ import { OrderStatus } from '../model/orderStatus';
 @Component({
   selector: 'orders',
   templateUrl: './orders.component.html',
-  providers: [OrdersService]
+  providers: [OrdersService, UserService]
 })
 export class OrdersComponent implements OnInit {
   private orders: Order[];
   private showOrderModal: boolean;
   private order: Order;
+  private users: [any];
   public onDelete: Function;
   public onEdit: Function;
   public closeModal: Function;
@@ -26,6 +28,7 @@ export class OrdersComponent implements OnInit {
   private orderStatusDates: Date[];
 
   constructor(private ordersService: OrdersService,
+    private userService: UserService,
     private route: ActivatedRoute,
     private location: Location,
     private cdRef: ChangeDetectorRef) {
@@ -34,6 +37,10 @@ export class OrdersComponent implements OnInit {
   ngOnInit() {
     this.ordersService.getOrders().subscribe(resp => {
       this.orders = resp;
+    });
+    this.userService.getUsers().subscribe(resp => {
+      this.users = resp;
+      console.log(this.users)
     });
     this.route.params.subscribe(params => {
     })

@@ -17,6 +17,8 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Configuration;
+using System.Security.Principal;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace EShipment.Controllers
 {
@@ -109,6 +111,7 @@ namespace EShipment.Controllers
       {
         var user = await GetCurrentUserAsync();
         var userRoles = await _userManager.GetRolesAsync(user);
+
         var claims = new Claim[]
         {
           new Claim(ClaimTypes.NameIdentifier, user.Id),
@@ -122,10 +125,11 @@ namespace EShipment.Controllers
         {
           int currentLen = 5;
           Array.Resize(ref claims, currentLen + userRoles.Count);
-          for (int i=0; i <  userRoles.Count; i++)
+          for (int i = 0; i < userRoles.Count; i++)
           {
             var role = userRoles[i];
-            claims[currentLen + i] = new Claim(Constant.String.JwtClaimIdentifier.Role, role);
+            //ClaimTypes.Role has to be used to create an effective role claim instead of a string of "role"
+            claims[currentLen + i] = new Claim(ClaimTypes.Role, role);
           }
         }
 
