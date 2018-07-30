@@ -172,6 +172,18 @@ exports.AppModule = AppModule;
 
 /***/ }),
 
+/***/ "./client-src/app/constant/user.key.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.idKey = 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier';
+exports.roleKey = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
+
+
+/***/ }),
+
 /***/ "./client-src/app/model/order.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -441,7 +453,7 @@ module.exports = "<form *ngIf=\"orderStatuses\" (ngSubmit)=\"saveOrder()\" #orde
 /***/ "./client-src/app/order/orders.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<br/>\r\n<div>\r\n  <orderModal [showModal]=\"showOrderModal\" [closeModal]=\"closeModal\" [saveOrder]=\"saveOrder\" [order]=\"order\"></orderModal>\r\n  <orderStatusesModal [showModal]=\"showOrderStatusesModal\" [closeModal]=\"closeStatusModal\"\r\n                      [orderStatuses]=\"order != null ? order.statuses : null\" [saveOrder]=\"saveOrder\"\r\n                      [orderStatusDates]=\"orderStatusDates\">\r\n  </orderStatusesModal>\r\n  <h4 style=\"display: inline\">Orders:</h4>\r\n  <div class=\"row\">\r\n    <div class=\"col-md-6\">\r\n      <p-dropdown [options]=\"users\" [(ngModel)]=\"selectedUser\" [filter]=\"true\"\r\n                  filterBy=\"value\" placeholder=\"User Name\">\r\n\r\n      </p-dropdown>\r\n    </div>\r\n    <div class=\"col-md-6\">\r\n      <button type=\"button\" class=\"btn btn-primary btn-sm pull-right\" (click)=\"onAddClick()\">\r\n        <i class=\"fa fa-plus\" aria-hidden=\"true\">&nbsp;</i>\r\n        Add\r\n      </button>\r\n    </div>\r\n  </div>\r\n  <br />\r\n  <p-table [value]=\"orders\" [scrollable]=\"true\" [style]=\"{width:'1140'}\" scrollHeight=\"900px\">\r\n    <ng-template pTemplate=\"colgroup\" let-orders>\r\n      <colgroup>\r\n        <col style=\"width:50px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n      </colgroup>\r\n    </ng-template>\r\n    <ng-template pTemplate=\"header\" let-order>\r\n      <tr>\r\n        <th>No.</th>\r\n        <th>Company</th>\r\n        <th>Mark</th>\r\n        <th>Container</th>\r\n        <th>Destination</th>\r\n        <th>Discharged Port</th>\r\n        <th>BL</th>\r\n        <th>ETD</th>\r\n        <th>ETA</th>\r\n        <th>Num Of Goods</th>\r\n        <th>Weight</th>\r\n        <th>Measurement</th>\r\n        <th>Product Description</th>\r\n        <th>Status</th>\r\n        <th>Receive Order Date</th>\r\n        <th></th>\r\n      </tr>\r\n    </ng-template>\r\n    <ng-template pTemplate=\"body\" let-order let-columns=\"columns\" let-i=\"rowIndex\">\r\n      <tr>\r\n        <td>\r\n          {{order.number}}\r\n        </td>\r\n        <td>\r\n          {{order.companyName}}\r\n        </td>\r\n        <td>\r\n          {{order.mark}}\r\n        </td>\r\n        <td>\r\n          {{order.containerNumber}}\r\n        </td>\r\n        <td>\r\n          {{order.destination}}\r\n        </td>\r\n        <td>\r\n          {{order.BLNumber}}\r\n        </td>\r\n        <td>\r\n          {{order.ETD}}\r\n        </td>\r\n        <td>\r\n          {{order.ETA}}\r\n        </td>\r\n        <td>\r\n          {{order.numOfGoods}}\r\n        </td>\r\n        <td>\r\n          {{order.weight}}\r\n        </td>\r\n        <td>\r\n          {{order.measurement}}\r\n        </td>\r\n        <td>\r\n          {{order.productDescription}}\r\n        </td>\r\n        <td>\r\n          {{order.OrderStatus}}\r\n        </td>\r\n        <td>\r\n          <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"openStatusesModal(i)\">\r\n            <i class=\"fa fa-edit\" aria-hidden=\"true\"></i>&nbsp;\r\n            Open\r\n          </button>\r\n        </td>\r\n        <td>\r\n          {{order.receiveOrderDate}}\r\n        </td>\r\n        <td>\r\n          <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"onEdit(i)\">\r\n            <i class=\"fa fa-edit\" aria-hidden=\"true\"></i>&nbsp;\r\n            Edit\r\n          </button>\r\n          <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"onDelete(i)\">\r\n            <i class=\"fa fa-trash\" aria-hidden=\"true\"></i>&nbsp;\r\n            Delete\r\n          </button>\r\n        </td>\r\n      </tr>\r\n    </ng-template>\r\n  </p-table>\r\n</div>\r\n\r\n\r\n"
+module.exports = "<br/>\r\n<div>\r\n  <orderModal [showModal]=\"showOrderModal\" [closeModal]=\"closeModal\" [saveOrder]=\"saveOrder\" [order]=\"order\"></orderModal>\r\n  <orderStatusesModal [showModal]=\"showOrderStatusesModal\" [closeModal]=\"closeStatusModal\"\r\n                      [orderStatuses]=\"order != null ? order.statuses : null\" [saveOrder]=\"saveOrder\"\r\n                      [orderStatusDates]=\"orderStatusDates\">\r\n  </orderStatusesModal>\r\n  <div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n      <p-dropdown [options]=\"userOptions\" [(ngModel)]=\"selectedUser\" [filter]=\"true\"\r\n                  filterBy=\"value\" placeholder=\"User Name\" showClear=\"true\">\r\n\r\n      </p-dropdown>\r\n    </div>\r\n  </div>\r\n  <br />\r\n  <div class=\"row\">\r\n    <div class=\"col-md-6\">\r\n      <h4 style=\"display: inline\">Orders:</h4>\r\n    </div>\r\n    <div class=\"col-md-6\">\r\n      <button type=\"button\" class=\"btn btn-primary btn-sm pull-right\" (click)=\"onAddClick()\">\r\n        <i class=\"fa fa-plus\" aria-hidden=\"true\">&nbsp;</i>\r\n        Add\r\n      </button>\r\n    </div>\r\n  </div>\r\n  <p-table [value]=\"orders\" [scrollable]=\"true\" [style]=\"{width:'1140'}\" scrollHeight=\"900px\">\r\n    <ng-template pTemplate=\"colgroup\" let-orders>\r\n      <colgroup>\r\n        <col style=\"width:50px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n      </colgroup>\r\n    </ng-template>\r\n    <ng-template pTemplate=\"header\" let-order>\r\n      <tr>\r\n        <th>No.</th>\r\n        <th>Company</th>\r\n        <th>Mark</th>\r\n        <th>Container</th>\r\n        <th>Destination</th>\r\n        <th>Discharged Port</th>\r\n        <th>BL</th>\r\n        <th>ETD</th>\r\n        <th>ETA</th>\r\n        <th>Num Of Goods</th>\r\n        <th>Weight</th>\r\n        <th>Measurement</th>\r\n        <th>Product Description</th>\r\n        <th>Status</th>\r\n        <th>Receive Order Date</th>\r\n        <th></th>\r\n      </tr>\r\n    </ng-template>\r\n    <ng-template pTemplate=\"body\" let-order let-columns=\"columns\" let-i=\"rowIndex\">\r\n      <tr>\r\n        <td>\r\n          {{order.number}}\r\n        </td>\r\n        <td>\r\n          {{order.companyName}}\r\n        </td>\r\n        <td>\r\n          {{order.mark}}\r\n        </td>\r\n        <td>\r\n          {{order.containerNumber}}\r\n        </td>\r\n        <td>\r\n          {{order.destination}}\r\n        </td>\r\n        <td>\r\n          {{order.BLNumber}}\r\n        </td>\r\n        <td>\r\n          {{order.ETD}}\r\n        </td>\r\n        <td>\r\n          {{order.ETA}}\r\n        </td>\r\n        <td>\r\n          {{order.numOfGoods}}\r\n        </td>\r\n        <td>\r\n          {{order.weight}}\r\n        </td>\r\n        <td>\r\n          {{order.measurement}}\r\n        </td>\r\n        <td>\r\n          {{order.productDescription}}\r\n        </td>\r\n        <td>\r\n          {{order.OrderStatus}}\r\n        </td>\r\n        <td>\r\n          <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"openStatusesModal(i)\">\r\n            <i class=\"fa fa-edit\" aria-hidden=\"true\"></i>&nbsp;\r\n            Open\r\n          </button>\r\n        </td>\r\n        <td>\r\n          {{order.receiveOrderDate}}\r\n        </td>\r\n        <td>\r\n          <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"onEdit(i)\">\r\n            <i class=\"fa fa-edit\" aria-hidden=\"true\"></i>&nbsp;\r\n            Edit\r\n          </button>\r\n          <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"onDelete(i)\">\r\n            <i class=\"fa fa-trash\" aria-hidden=\"true\"></i>&nbsp;\r\n            Delete\r\n          </button>\r\n        </td>\r\n      </tr>\r\n    </ng-template>\r\n  </p-table>\r\n</div>\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -467,6 +479,7 @@ var user_service_1 = __webpack_require__("./client-src/app/service/user.service.
 var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var common_1 = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
 __webpack_require__("./node_modules/rxjs/_esm5/add/operator/switchMap.js");
+var user_key_1 = __webpack_require__("./client-src/app/constant/user.key.ts");
 var OrdersComponent = /** @class */ (function () {
     function OrdersComponent(ordersService, userService, route, location, cdRef) {
         this.ordersService = ordersService;
@@ -482,7 +495,27 @@ var OrdersComponent = /** @class */ (function () {
         });
         this.userService.getUsers().subscribe(function (resp) {
             _this.users = resp;
-            console.log(_this.users);
+            if (_this.users != null) {
+                var currentUser = JSON.parse(localStorage.getItem('user'));
+                if (currentUser != null) {
+                    var currentUserId_1 = currentUser[user_key_1.idKey];
+                    if (currentUserId_1 != null) {
+                        _this.users.filter(function (user) {
+                            // Don't include the admin user itself in the dropdown options
+                            return currentUserId_1 !== user.id;
+                        }).map(function (user) {
+                            if (_this.userOptions == null) {
+                                _this.userOptions = new Array();
+                            }
+                            _this.userOptions.push({
+                                label: user.email,
+                                value: user.id
+                            });
+                        });
+                    }
+                }
+            }
+            console.log(_this.userOptions);
         });
         this.route.params.subscribe(function (params) {
         });
@@ -744,6 +777,7 @@ __webpack_require__("./node_modules/rxjs/_esm5/add/operator/map.js");
 var http_3 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
 var operators_1 = __webpack_require__("./node_modules/rxjs/_esm5/operators.js");
 var error_handler_1 = __webpack_require__("./client-src/app/service/error.handler.ts");
+var user_key_1 = __webpack_require__("./client-src/app/constant/user.key.ts");
 var OrdersService = /** @class */ (function () {
     function OrdersService(http) {
         this.http = http;
@@ -753,7 +787,7 @@ var OrdersService = /** @class */ (function () {
     }
     OrdersService.prototype.getOrders = function () {
         var user = JSON.parse(localStorage.getItem('user'));
-        return this.http.get(this.baseUrl + '/user/' + user[this.idKey] + '/orders').pipe(operators_1.catchError(error_handler_1.ErrorHandler.handleError));
+        return this.http.get(this.baseUrl + '/user/' + user[user_key_1.idKey] + '/orders').pipe(operators_1.catchError(error_handler_1.ErrorHandler.handleError));
     };
     OrdersService.prototype.saveOrder = function (order) {
         var httpOptions = {
@@ -802,16 +836,16 @@ __webpack_require__("./node_modules/rxjs/_esm5/add/operator/map.js");
 var http_2 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
 var operators_1 = __webpack_require__("./node_modules/rxjs/_esm5/operators.js");
 var error_handler_1 = __webpack_require__("./client-src/app/service/error.handler.ts");
+var user_key_1 = __webpack_require__("./client-src/app/constant/user.key.ts");
 var UserService = /** @class */ (function () {
     function UserService(http) {
         this.http = http;
         this.baseUrl = '/api';
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
-        this.idKey = 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier';
     }
     UserService.prototype.getUsers = function () {
         var user = JSON.parse(localStorage.getItem('user'));
-        return this.http.get(this.baseUrl + '/user/' + user[this.idKey] + '/users').pipe(operators_1.catchError(error_handler_1.ErrorHandler.handleError));
+        return this.http.get(this.baseUrl + '/user/' + user[user_key_1.idKey] + '/users').pipe(operators_1.catchError(error_handler_1.ErrorHandler.handleError));
     };
     UserService = __decorate([
         core_1.Injectable(),

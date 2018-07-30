@@ -11,6 +11,7 @@ import { _throw } from 'rxjs/observable/throw';
 import { catchError } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { ErrorHandler } from './error.handler'
+import { idKey } from '../constant/user.key'
 
 @Injectable()
 export class OrdersService {
@@ -24,7 +25,7 @@ export class OrdersService {
 
   getOrders(): Observable<Order[]> {
     let user = JSON.parse(localStorage.getItem('user'))
-    return this.http.get<Order[]>(this.baseUrl + '/user/' + user[this.idKey] + '/orders').pipe(
+    return this.http.get<Order[]>(this.baseUrl + '/user/' + user[idKey] + '/orders').pipe(
       catchError(ErrorHandler.handleError))
   }
 

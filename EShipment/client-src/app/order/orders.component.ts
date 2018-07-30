@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 import 'rxjs/add/operator/switchMap';
 import { NgForm, FormArray } from '@angular/forms'
 import { OrderStatus } from '../model/orderStatus';
+import { idKey, roleKey } from '../constant/user.key'
 
 @Component({
   selector: 'orders',
@@ -18,6 +19,8 @@ export class OrdersComponent implements OnInit {
   private showOrderModal: boolean;
   private order: Order;
   private users: [any];
+  private userOptions: Array<Object>;
+  private selectedUser: string;
   public onDelete: Function;
   public onEdit: Function;
   public closeModal: Function;
@@ -40,7 +43,27 @@ export class OrdersComponent implements OnInit {
     });
     this.userService.getUsers().subscribe(resp => {
       this.users = resp;
-      console.log(this.users)
+      if (this.users != null) {
+        let currentUser = JSON.parse(localStorage.getItem('user'))
+        if (currentUser != null) {
+          let currentUserId = currentUser[idKey]
+          if (currentUserId != null) {
+            this.users.filter(user => {
+              // Don't include the admin user itself in the dropdown options
+              return currentUserId !== user.id
+            }).map(user => {
+              if (this.userOptions == null) {
+                this.userOptions = new Array<Object>()
+              }
+              this.userOptions.push({
+                label: user.email,
+                value: user.id
+              })
+            })
+          }
+        }
+      }
+      console.log(this.userOptions)
     });
     this.route.params.subscribe(params => {
     })
