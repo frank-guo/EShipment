@@ -44,7 +44,7 @@ namespace EShipment.Controllers
         user.FindFirst("companyName").Value
         );
 
-      return await orderService.GetByUserId(userInfo);
+      return await orderService.GetByUserId(userInfo, user.IsInRole(Constant.String.JwtClaim.Admin));
     }
 
     [Route("user/{userId}/order")]

@@ -117,7 +117,7 @@ namespace EShipment.Controllers
           new Claim(ClaimTypes.NameIdentifier, user.Id),
           new Claim(JwtRegisteredClaimNames.Email, user.Email),
           new Claim(ClaimTypes.Name, user.UserName),
-          new Claim("companyName", user.CompanyName),
+          new Claim("companyName", user.CompanyName != null ? user.CompanyName : ""),
           new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
         };
 
@@ -285,6 +285,7 @@ namespace EShipment.Controllers
         {
             var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
             var result = await _userManager.CreateAsync(user, model.Password);
+            await _userManager.AddToRoleAsync(user, Constant.String.JwtClaim.Regular);
             if (result.Succeeded)
             {
                 _logger.LogInformation("User created a new account with password.");

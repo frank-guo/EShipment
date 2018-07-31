@@ -34,9 +34,14 @@ namespace EShipment.Services
       return order;
     }
 
-    public async Task<IList<OrderViewModel>> GetByUserId (UserInfo userInfo)
+    public async Task<IList<OrderViewModel>> GetByUserId(UserInfo userInfo, bool isAdmin)
     {
-      IEnumerable<Order> orders = await unitOfWork.Repository<Order>().Get(order => order.ApplicationUser_Id == userInfo.Id);
+      IEnumerable<Order> orders;
+      if (!isAdmin) {
+        orders = await unitOfWork.Repository<Order>().Get(order => order.ApplicationUser_Id == userInfo.Id);
+      } else {
+        orders = await unitOfWork.Repository<Order>().Get();
+      }
 
       IList<OrderViewModel> vOrders = new List<OrderViewModel>();
       foreach(Order order in orders)

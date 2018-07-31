@@ -41,6 +41,7 @@ export class OrdersComponent implements OnInit {
     this.ordersService.getOrders().subscribe(resp => {
       this.orders = resp;
     });
+    console.log(this.orders)
     this.userService.getUsers().subscribe(resp => {
       this.users = resp;
       if (this.users != null) {
@@ -63,7 +64,6 @@ export class OrdersComponent implements OnInit {
           }
         }
       }
-      console.log(this.userOptions)
     });
     this.route.params.subscribe(params => {
     })
@@ -77,6 +77,14 @@ export class OrdersComponent implements OnInit {
 
   ngAfterViewChecked() {
     this.cdRef.detectChanges()
+  }
+
+  ngDoCheck() {
+    console.log("Before=", this.orders)
+    this.orders = this.orders != null ? this.orders.filter(order => {
+      return this.selectedUser != null ?  order.applicationUser_Id === this.selectedUser : true
+    }) : null
+    console.log(this.orders)
   }
 
   public onSaveChangeClick(): void {

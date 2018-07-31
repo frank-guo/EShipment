@@ -493,6 +493,7 @@ var OrdersComponent = /** @class */ (function () {
         this.ordersService.getOrders().subscribe(function (resp) {
             _this.orders = resp;
         });
+        console.log(this.orders);
         this.userService.getUsers().subscribe(function (resp) {
             _this.users = resp;
             if (_this.users != null) {
@@ -515,7 +516,6 @@ var OrdersComponent = /** @class */ (function () {
                     }
                 }
             }
-            console.log(_this.userOptions);
         });
         this.route.params.subscribe(function (params) {
         });
@@ -528,6 +528,14 @@ var OrdersComponent = /** @class */ (function () {
     };
     OrdersComponent.prototype.ngAfterViewChecked = function () {
         this.cdRef.detectChanges();
+    };
+    OrdersComponent.prototype.ngDoCheck = function () {
+        var _this = this;
+        console.log("Before=", this.orders);
+        this.orders = this.orders != null ? this.orders.filter(function (order) {
+            return _this.selectedUser != null ? order.applicationUser_Id === _this.selectedUser : true;
+        }) : null;
+        console.log(this.orders);
     };
     OrdersComponent.prototype.onSaveChangeClick = function () {
         var _this = this;

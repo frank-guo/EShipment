@@ -71,6 +71,10 @@ namespace EShipment
         options.AddPolicy("managerUser", policy => {
           policy.RequireClaim(ClaimTypes.Role, Constant.String.JwtClaim.Manager);
         });
+
+        options.AddPolicy("adminOrRegularUser", policy => {
+          policy.RequireClaim(ClaimTypes.Role, Constant.String.JwtClaim.Admin, Constant.String.JwtClaim.Regular);
+        });
       });
 
       services.AddTransient<IOrderService, OrderService>();
@@ -139,11 +143,13 @@ namespace EShipment
 
       //Assign admin role to the main User here for admin management    
       ApplicationUser user = await UserManager.FindByEmailAsync("frank@hotmail.com");
-      var User = new ApplicationUser();
       await UserManager.AddToRoleAsync(user, Constant.String.JwtClaim.Admin);
 
       //Assign manager role to the main User here for management    
       await UserManager.AddToRoleAsync(user, Constant.String.JwtClaim.Manager);
+
+      user = await UserManager.FindByEmailAsync("sophie@hotmail.com");
+      await UserManager.AddToRoleAsync(user, Constant.String.JwtClaim.Regular);
     }
   }
 }

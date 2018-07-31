@@ -26,8 +26,8 @@ namespace EShipment.Controllers
       this._authorization = authorizationService;
     }
 
-    [Authorize(Policy = "adminUser")]
-    //[Authorize(Policy = "managerUser")]
+    [Authorize(Policy = "adminOrRegularUser")]
+    //[Authorize(Policy = "regularUser")]
     [Route("user/{userId}/users")]
     [HttpGet]
     public async Task<IList<UserInfo>> GetAll()
