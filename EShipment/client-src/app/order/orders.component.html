@@ -25,8 +25,8 @@
       </button>
     </div>
   </div>
-  <p-table [value]="orders" [scrollable]="true" [style]="{width:'1140'}" scrollHeight="900px">
-    <ng-template pTemplate="colgroup" let-orders>
+  <p-table [value]="filteredOrders" [scrollable]="true" [style]="{width:'1140'}" scrollHeight="900px">
+    <ng-template pTemplate="colgroup" let-filteredOrders>
       <colgroup>
         <col style="width:50px">
         <col style="width:150px">

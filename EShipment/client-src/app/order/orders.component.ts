@@ -16,6 +16,7 @@ import { idKey, roleKey } from '../constant/user.key'
 })
 export class OrdersComponent implements OnInit {
   private orders: Order[];
+  private filteredOrders: Orders[];
   private showOrderModal: boolean;
   private order: Order;
   private users: [any];
@@ -80,11 +81,11 @@ export class OrdersComponent implements OnInit {
   }
 
   ngDoCheck() {
-    console.log("Before=", this.orders)
-    this.orders = this.orders != null ? this.orders.filter(order => {
+    console.log("Before=", this.filteredOrders)
+    this.filteredOrders = this.orders != null ? this.orders.filter(order => {
       return this.selectedUser != null ?  order.applicationUser_Id === this.selectedUser : true
     }) : null
-    console.log(this.orders)
+    console.log(this.filteredOrders)
   }
 
   public onSaveChangeClick(): void {
