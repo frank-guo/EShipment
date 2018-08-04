@@ -16,7 +16,7 @@ import { idKey, roleKey } from '../constant/user.key'
 })
 export class OrdersComponent implements OnInit {
   private orders: Order[];
-  private filteredOrders: Orders[];
+  private filteredOrders: Order[];
   private showOrderModal: boolean;
   private order: Order;
   private users: [any];
@@ -42,28 +42,28 @@ export class OrdersComponent implements OnInit {
     this.ordersService.getOrders().subscribe(resp => {
       this.orders = resp;
     });
-    console.log(this.orders)
     this.userService.getUsers().subscribe(resp => {
       this.users = resp;
       if (this.users != null) {
-        let currentUser = JSON.parse(localStorage.getItem('user'))
-        if (currentUser != null) {
-          let currentUserId = currentUser[idKey]
-          if (currentUserId != null) {
-            this.users.filter(user => {
-              // Don't include the admin user itself in the dropdown options
-              return currentUserId !== user.id
-            }).map(user => {
-              if (this.userOptions == null) {
-                this.userOptions = new Array<Object>()
-              }
-              this.userOptions.push({
-                label: user.email,
-                value: user.id
-              })
-            })
+        this.users.filter(user => {
+          // Don't include the admin user in the dropdown options
+          let isAdmin = false;
+          user.roleNames.some(role => {
+            if (role === "admin") {
+              isAdmin = true
+              return true;
+            }
+          })
+          return !isAdmin
+        }).map(user => {
+          if (this.userOptions == null) {
+            this.userOptions = new Array<Object>()
           }
-        }
+          this.userOptions.push({
+            label: user.email,
+            value: user.id
+          })
+        })
       }
     });
     this.route.params.subscribe(params => {

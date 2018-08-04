@@ -11,7 +11,7 @@ namespace EShipment.Services
   {
     void Update(Order order);
     Order GetById(long id);
-    Task<IList<OrderViewModel>> GetByUserId(UserInfo userInfo, bool isAdmin);
+    Task<IList<OrderViewModel>> GetByUserId(UserViewModel userInfo, bool isAdmin);
     long Save(OrderViewModel orderVM);
     bool Delete(long orderId);
   }

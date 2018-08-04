@@ -34,7 +34,7 @@ namespace EShipment.Services
       return order;
     }
 
-    public async Task<IList<OrderViewModel>> GetByUserId(UserInfo userInfo, bool isAdmin)
+    public async Task<IList<OrderViewModel>> GetByUserId(UserViewModel userInfo, bool isAdmin)
     {
       IEnumerable<Order> orders;
       if (!isAdmin) {

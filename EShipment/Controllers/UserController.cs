@@ -30,7 +30,7 @@ namespace EShipment.Controllers
     //[Authorize(Policy = "regularUser")]
     [Route("user/{userId}/users")]
     [HttpGet]
-    public async Task<IList<UserInfo>> GetAll()
+    public async Task<IList<UserViewModel>> GetAll()
     {
       // The statement below can be used to do the authorization manually
       //var allowed = await _authorization.AuthorizeAsync(User, "adminUser");

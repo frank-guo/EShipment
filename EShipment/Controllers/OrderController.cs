@@ -35,7 +35,7 @@ namespace EShipment.Controllers
     public async Task<IList<OrderViewModel>> Get(string userId)
     {
       var user = HttpContext.User;
-      var userInfo = new UserInfo(
+      var userInfo = new UserViewModel(
         user.FindFirst(ClaimTypes.NameIdentifier).Value,
         //By default the JWT authentication handler in .NET will map the JwtRegisteredClaimNames.Email claim of a JWT access token
         //to the System.Security.Claims.ClaimTypes.Email claim type

@@ -8,6 +8,6 @@ namespace EShipment.Services
 {
     public interface IUserService
     {
-      Task<IList<UserInfo>> GetAll();
+      Task<IList<UserViewModel>> GetAll();
     }
 }

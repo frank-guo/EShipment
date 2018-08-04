@@ -4,13 +4,15 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor, NG_VALIDATORS, FormControl, Va
 
 @Component({
   selector: 'orderModal',
-  templateUrl: './orderModal.component.html'
+  templateUrl: './orderModal.component.html',
+  styles: ['p-dropdown {width: 172px !important;} p-dropdown /deep/ div:first-child {width: 172px !important;}']
 })
 export class OrderModalComponent implements OnInit {
   @Input() public order: Order;
   @Input() public showModal: boolean
   @Input() public closeModal: Function
   @Input() public saveOrder: Function
+  @Input() public userOptions: [any]
   private displayValue: string;
 
   submitted = false;

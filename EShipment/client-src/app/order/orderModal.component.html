@@ -1,3 +1,4 @@
+
 <div class="modal" id="exampleModal" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalLabel" aria-hidden="true" [style.display]="this.showModal ? 'block' : 'none'">
   <div class="modal-dialog" role="document" style="">
@@ -7,6 +8,19 @@
       </div>
       <div class="modal-body">
         <form *ngIf="order">
+          <div class="row">
+            <div class="col-md-12">
+              <label>
+                User Email
+              </label>
+              <br />
+              <p-dropdown [options]="userOptions" [(ngModel)]="selectedUser" [filter]="true"
+                          filterBy="value" placeholder="User Name" showClear="true" autoWidth="false">
+
+              </p-dropdown>
+            </div>
+          </div>
+          <br />
           <div class="row">
             <div class="col-md-6">
               <label>

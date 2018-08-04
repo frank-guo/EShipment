@@ -10,5 +10,5 @@ namespace EShipment.Models
     public class ApplicationUser : IdentityUser
     {
       public string CompanyName { get; set; }
-    }
+  }
 }
