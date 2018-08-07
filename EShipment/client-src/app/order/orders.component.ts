@@ -22,8 +22,6 @@ export class OrdersComponent implements OnInit {
   private users: [any];
   private userOptions: Array<Object>;
   private selectedUser: string;
-  public onDelete: Function;
-  public onEdit: Function;
   public closeModal: Function;
   public saveOrder: Function;
   private showOrderStatusesModal: boolean;
@@ -68,8 +66,6 @@ export class OrdersComponent implements OnInit {
     });
     this.route.params.subscribe(params => {
     })
-    this.onDelete = this.onDeleteClick.bind(this)
-    this.onEdit = this.onEditClick.bind(this)
     this.closeModal = this.onColseModalClick.bind(this)
     this.saveOrder = this.onSaveChangeClick.bind(this)
     this.openStatusesModal = this.onOpenStatusesClick.bind(this);
@@ -81,11 +77,9 @@ export class OrdersComponent implements OnInit {
   }
 
   ngDoCheck() {
-    console.log("Before=", this.filteredOrders)
     this.filteredOrders = this.orders != null ? this.orders.filter(order => {
       return this.selectedUser != null ?  order.applicationUser_Id === this.selectedUser : true
     }) : null
-    console.log(this.filteredOrders)
   }
 
   public onSaveChangeClick(): void {
@@ -125,6 +119,7 @@ export class OrdersComponent implements OnInit {
   public onEditClick(index: number): void {
     this.showOrderModal = true;
     this.order = this.orders[index]
+    this.setOrderStatusDates()
   }
 
   public onColseModalClick(): void {
@@ -134,15 +129,16 @@ export class OrdersComponent implements OnInit {
   public onOpenStatusesClick(index: number): void {
     this.showOrderStatusesModal = true;
     this.order = this.orders[index];
+    this.setOrderStatusDates();
+  }
 
-    if (this.order.statuses != null) {
+  private setOrderStatusDates() {
+    if (this.order != null && this.order.statuses != null) {
       this.orderStatusDates = []
       this.order.statuses.map(orderStatus => {
         this.orderStatusDates.push(new Date(orderStatus.date))
       })
-      console.log(this.orderStatusDates)
     }
-    console.log(this.order)
   }
 
   public onCloseStatusClick(): void {
