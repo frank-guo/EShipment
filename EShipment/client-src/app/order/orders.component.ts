@@ -28,6 +28,7 @@ export class OrdersComponent implements OnInit {
   private openStatusesModal: Function;
   private closeStatusModal: Function;
   private orderStatusDates: Date[];
+  private orderModalTitle: string;
 
   constructor(private ordersService: OrdersService,
     private userService: UserService,
@@ -105,6 +106,7 @@ export class OrdersComponent implements OnInit {
 
   public onAddClick(): void {
     this.showOrderModal = true;
+    this.orderModalTitle = "Add Order";
     this.order = new Order()
     let user = JSON.parse(localStorage.getItem('user'))
     this.order.companyName = user.companyName
@@ -118,6 +120,7 @@ export class OrdersComponent implements OnInit {
 
   public onEditClick(index: number): void {
     this.showOrderModal = true;
+    this.orderModalTitle = "Edit Order";
     this.order = this.orders[index]
     this.setOrderStatusDates()
   }

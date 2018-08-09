@@ -30,7 +30,7 @@ namespace EShipment.Services
         userVM.Id = user.Id;
         userVM.Email = user.Email;
         userVM.UserName = user.UserName;
-        userVM.Companyname = user.CompanyName;
+        userVM.CompanyName = user.CompanyName;
         //ToDo: Create ApplicationRole and its controller to deal with role-related operations
         //Refer to:
         //https://stackoverflow.com/questions/51004516/net-core-2-1-identity-get-all-users-with-their-associated-roles/51005445#51005445
@@ -40,6 +40,22 @@ namespace EShipment.Services
       }
 
       return usersVM;
+    }
+
+    public async Task<UserViewModel> Get(string userId)
+    {
+      var user = await unitOfWork.Repository<ApplicationUser>().GetByID(userId);
+      var userVM = new UserViewModel();
+      if (user != null)
+      {
+        userVM.Id = user.Id;
+        userVM.Email = user.Email;
+        userVM.UserName = user.UserName;
+        userVM.CompanyName = user.CompanyName;
+        userVM.RoleNames = await _userManager.GetRolesAsync(user);
+      }
+
+      return userVM;
     }
   }
 }

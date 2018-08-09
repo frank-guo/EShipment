@@ -26,5 +26,11 @@ export class UserService {
     return this.http.get<[any]>(this.baseUrl + '/user/' + user[idKey] + '/users').pipe(
       catchError(ErrorHandler.handleError));
   }
+
+  getUser(userId: string): Observable<any> {
+    let user = JSON.parse(localStorage.getItem('user'))
+    return this.http.get<any>(this.baseUrl + '/user/' + user[idKey] + '/userToGet/' + userId).pipe(
+      catchError(ErrorHandler.handleError));
+  }
 }
 

@@ -50,7 +50,7 @@ namespace EShipment.Services
         OrderViewModel vOrder = new OrderViewModel();
         vOrder.ID = order.ID;
         vOrder.ApplicationUser_Id = order.ApplicationUser_Id;
-        vOrder.CompanyName = userInfo.Companyname;
+        vOrder.CompanyName = userInfo.CompanyName;
         vOrder.Number = order.Number;
         vOrder.Mark = order.Mark;
         vOrder.ContainerNumber = order.ContainerNumber;

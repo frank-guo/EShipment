@@ -4,7 +4,7 @@
   <div class="modal-dialog" role="document" style="">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="exampleModalLabel">Edit Order</h4>
+        <h4 class="modal-title" id="exampleModalLabel">{{title}}</h4>
       </div>
       <div class="modal-body">
         <form *ngIf="order">
@@ -14,7 +14,7 @@
                 User Email
               </label>
               <br />
-              <p-dropdown [options]="userOptions" [(ngModel)]="selectedUser" [filter]="true"  name="userName"
+              <p-dropdown [options]="userOptions" [(ngModel)]="order.applicationUser_Id" [filter]="true"  name="userName"
                           filterBy="value" placeholder="User Name" showClear="true" autoWidth="false">
 
               </p-dropdown>

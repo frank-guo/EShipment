@@ -12,6 +12,7 @@ namespace EShipment.Repositories
         Expression<Func<TEntity, bool>> filter = null,
         string includeProperties = "");
     TEntity GetByID(long id);
+    Task<TEntity> GetByID(string id);
     void Insert(TEntity entity);
     EntityEntry<TEntity> InsertAndReturn(TEntity entity);
     bool Delete(long id);

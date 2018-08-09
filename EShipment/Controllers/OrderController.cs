@@ -56,7 +56,7 @@ namespace EShipment.Controllers
       var user = HttpContext.User;
       var userId = user.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-      if (userId != orderVM.ApplicationUser_Id)
+      if (userId != orderVM.ApplicationUser_Id && !user.IsInRole("admin"))
       {
         return BadRequest("Could not save order");
       }

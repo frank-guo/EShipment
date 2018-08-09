@@ -26,7 +26,7 @@ namespace EShipment.Controllers
       this._authorization = authorizationService;
     }
 
-    [Authorize(Policy = "adminOrRegularUser")]
+    [Authorize(Policy = "adminUser")]
     //[Authorize(Policy = "regularUser")]
     [Route("user/{userId}/users")]
     [HttpGet]
@@ -37,6 +37,16 @@ namespace EShipment.Controllers
       var users =  userService.GetAll();
 
       return await users;
+    }
+
+    [Authorize(Policy = "adminUser")]
+    [Route("user/{userId}/userToGet/{userIdToGet}")]
+    [HttpGet]
+    public async Task<UserViewModel> Get(string userIdToGet)
+    {
+      var user = userService.Get(userIdToGet);
+
+      return await user;
     }
   }
 }

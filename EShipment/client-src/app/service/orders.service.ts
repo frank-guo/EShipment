@@ -35,8 +35,7 @@ export class OrdersService {
         'Content-Type': 'application/json'
       })
     };
-    let user = JSON.parse(localStorage.getItem('user'))
-    order.applicationUser_Id = user[this.idKey]
+    let user = JSON.parse(localStorage.getItem('user')) 
 
     return this.http.post<Order>(this.baseUrl + '/user/' + user[this.idKey] + '/order', order, httpOptions).pipe(
       catchError(ErrorHandler.handleError)

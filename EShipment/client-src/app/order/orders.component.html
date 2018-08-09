@@ -1,6 +1,8 @@
 <br/>
 <div>
-  <orderModal [showModal]="showOrderModal" [closeModal]="closeModal" [saveOrder]="saveOrder" [order]="order" [userOptions]="userOptions"></orderModal>
+  <orderModal [showModal]="showOrderModal" [closeModal]="closeModal" [saveOrder]="saveOrder" [order]="order"
+              [userOptions]="userOptions" [title]="orderModalTitle" [userId]="order !=null ? order.applicationUser_Id : null">
+  </orderModal>
   <orderStatusesModal [showModal]="showOrderStatusesModal" [closeModal]="closeStatusModal"
                       [orderStatuses]="order != null ? order.statuses : null" [saveOrder]="saveOrder"
                       [orderStatusDates]="orderStatusDates">

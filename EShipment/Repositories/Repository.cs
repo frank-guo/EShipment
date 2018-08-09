@@ -48,6 +48,12 @@ namespace EShipment.Repositories
       return entity;
     }
 
+    public virtual async Task<TEntity> GetByID(string id)
+    {
+      TEntity entity = await dbSet.FindAsync(id);
+      return entity;
+    }
+
     public void Insert(TEntity entity)
     {
       dbSet.Add(entity);

@@ -9,5 +9,6 @@ namespace EShipment.Services
     public interface IUserService
     {
       Task<IList<UserViewModel>> GetAll();
+      Task<UserViewModel> Get(string userId);
     }
 }
