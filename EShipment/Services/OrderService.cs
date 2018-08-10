@@ -2,10 +2,12 @@ using EShipment.Models;
 using EShipment.Repositories;
 using EShipment.UnitOfWorks;
 using EShipment.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace EShipment.Services
@@ -15,10 +17,12 @@ namespace EShipment.Services
     private const long NOTHING_SAVE = 0;
     private const long INVALID_ID = 0;
     private readonly IUnitOfWork unitOfWork = null;
+    private readonly UserManager<ApplicationUser> userManager;
 
-    public OrderService(IUnitOfWork unitOfWork)
+    public OrderService(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
     {
       this.unitOfWork = unitOfWork;
+      this.userManager = userManager;
     }
 
     public void Update(Order order)
@@ -50,7 +54,8 @@ namespace EShipment.Services
         OrderViewModel vOrder = new OrderViewModel();
         vOrder.ID = order.ID;
         vOrder.ApplicationUser_Id = order.ApplicationUser_Id;
-        vOrder.CompanyName = userInfo.CompanyName;
+        var user = userManager.Users.Single(u => u.Id == order.ApplicationUser_Id);
+        vOrder.CompanyName = user?.CompanyName;
         vOrder.Number = order.Number;
         vOrder.Mark = order.Mark;
         vOrder.ContainerNumber = order.ContainerNumber;

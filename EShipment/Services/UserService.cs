@@ -12,12 +12,12 @@ namespace EShipment.Services
   public class UserService : IUserService
   {
     private readonly IUnitOfWork unitOfWork = null;
-    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly UserManager<ApplicationUser> userManager;
 
     public UserService(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
     {
       this.unitOfWork = unitOfWork;
-      this._userManager = userManager;
+      this.userManager = userManager;
     }
 
     public async Task<IList<UserViewModel>> GetAll()
@@ -35,7 +35,7 @@ namespace EShipment.Services
         //Refer to:
         //https://stackoverflow.com/questions/51004516/net-core-2-1-identity-get-all-users-with-their-associated-roles/51005445#51005445
         //https://social.technet.microsoft.com/wiki/contents/articles/36804.asp-net-core-mvc-authentication-and-role-based-authorization-with-asp-net-core-identity.aspx#Application_Roles
-        userVM.RoleNames = await _userManager.GetRolesAsync(user);
+        userVM.RoleNames = await userManager.GetRolesAsync(user);
         usersVM.Add(userVM);
       }
 
@@ -52,7 +52,7 @@ namespace EShipment.Services
         userVM.Email = user.Email;
         userVM.UserName = user.UserName;
         userVM.CompanyName = user.CompanyName;
-        userVM.RoleNames = await _userManager.GetRolesAsync(user);
+        userVM.RoleNames = await userManager.GetRolesAsync(user);
       }
 
       return userVM;

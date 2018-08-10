@@ -23,6 +23,11 @@ $("#submit").click((event) => {
           location = resp.returnUrl
         }
       }
+    },
+    error: function (resp) {
+      document.open()
+      document.write(resp.responseText)
+      document.close()
     }
   })
 })
