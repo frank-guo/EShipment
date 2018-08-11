@@ -1,22 +1,22 @@
 
-<div class="modal" id="exampleModal" tabindex="-1" role="dialog"
-     aria-labelledby="exampleModalLabel" aria-hidden="true" [style.display]="this.showModal ? 'block' : 'none'">
-  <div class="modal-dialog" role="document" style="">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="exampleModalLabel">{{title}}</h4>
-      </div>
-      <div class="modal-body">
-        <form *ngIf="order">
+<form *ngIf="order" (ngSubmit)="saveOrder()" #orderForm="ngForm">
+  <div class="modal" id="exampleModal" tabindex="-1" role="dialog" [ngStyle]="setStyle()"
+       aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="exampleModalLabel">{{title}}</h4>
+        </div>
+        <div class="modal-body">
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
               <label>
                 User Email
               </label>
               <br />
-              <p-dropdown [options]="userOptions" [(ngModel)]="order.applicationUser_Id" [filter]="true"  name="userName"
-                          filterBy="value" placeholder="User Name" showClear="true" autoWidth="false">
-
+              <p-dropdown [options]="userOptions" [(ngModel)]="order.applicationUser_Id" [filter]="true" name="userName"
+                          filterBy="value" placeholder="User Name" autoWidth="false"
+                          #userEmail="ngModel">
               </p-dropdown>
             </div>
           </div>
@@ -27,7 +27,7 @@
                 Order Number
               </label>
               <br />
-              <input type="text" pInputText [(ngModel)]="order.number" name="number" />
+              <input type="text" class="form-control" pInputText [(ngModel)]="order.number" name="number" />
             </div>
             <div class="col-md-6">
               <label>
@@ -44,14 +44,14 @@
                 mark
               </label>
               <br />
-              <input type="text" pInputText [(ngModel)]="order.mark" name="mark" />
+              <input type="text" class="form-control" [(ngModel)]="order.mark" name="mark" />
             </div>
             <div class="col-md-6">
               <label>
                 Container Number
               </label>
               <br />
-              <input type="text" pInputText [(ngModel)]="order.containerNumber" name="containerNumber" />
+              <input type="text" class="form-control" [(ngModel)]="order.containerNumber" name="containerNumber" />
             </div>
           </div>
           <br />
@@ -61,14 +61,14 @@
                 Destination
               </label>
               <br />
-              <input type="text" pInputText [(ngModel)]="order.destination" name="destination" />
+              <input type="text" class="form-control"  [(ngModel)]="order.destination" name="destination" />
             </div>
             <div class="col-md-6">
               <label>
                 Discharged Port
               </label>
               <br />
-              <input type="text" pInputText [(ngModel)]="order.dischargedPort" name="dischargedPort" />
+              <input type="text" class="form-control"  [(ngModel)]="order.dischargedPort" name="dischargedPort" />
             </div>
           </div>
           <br />
@@ -78,14 +78,14 @@
                 BL Number
               </label>
               <br />
-              <input type="text" pInputText [(ngModel)]="order.BLNumber" name="BLNumber" />
+              <input type="text" class="form-control"  [(ngModel)]="order.BLNumber" name="BLNumber" />
             </div>
             <div class="col-md-6">
               <label>
                 ETD
               </label>
               <br />
-              <input type="text" pInputText [(ngModel)]="order.ETD" name="ETD" />
+              <input type="text" class="form-control"  [(ngModel)]="order.ETD" name="ETD" />
             </div>
           </div>
           <br />
@@ -95,14 +95,14 @@
                 ETA
               </label>
               <br />
-              <input type="text" pInputText [(ngModel)]="order.ETA" name="ETA" />
+              <input type="text" class="form-control"  [(ngModel)]="order.ETA" name="ETA" />
             </div>
             <div class="col-md-6">
               <label>
                 Num Of Goods
               </label>
               <br />
-              <input type="text" pInputText [(ngModel)]="order.numOfGoods" name="numOfGoods" />
+              <input type="text" class="form-control"  [(ngModel)]="order.numOfGoods" name="numOfGoods" />
             </div>
           </div>
           <br />
@@ -112,14 +112,14 @@
                 Weight
               </label>
               <br />
-              <input type="text" pInputText [(ngModel)]="order.weight" name="weight" />
+              <input type="text" class="form-control"  [(ngModel)]="order.weight" name="weight" />
             </div>
             <div class="col-md-6">
               <label>
                 Measurement
               </label>
               <br />
-              <input type="text" pInputText [(ngModel)]="order.measurement" name="measurement" />
+              <input type="text" class="form-control"  [(ngModel)]="order.measurement" name="measurement" />
             </div>
           </div>
           <br />
@@ -129,23 +129,23 @@
                 Product Description
               </label>
               <br />
-              <input type="text" pInputText [(ngModel)]="order.productDescription" name="productDescription" />
+              <input type="text" class="form-control"  [(ngModel)]="order.productDescription" name="productDescription" />
             </div>
             <div class="col-md-6">
               <label>
                 Receive Order Date
               </label>
               <br />
-              <input type="text" pInputText [(ngModel)]="order.receiveOrderDate" name="receiveOrderDate" />
+              <input type="text" class="form-control"  [(ngModel)]="order.receiveOrderDate" name="receiveOrderDate" />
             </div>
           </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
-        <button type="button" class="btn btn-primary" (click)="saveOrder()">Save changes</button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!orderForm.form.valid">Save changes</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</form>
 

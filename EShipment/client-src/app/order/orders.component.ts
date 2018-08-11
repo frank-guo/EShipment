@@ -38,6 +38,7 @@ export class OrdersComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("window height=", window.innerWidth)
     this.ordersService.getOrders().subscribe(resp => {
       this.orders = resp;
     });
@@ -108,8 +109,6 @@ export class OrdersComponent implements OnInit {
     this.showOrderModal = true;
     this.orderModalTitle = "Add Order";
     this.order = new Order()
-    let user = JSON.parse(localStorage.getItem('user'))
-    this.order.companyName = user.companyName
   }
 
   public onDeleteClick(index): void {
@@ -118,6 +117,8 @@ export class OrdersComponent implements OnInit {
     })
   }
 
+  //ToDo: Make a copy of orders[index] and keep orders unchanged until saving the changes
+  //so that no changes will appear if closing the modal and re-opening it.
   public onEditClick(index: number): void {
     this.showOrderModal = true;
     this.orderModalTitle = "Edit Order";

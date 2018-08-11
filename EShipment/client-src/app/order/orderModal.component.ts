@@ -6,7 +6,7 @@ import { UserService } from '../service/user.service';
 @Component({
   selector: 'orderModal',
   templateUrl: './orderModal.component.html',
-  styles: ['p-dropdown {width: 172px !important;} p-dropdown /deep/ div:first-child {width: 172px !important;}'],
+  styles: ['p-dropdown {width: 269px !important;} p-dropdown /deep/ div:first-child {width: 269px !important;}'],
   providers: [UserService]
 })
 export class OrderModalComponent implements OnInit {
@@ -18,6 +18,7 @@ export class OrderModalComponent implements OnInit {
   @Input() public userOptions: [any]
   @Input() public title: string;
   private displayValue: string;
+  private windowHeight: number;
 
   submitted = false;
   onSubmit() { this.submitted = true; }
@@ -26,10 +27,10 @@ export class OrderModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.windowHeight = window.innerHeight;
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes)
     let userId = changes.userId;
     if (userId && userId.currentValue) {
       this.userService.getUser(userId.currentValue).subscribe(resp => {
@@ -37,10 +38,11 @@ export class OrderModalComponent implements OnInit {
           this.order.companyName = resp.companyName
         }
       });
-    } else {
+    }
+    if (userId && !userId.currentValue) {
       if (this.order != null) {
         this.order.companyName = null
-      }      
+      }
     }
   }
 
@@ -48,5 +50,14 @@ export class OrderModalComponent implements OnInit {
   }
 
   ngAfterViewChecked() {
+  }
+
+  setStyle() {
+    let styles = {
+      'max-height': window.innerHeight,
+      'overflow': 'auto',
+      'display': this.showModal ? 'block' : 'none'
+    };
+    return styles;
   }
 }
