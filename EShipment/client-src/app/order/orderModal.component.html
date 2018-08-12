@@ -140,7 +140,9 @@
                 Receive Order Date
               </label>
               <br />
-              <input type="text" class="form-control"  [(ngModel)]="order.receiveOrderDate" name="receiveOrderDate" />
+              <p-calendar [(ngModel)]="order.receiveOrderDate" [monthNavigator]="true" [showIcon]="true"
+                          [yearNavigator]="true" yearRange="1950:2030" name="receiveDate">
+              </p-calendar>
             </div>
           </div>
         </div>
