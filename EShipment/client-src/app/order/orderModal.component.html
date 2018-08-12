@@ -8,16 +8,20 @@
           <h4 class="modal-title" id="exampleModalLabel">{{title}}</h4>
         </div>
         <div class="modal-body">
-          <div class="row">
+          <div class="row" [style.display]="isAdmin ? 'block' : 'none'">
             <div class="col-md-6">
               <label>
-                User Email
+                User Email*
               </label>
               <br />
               <p-dropdown [options]="userOptions" [(ngModel)]="order.applicationUser_Id" [filter]="true" name="userName"
-                          filterBy="value" placeholder="User Name" autoWidth="false"
+                          filterBy="value" placeholder="User Name" autoWidth="false" required
                           #userEmail="ngModel">
               </p-dropdown>
+              <div [hidden]="userEmail.valid || userEmail.pristine"
+                   class="alert alert-danger">
+                User email is required
+              </div>
             </div>
           </div>
           <br />

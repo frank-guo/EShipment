@@ -19,6 +19,7 @@ export class OrdersComponent implements OnInit {
   private filteredOrders: Order[];
   private showOrderModal: boolean;
   private order: Order;
+  private currentOrderIdx: number; 
   private users: [any];
   private userOptions: Array<Object>;
   private selectedUser: string;
@@ -29,6 +30,7 @@ export class OrdersComponent implements OnInit {
   private closeStatusModal: Function;
   private orderStatusDates: Date[];
   private orderModalTitle: string;
+  private isAdmin: boolean;
 
   constructor(private ordersService: OrdersService,
     private userService: UserService,
@@ -38,34 +40,51 @@ export class OrdersComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("window height=", window.innerWidth)
+    this.isAdmin = false;
+    let user = JSON.parse(localStorage.getItem('user'))
+    let roles = user[roleKey]
+    if (Object.prototype.toString.call(roles) === '[object Array]') {
+      roles.some(role => {
+        if (role === "admin") {
+          this.isAdmin = true
+          return true;
+        }
+      })
+    } else {
+      if (roles === 'admin') {
+        this.isAdmin = true
+      }
+    }
+
     this.ordersService.getOrders().subscribe(resp => {
       this.orders = resp;
     });
-    this.userService.getUsers().subscribe(resp => {
-      this.users = resp;
-      if (this.users != null) {
-        this.users.filter(user => {
-          // Don't include the admin user in the dropdown options
-          let isAdmin = false;
-          user.roleNames.some(role => {
-            if (role === "admin") {
-              isAdmin = true
-              return true;
+    if (this.isAdmin) {
+      this.userService.getUsers().subscribe(resp => {
+        this.users = resp;
+        if (this.users != null) {
+          this.users.filter(user => {
+            // Don't include the admin user in the dropdown options
+            let isAdmin = false;
+            user.roleNames.some(role => {
+              if (role === "admin") {
+                isAdmin = true
+                return true;
+              }
+            })
+            return !isAdmin
+          }).map(user => {
+            if (this.userOptions == null) {
+              this.userOptions = new Array<Object>()
             }
+            this.userOptions.push({
+              label: user.email,
+              value: user.id
+            })
           })
-          return !isAdmin
-        }).map(user => {
-          if (this.userOptions == null) {
-            this.userOptions = new Array<Object>()
-          }
-          this.userOptions.push({
-            label: user.email,
-            value: user.id
-          })
-        })
-      }
-    });
+        }
+      });
+    }
     this.route.params.subscribe(params => {
     })
     this.closeModal = this.onColseModalClick.bind(this)
@@ -98,6 +117,8 @@ export class OrdersComponent implements OnInit {
       if (this.order.id == null) {
         this.order.id = resp;
         this.orders.push(this.order);
+      } else {
+        this.orders[this.currentOrderIdx] = this.order
       }
 
       this.showOrderModal = false;
@@ -122,7 +143,9 @@ export class OrdersComponent implements OnInit {
   public onEditClick(index: number): void {
     this.showOrderModal = true;
     this.orderModalTitle = "Edit Order";
-    this.order = this.orders[index]
+
+    this.order = Object.assign({}, this.orders[index])
+    this.currentOrderIdx = index
     this.setOrderStatusDates()
   }
 

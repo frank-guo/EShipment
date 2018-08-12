@@ -1,13 +1,14 @@
 <br/>
 <div>
   <orderModal [showModal]="showOrderModal" [closeModal]="closeModal" [saveOrder]="saveOrder" [order]="order"
-              [userOptions]="userOptions" [title]="orderModalTitle" [userId]="order !=null ? order.applicationUser_Id : null">
+              [userOptions]="userOptions" [title]="orderModalTitle" [userId]="order !=null ? order.applicationUser_Id : null"
+              [isAdmin]="isAdmin">
   </orderModal>
   <orderStatusesModal [showModal]="showOrderStatusesModal" [closeModal]="closeStatusModal"
                       [orderStatuses]="order != null ? order.statuses : null" [saveOrder]="saveOrder"
                       [orderStatusDates]="orderStatusDates">
   </orderStatusesModal>
-  <div class="row">
+  <div class="row" [style.display]="isAdmin ? 'block' : 'none'">
     <div class="col-md-12">
       <p-dropdown [options]="userOptions" [(ngModel)]="selectedUser" [filter]="true"
                   filterBy="value" placeholder="User Name" showClear="true">
@@ -86,6 +87,9 @@
           {{order.destination}}
         </td>
         <td>
+          {{order.dischargedProt}}
+        </td>
+        <td>
           {{order.BLNumber}}
         </td>
         <td>
@@ -105,9 +109,6 @@
         </td>
         <td>
           {{order.productDescription}}
-        </td>
-        <td>
-          {{order.OrderStatus}}
         </td>
         <td>
           <button type="button" class="btn btn-primary btn-xs" (click)="openStatusesModal(i)">

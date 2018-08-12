@@ -17,6 +17,7 @@ export class OrderModalComponent implements OnInit {
   @Input() public saveOrder: Function
   @Input() public userOptions: [any]
   @Input() public title: string;
+  @Input() public isAdmin: boolean;
   private displayValue: string;
   private windowHeight: number;
 
@@ -32,7 +33,7 @@ export class OrderModalComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges) {
     let userId = changes.userId;
-    if (userId && userId.currentValue) {
+    if (userId && userId.currentValue && this.isAdmin) {
       this.userService.getUser(userId.currentValue).subscribe(resp => {
         if (this.order != null) {
           this.order.companyName = resp.companyName

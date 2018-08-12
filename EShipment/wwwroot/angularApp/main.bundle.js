@@ -378,7 +378,7 @@ exports.OrderComponent = OrderComponent;
 /***/ "./client-src/app/order/orderModal.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<form *ngIf=\"order\" (ngSubmit)=\"saveOrder()\" #orderForm=\"ngForm\">\r\n  <div class=\"modal\" id=\"exampleModal\" tabindex=\"-1\" role=\"dialog\" [ngStyle]=\"setStyle()\"\r\n       aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\r\n    <div class=\"modal-dialog\" role=\"document\">\r\n      <div class=\"modal-content\">\r\n        <div class=\"modal-header\">\r\n          <h4 class=\"modal-title\" id=\"exampleModalLabel\">{{title}}</h4>\r\n        </div>\r\n        <div class=\"modal-body\">\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                User Email\r\n              </label>\r\n              <br />\r\n              <p-dropdown [options]=\"userOptions\" [(ngModel)]=\"order.applicationUser_Id\" [filter]=\"true\" name=\"userName\"\r\n                          filterBy=\"value\" placeholder=\"User Name\" autoWidth=\"false\"\r\n                          #userEmail=\"ngModel\">\r\n              </p-dropdown>\r\n            </div>\r\n          </div>\r\n          <br />\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Order Number\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\" pInputText [(ngModel)]=\"order.number\" name=\"number\" />\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Company Name\r\n              </label>\r\n              <br />\r\n              {{order.companyName}}\r\n            </div>\r\n          </div>\r\n          <br />\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                mark\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\" [(ngModel)]=\"order.mark\" name=\"mark\" />\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Container Number\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\" [(ngModel)]=\"order.containerNumber\" name=\"containerNumber\" />\r\n            </div>\r\n          </div>\r\n          <br />\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Destination\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"order.destination\" name=\"destination\" />\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Discharged Port\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"order.dischargedPort\" name=\"dischargedPort\" />\r\n            </div>\r\n          </div>\r\n          <br />\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                BL Number\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"order.BLNumber\" name=\"BLNumber\" />\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                ETD\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"order.ETD\" name=\"ETD\" />\r\n            </div>\r\n          </div>\r\n          <br />\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                ETA\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"order.ETA\" name=\"ETA\" />\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Num Of Goods\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"order.numOfGoods\" name=\"numOfGoods\" />\r\n            </div>\r\n          </div>\r\n          <br />\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Weight\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"order.weight\" name=\"weight\" />\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Measurement\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"order.measurement\" name=\"measurement\" />\r\n            </div>\r\n          </div>\r\n          <br />\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Product Description\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"order.productDescription\" name=\"productDescription\" />\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Receive Order Date\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"order.receiveOrderDate\" name=\"receiveOrderDate\" />\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <div class=\"modal-footer\">\r\n          <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"closeModal()\">Close</button>\r\n          <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"!orderForm.form.valid\">Save changes</button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</form>\r\n\r\n"
+module.exports = "\r\n<form *ngIf=\"order\" (ngSubmit)=\"saveOrder()\" #orderForm=\"ngForm\">\r\n  <div class=\"modal\" id=\"exampleModal\" tabindex=\"-1\" role=\"dialog\" [ngStyle]=\"setStyle()\"\r\n       aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\r\n    <div class=\"modal-dialog\" role=\"document\">\r\n      <div class=\"modal-content\">\r\n        <div class=\"modal-header\">\r\n          <h4 class=\"modal-title\" id=\"exampleModalLabel\">{{title}}</h4>\r\n        </div>\r\n        <div class=\"modal-body\">\r\n          <div class=\"row\" [style.display]=\"isAdmin ? 'block' : 'none'\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                User Email*\r\n              </label>\r\n              <br />\r\n              <p-dropdown [options]=\"userOptions\" [(ngModel)]=\"order.applicationUser_Id\" [filter]=\"true\" name=\"userName\"\r\n                          filterBy=\"value\" placeholder=\"User Name\" autoWidth=\"false\" required\r\n                          #userEmail=\"ngModel\">\r\n              </p-dropdown>\r\n              <div [hidden]=\"userEmail.valid || userEmail.pristine\"\r\n                   class=\"alert alert-danger\">\r\n                User email is required\r\n              </div>\r\n            </div>\r\n          </div>\r\n          <br />\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Order Number\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\" pInputText [(ngModel)]=\"order.number\" name=\"number\" />\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Company Name\r\n              </label>\r\n              <br />\r\n              {{order.companyName}}\r\n            </div>\r\n          </div>\r\n          <br />\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                mark\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\" [(ngModel)]=\"order.mark\" name=\"mark\" />\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Container Number\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\" [(ngModel)]=\"order.containerNumber\" name=\"containerNumber\" />\r\n            </div>\r\n          </div>\r\n          <br />\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Destination\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"order.destination\" name=\"destination\" />\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Discharged Port\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"order.dischargedPort\" name=\"dischargedPort\" />\r\n            </div>\r\n          </div>\r\n          <br />\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                BL Number\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"order.BLNumber\" name=\"BLNumber\" />\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                ETD\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"order.ETD\" name=\"ETD\" />\r\n            </div>\r\n          </div>\r\n          <br />\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                ETA\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"order.ETA\" name=\"ETA\" />\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Num Of Goods\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"order.numOfGoods\" name=\"numOfGoods\" />\r\n            </div>\r\n          </div>\r\n          <br />\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Weight\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"order.weight\" name=\"weight\" />\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Measurement\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"order.measurement\" name=\"measurement\" />\r\n            </div>\r\n          </div>\r\n          <br />\r\n          <div class=\"row\">\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Product Description\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"order.productDescription\" name=\"productDescription\" />\r\n            </div>\r\n            <div class=\"col-md-6\">\r\n              <label>\r\n                Receive Order Date\r\n              </label>\r\n              <br />\r\n              <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"order.receiveOrderDate\" name=\"receiveOrderDate\" />\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <div class=\"modal-footer\">\r\n          <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\" (click)=\"closeModal()\">Close</button>\r\n          <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"!orderForm.form.valid\">Save changes</button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</form>\r\n\r\n"
 
 /***/ }),
 
@@ -413,7 +413,7 @@ var OrderModalComponent = /** @class */ (function () {
     OrderModalComponent.prototype.ngOnChanges = function (changes) {
         var _this = this;
         var userId = changes.userId;
-        if (userId && userId.currentValue) {
+        if (userId && userId.currentValue && this.isAdmin) {
             this.userService.getUser(userId.currentValue).subscribe(function (resp) {
                 if (_this.order != null) {
                     _this.order.companyName = resp.companyName;
@@ -466,6 +466,10 @@ var OrderModalComponent = /** @class */ (function () {
         core_1.Input(),
         __metadata("design:type", String)
     ], OrderModalComponent.prototype, "title", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], OrderModalComponent.prototype, "isAdmin", void 0);
     OrderModalComponent = __decorate([
         core_1.Component({
             selector: 'orderModal',
@@ -492,7 +496,7 @@ module.exports = "<form *ngIf=\"orderStatuses\" (ngSubmit)=\"saveOrder()\" #orde
 /***/ "./client-src/app/order/orders.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<br/>\r\n<div>\r\n  <orderModal [showModal]=\"showOrderModal\" [closeModal]=\"closeModal\" [saveOrder]=\"saveOrder\" [order]=\"order\"\r\n              [userOptions]=\"userOptions\" [title]=\"orderModalTitle\" [userId]=\"order !=null ? order.applicationUser_Id : null\">\r\n  </orderModal>\r\n  <orderStatusesModal [showModal]=\"showOrderStatusesModal\" [closeModal]=\"closeStatusModal\"\r\n                      [orderStatuses]=\"order != null ? order.statuses : null\" [saveOrder]=\"saveOrder\"\r\n                      [orderStatusDates]=\"orderStatusDates\">\r\n  </orderStatusesModal>\r\n  <div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n      <p-dropdown [options]=\"userOptions\" [(ngModel)]=\"selectedUser\" [filter]=\"true\"\r\n                  filterBy=\"value\" placeholder=\"User Name\" showClear=\"true\">\r\n\r\n      </p-dropdown>\r\n    </div>\r\n  </div>\r\n  <br />\r\n  <div class=\"row\">\r\n    <div class=\"col-md-6\">\r\n      <h4 style=\"display: inline\">Orders:</h4>\r\n    </div>\r\n    <div class=\"col-md-6\">\r\n      <button type=\"button\" class=\"btn btn-primary btn-sm pull-right\" (click)=\"onAddClick()\">\r\n        <i class=\"fa fa-plus\" aria-hidden=\"true\">&nbsp;</i>\r\n        Add\r\n      </button>\r\n    </div>\r\n  </div>\r\n  <p-table [value]=\"filteredOrders\" [scrollable]=\"true\" [style]=\"{width:'1140'}\" scrollHeight=\"900px\">\r\n    <ng-template pTemplate=\"colgroup\" let-filteredOrders>\r\n      <colgroup>\r\n        <col style=\"width:50px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n      </colgroup>\r\n    </ng-template>\r\n    <ng-template pTemplate=\"header\" let-order>\r\n      <tr>\r\n        <th>No.</th>\r\n        <th>Company</th>\r\n        <th>Mark</th>\r\n        <th>Container</th>\r\n        <th>Destination</th>\r\n        <th>Discharged Port</th>\r\n        <th>BL</th>\r\n        <th>ETD</th>\r\n        <th>ETA</th>\r\n        <th>Num Of Goods</th>\r\n        <th>Weight</th>\r\n        <th>Measurement</th>\r\n        <th>Product Description</th>\r\n        <th>Status</th>\r\n        <th>Receive Order Date</th>\r\n        <th></th>\r\n      </tr>\r\n    </ng-template>\r\n    <ng-template pTemplate=\"body\" let-order let-columns=\"columns\" let-i=\"rowIndex\">\r\n      <tr>\r\n        <td>\r\n          {{order.number}}\r\n        </td>\r\n        <td>\r\n          {{order.companyName}}\r\n        </td>\r\n        <td>\r\n          {{order.mark}}\r\n        </td>\r\n        <td>\r\n          {{order.containerNumber}}\r\n        </td>\r\n        <td>\r\n          {{order.destination}}\r\n        </td>\r\n        <td>\r\n          {{order.BLNumber}}\r\n        </td>\r\n        <td>\r\n          {{order.ETD}}\r\n        </td>\r\n        <td>\r\n          {{order.ETA}}\r\n        </td>\r\n        <td>\r\n          {{order.numOfGoods}}\r\n        </td>\r\n        <td>\r\n          {{order.weight}}\r\n        </td>\r\n        <td>\r\n          {{order.measurement}}\r\n        </td>\r\n        <td>\r\n          {{order.productDescription}}\r\n        </td>\r\n        <td>\r\n          {{order.OrderStatus}}\r\n        </td>\r\n        <td>\r\n          <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"openStatusesModal(i)\">\r\n            <i class=\"fa fa-edit\" aria-hidden=\"true\"></i>&nbsp;\r\n            Open\r\n          </button>\r\n        </td>\r\n        <td>\r\n          {{order.receiveOrderDate}}\r\n        </td>\r\n        <td>\r\n          <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"onEditClick(i)\">\r\n            <i class=\"fa fa-edit\" aria-hidden=\"true\"></i>&nbsp;\r\n            Edit\r\n          </button>\r\n          <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"onDeleteClick(i)\">\r\n            <i class=\"fa fa-trash\" aria-hidden=\"true\"></i>&nbsp;\r\n            Delete\r\n          </button>\r\n        </td>\r\n      </tr>\r\n    </ng-template>\r\n  </p-table>\r\n</div>\r\n\r\n\r\n"
+module.exports = "<br/>\r\n<div>\r\n  <orderModal [showModal]=\"showOrderModal\" [closeModal]=\"closeModal\" [saveOrder]=\"saveOrder\" [order]=\"order\"\r\n              [userOptions]=\"userOptions\" [title]=\"orderModalTitle\" [userId]=\"order !=null ? order.applicationUser_Id : null\"\r\n              [isAdmin]=\"isAdmin\">\r\n  </orderModal>\r\n  <orderStatusesModal [showModal]=\"showOrderStatusesModal\" [closeModal]=\"closeStatusModal\"\r\n                      [orderStatuses]=\"order != null ? order.statuses : null\" [saveOrder]=\"saveOrder\"\r\n                      [orderStatusDates]=\"orderStatusDates\">\r\n  </orderStatusesModal>\r\n  <div class=\"row\" [style.display]=\"isAdmin ? 'block' : 'none'\">\r\n    <div class=\"col-md-12\">\r\n      <p-dropdown [options]=\"userOptions\" [(ngModel)]=\"selectedUser\" [filter]=\"true\"\r\n                  filterBy=\"value\" placeholder=\"User Name\" showClear=\"true\">\r\n\r\n      </p-dropdown>\r\n    </div>\r\n  </div>\r\n  <br />\r\n  <div class=\"row\">\r\n    <div class=\"col-md-6\">\r\n      <h4 style=\"display: inline\">Orders:</h4>\r\n    </div>\r\n    <div class=\"col-md-6\">\r\n      <button type=\"button\" class=\"btn btn-primary btn-sm pull-right\" (click)=\"onAddClick()\">\r\n        <i class=\"fa fa-plus\" aria-hidden=\"true\">&nbsp;</i>\r\n        Add\r\n      </button>\r\n    </div>\r\n  </div>\r\n  <p-table [value]=\"filteredOrders\" [scrollable]=\"true\" [style]=\"{width:'1140'}\" scrollHeight=\"900px\">\r\n    <ng-template pTemplate=\"colgroup\" let-filteredOrders>\r\n      <colgroup>\r\n        <col style=\"width:50px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n        <col style=\"width:150px\">\r\n      </colgroup>\r\n    </ng-template>\r\n    <ng-template pTemplate=\"header\" let-order>\r\n      <tr>\r\n        <th>No.</th>\r\n        <th>Company</th>\r\n        <th>Mark</th>\r\n        <th>Container</th>\r\n        <th>Destination</th>\r\n        <th>Discharged Port</th>\r\n        <th>BL</th>\r\n        <th>ETD</th>\r\n        <th>ETA</th>\r\n        <th>Num Of Goods</th>\r\n        <th>Weight</th>\r\n        <th>Measurement</th>\r\n        <th>Product Description</th>\r\n        <th>Status</th>\r\n        <th>Receive Order Date</th>\r\n        <th></th>\r\n      </tr>\r\n    </ng-template>\r\n    <ng-template pTemplate=\"body\" let-order let-columns=\"columns\" let-i=\"rowIndex\">\r\n      <tr>\r\n        <td>\r\n          {{order.number}}\r\n        </td>\r\n        <td>\r\n          {{order.companyName}}\r\n        </td>\r\n        <td>\r\n          {{order.mark}}\r\n        </td>\r\n        <td>\r\n          {{order.containerNumber}}\r\n        </td>\r\n        <td>\r\n          {{order.destination}}\r\n        </td>\r\n        <td>\r\n          {{order.dischargedProt}}\r\n        </td>\r\n        <td>\r\n          {{order.BLNumber}}\r\n        </td>\r\n        <td>\r\n          {{order.ETD}}\r\n        </td>\r\n        <td>\r\n          {{order.ETA}}\r\n        </td>\r\n        <td>\r\n          {{order.numOfGoods}}\r\n        </td>\r\n        <td>\r\n          {{order.weight}}\r\n        </td>\r\n        <td>\r\n          {{order.measurement}}\r\n        </td>\r\n        <td>\r\n          {{order.productDescription}}\r\n        </td>\r\n        <td>\r\n          <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"openStatusesModal(i)\">\r\n            <i class=\"fa fa-edit\" aria-hidden=\"true\"></i>&nbsp;\r\n            Open\r\n          </button>\r\n        </td>\r\n        <td>\r\n          {{order.receiveOrderDate}}\r\n        </td>\r\n        <td>\r\n          <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"onEditClick(i)\">\r\n            <i class=\"fa fa-edit\" aria-hidden=\"true\"></i>&nbsp;\r\n            Edit\r\n          </button>\r\n          <button type=\"button\" class=\"btn btn-primary btn-xs\" (click)=\"onDeleteClick(i)\">\r\n            <i class=\"fa fa-trash\" aria-hidden=\"true\"></i>&nbsp;\r\n            Delete\r\n          </button>\r\n        </td>\r\n      </tr>\r\n    </ng-template>\r\n  </p-table>\r\n</div>\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -518,6 +522,7 @@ var user_service_1 = __webpack_require__("./client-src/app/service/user.service.
 var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var common_1 = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
 __webpack_require__("./node_modules/rxjs/_esm5/add/operator/switchMap.js");
+var user_key_1 = __webpack_require__("./client-src/app/constant/user.key.ts");
 var OrdersComponent = /** @class */ (function () {
     function OrdersComponent(ordersService, userService, route, location, cdRef) {
         this.ordersService = ordersService;
@@ -528,34 +533,51 @@ var OrdersComponent = /** @class */ (function () {
     }
     OrdersComponent.prototype.ngOnInit = function () {
         var _this = this;
-        console.log("window height=", window.innerWidth);
+        this.isAdmin = false;
+        var user = JSON.parse(localStorage.getItem('user'));
+        var roles = user[user_key_1.roleKey];
+        if (Object.prototype.toString.call(roles) === '[object Array]') {
+            roles.some(function (role) {
+                if (role === "admin") {
+                    _this.isAdmin = true;
+                    return true;
+                }
+            });
+        }
+        else {
+            if (roles === 'admin') {
+                this.isAdmin = true;
+            }
+        }
         this.ordersService.getOrders().subscribe(function (resp) {
             _this.orders = resp;
         });
-        this.userService.getUsers().subscribe(function (resp) {
-            _this.users = resp;
-            if (_this.users != null) {
-                _this.users.filter(function (user) {
-                    // Don't include the admin user in the dropdown options
-                    var isAdmin = false;
-                    user.roleNames.some(function (role) {
-                        if (role === "admin") {
-                            isAdmin = true;
-                            return true;
+        if (this.isAdmin) {
+            this.userService.getUsers().subscribe(function (resp) {
+                _this.users = resp;
+                if (_this.users != null) {
+                    _this.users.filter(function (user) {
+                        // Don't include the admin user in the dropdown options
+                        var isAdmin = false;
+                        user.roleNames.some(function (role) {
+                            if (role === "admin") {
+                                isAdmin = true;
+                                return true;
+                            }
+                        });
+                        return !isAdmin;
+                    }).map(function (user) {
+                        if (_this.userOptions == null) {
+                            _this.userOptions = new Array();
                         }
+                        _this.userOptions.push({
+                            label: user.email,
+                            value: user.id
+                        });
                     });
-                    return !isAdmin;
-                }).map(function (user) {
-                    if (_this.userOptions == null) {
-                        _this.userOptions = new Array();
-                    }
-                    _this.userOptions.push({
-                        label: user.email,
-                        value: user.id
-                    });
-                });
-            }
-        });
+                }
+            });
+        }
         this.route.params.subscribe(function (params) {
         });
         this.closeModal = this.onColseModalClick.bind(this);
@@ -587,6 +609,9 @@ var OrdersComponent = /** @class */ (function () {
                 _this.order.id = resp;
                 _this.orders.push(_this.order);
             }
+            else {
+                _this.orders[_this.currentOrderIdx] = _this.order;
+            }
             _this.showOrderModal = false;
             _this.showOrderStatusesModal = false;
         });
@@ -607,7 +632,8 @@ var OrdersComponent = /** @class */ (function () {
     OrdersComponent.prototype.onEditClick = function (index) {
         this.showOrderModal = true;
         this.orderModalTitle = "Edit Order";
-        this.order = this.orders[index];
+        this.order = Object.assign({}, this.orders[index]);
+        this.currentOrderIdx = index;
         this.setOrderStatusDates();
     };
     OrdersComponent.prototype.onColseModalClick = function () {
