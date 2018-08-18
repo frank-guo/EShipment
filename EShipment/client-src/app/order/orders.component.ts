@@ -130,6 +130,9 @@ export class OrdersComponent implements OnInit {
     this.showOrderModal = true;
     this.orderModalTitle = "Add Order";
     this.order = new Order()
+    let user = JSON.parse(localStorage.getItem('user'))
+    this.order.applicationUser_Id = user[idKey]
+    this.order.companyName = this.isAdmin ? null : user.companyName
   }
 
   public onDeleteClick(index): void {

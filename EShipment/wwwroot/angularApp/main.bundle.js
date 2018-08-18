@@ -474,7 +474,7 @@ var OrderModalComponent = /** @class */ (function () {
         core_1.Component({
             selector: 'orderModal',
             template: __webpack_require__("./client-src/app/order/orderModal.component.html"),
-            styles: ['p-dropdown {width: 269px !important;} p-dropdown /deep/ div:first-child {width: 269px !important;}'],
+            styles: ['p-dropdown {width: 269px !important;} p-dropdown /deep/ div:first-child {width: 269px !important;} p-calendar {width: 245px !important;} p-calendar /deep/ input {width: 245px !important;}'],
             providers: [user_service_1.UserService]
         }),
         __metadata("design:paramtypes", [core_1.ChangeDetectorRef, user_service_1.UserService])
@@ -620,6 +620,9 @@ var OrdersComponent = /** @class */ (function () {
         this.showOrderModal = true;
         this.orderModalTitle = "Add Order";
         this.order = new order_1.Order();
+        var user = JSON.parse(localStorage.getItem('user'));
+        this.order.applicationUser_Id = user[user_key_1.idKey];
+        this.order.companyName = this.isAdmin ? null : user.companyName;
     };
     OrdersComponent.prototype.onDeleteClick = function (index) {
         var _this = this;

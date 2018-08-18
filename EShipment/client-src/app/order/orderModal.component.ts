@@ -6,7 +6,7 @@ import { UserService } from '../service/user.service';
 @Component({
   selector: 'orderModal',
   templateUrl: './orderModal.component.html',
-  styles: ['p-dropdown {width: 269px !important;} p-dropdown /deep/ div:first-child {width: 269px !important;}'],
+  styles: ['p-dropdown {width: 269px !important;} p-dropdown /deep/ div:first-child {width: 269px !important;} p-calendar {width: 245px !important;} p-calendar /deep/ input {width: 245px !important;}'],
   providers: [UserService]
 })
 export class OrderModalComponent implements OnInit {
