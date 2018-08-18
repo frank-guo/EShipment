@@ -283,7 +283,7 @@ namespace EShipment.Controllers
         ViewData["ReturnUrl"] = returnUrl;
         if (ModelState.IsValid)
         {
-            var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+            var user = new ApplicationUser { UserName = model.Email, Email = model.Email, SecurityStamp = Guid.NewGuid().ToString() };
             var result = await _userManager.CreateAsync(user, model.Password);
             await _userManager.AddToRoleAsync(user, Constant.String.JwtClaim.Regular);
             if (result.Succeeded)

@@ -141,15 +141,15 @@ namespace EShipment
         roleResult = await RoleManager.CreateAsync(new IdentityRole(Constant.String.JwtClaim.Regular));
       }
 
-      //Assign admin role to the main User here for admin management    
-      ApplicationUser user = await UserManager.FindByEmailAsync("frank@hotmail.com");
-      await UserManager.AddToRoleAsync(user, Constant.String.JwtClaim.Admin);
+      ////Assign admin role to the main User here for admin management    
+      //ApplicationUser user = await UserManager.FindByEmailAsync("frank@hotmail.com");
+      //await UserManager.AddToRoleAsync(user, Constant.String.JwtClaim.Admin);
 
-      //Assign manager role to the main User here for management    
-      await UserManager.AddToRoleAsync(user, Constant.String.JwtClaim.Manager);
+      ////Assign manager role to the main User here for management    
+      //await UserManager.AddToRoleAsync(user, Constant.String.JwtClaim.Manager);
 
-      user = await UserManager.FindByEmailAsync("sophie@hotmail.com");
-      await UserManager.AddToRoleAsync(user, Constant.String.JwtClaim.Regular);
+      //user = await UserManager.FindByEmailAsync("sophie@hotmail.com");
+      //await UserManager.AddToRoleAsync(user, Constant.String.JwtClaim.Regular);
     }
   }
 }
