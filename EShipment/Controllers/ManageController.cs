@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -59,6 +59,7 @@ namespace EShipment.Controllers
             {
                 Username = user.UserName,
                 Email = user.Email,
+                CompanyName = user.CompanyName,
                 PhoneNumber = user.PhoneNumber,
                 IsEmailConfirmed = user.EmailConfirmed,
                 StatusMessage = StatusMessage
@@ -102,6 +103,15 @@ namespace EShipment.Controllers
                 }
             }
 
+            var companyName = user.CompanyName;
+            if (model.CompanyName != companyName)
+            {
+                user.CompanyName = model.CompanyName;
+            }
+
+            await _userManager.UpdateAsync(user);
+            //ToDo: Figure out if the line below, which is to regenerate the cookie, is needed or not
+            //await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToAction(nameof(Index));
         }

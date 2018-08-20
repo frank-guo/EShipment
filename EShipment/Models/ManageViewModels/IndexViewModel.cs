@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -15,6 +15,9 @@ namespace EShipment.Models.ManageViewModels
         [Required]
         [EmailAddress]
         public string Email { get; set; }
+
+        [Display(Name = "Company Name")]
+        public string CompanyName { get; set; }
 
         [Phone]
         [Display(Name = "Phone number")]
