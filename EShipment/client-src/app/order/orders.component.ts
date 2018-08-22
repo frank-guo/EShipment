@@ -8,6 +8,7 @@ import 'rxjs/add/operator/switchMap';
 import { NgForm, FormArray } from '@angular/forms'
 import { OrderStatus } from '../model/orderStatus';
 import { idKey, roleKey } from '../constant/user.key'
+import { OrderModalComponent } from './orderModal.component'
 
 @Component({
   selector: 'orders',
@@ -31,6 +32,7 @@ export class OrdersComponent implements OnInit {
   private orderStatusDates: Date[];
   private orderModalTitle: string;
   private isAdmin: boolean;
+  @ViewChild(OrderModalComponent) orderModal: OrderModalComponent
 
   constructor(private ordersService: OrdersService,
     private userService: UserService,
@@ -40,6 +42,7 @@ export class OrdersComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.order = new Order()
     this.isAdmin = false;
     let user = JSON.parse(localStorage.getItem('user'))
     let roles = user[roleKey]
@@ -58,6 +61,11 @@ export class OrdersComponent implements OnInit {
 
     this.ordersService.getOrders().subscribe(resp => {
       this.orders = resp;
+      if (Array.isArray(resp)) {
+        resp.map((order, idx) => {
+          this.orders[idx].receiveOrderDate = order.receiveOrderDate ? new Date(order.receiveOrderDate) : null
+        })
+      }
     });
     if (this.isAdmin) {
       this.userService.getUsers().subscribe(resp => {
@@ -97,6 +105,10 @@ export class OrdersComponent implements OnInit {
     this.cdRef.detectChanges()
   }
 
+  ngAfterViewInit() {
+    console.log(this.orderModal)
+  }
+
   ngDoCheck() {
     this.filteredOrders = this.orders != null ? this.orders.filter(order => {
       return this.selectedUser != null ?  order.applicationUser_Id === this.selectedUser : true
@@ -130,8 +142,10 @@ export class OrdersComponent implements OnInit {
     this.showOrderModal = true;
     this.orderModalTitle = "Add Order";
     this.order = new Order()
+    //Make order modal form prestine
+    this.orderModal.orderForm.reset();
     let user = JSON.parse(localStorage.getItem('user'))
-    this.order.applicationUser_Id = user[idKey]
+    this.order.applicationUser_Id = this.isAdmin ? null : user[idKey]
     this.order.companyName = this.isAdmin ? null : user.companyName
   }
 

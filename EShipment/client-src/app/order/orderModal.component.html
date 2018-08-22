@@ -16,7 +16,7 @@
               <br />
               <p-dropdown [options]="userOptions" [(ngModel)]="order.applicationUser_Id" [filter]="true" name="userName"
                           filterBy="value" placeholder="User Name" autoWidth="false" required
-                          #userEmail="ngModel">
+                          #userEmail="ngModel" ngControl="userEmail">
               </p-dropdown>
               <div [hidden]="userEmail.valid || userEmail.pristine"
                    class="alert alert-danger">

@@ -31,7 +31,7 @@
   <p-table [value]="filteredOrders" [scrollable]="true" [style]="{width:'1140'}" scrollHeight="900px">
     <ng-template pTemplate="colgroup" let-filteredOrders>
       <colgroup>
-        <col style="width:50px">
+        <col style="width:150px">
         <col style="width:150px">
         <col style="width:150px">
         <col style="width:150px">
@@ -117,7 +117,11 @@
           </button>
         </td>
         <td>
-          {{order.receiveOrderDate}}
+          {{
+          order.receiveOrderDate ? ((order.receiveOrderDate.getMonth() + 1) + "/" +
+          order.receiveOrderDate.getDate() + "/" +
+          order.receiveOrderDate.getFullYear()) : null
+          }}
         </td>
         <td>
           <button type="button" class="btn btn-primary btn-xs" (click)="onEditClick(i)">

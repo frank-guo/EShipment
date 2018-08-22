@@ -1,7 +1,8 @@
-import { Component, Input, SimpleChanges, forwardRef, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, SimpleChanges, forwardRef, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Order } from '../model/order';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, NG_VALIDATORS, FormControl, Validator } from '@angular/forms';
 import { UserService } from '../service/user.service';
+import { NgForm, FormArray } from '@angular/forms'
 
 @Component({
   selector: 'orderModal',
@@ -18,6 +19,7 @@ export class OrderModalComponent implements OnInit {
   @Input() public userOptions: [any]
   @Input() public title: string;
   @Input() public isAdmin: boolean;
+  @ViewChild('orderForm') orderForm: NgForm
   private displayValue: string;
   private windowHeight: number;
 
@@ -47,7 +49,10 @@ export class OrderModalComponent implements OnInit {
     }
   }
 
-  ngAfterContentChecked() {
+  ngAfterContentChecked() {   
+  }
+
+  ngAfterViewInit() {
   }
 
   ngAfterViewChecked() {
