@@ -9,9 +9,9 @@ export class Order {
   containerNumber: string;
   destination: string;
   dischargedPort: string;
-  BLNumber: string;
-  ETD: Date;
-  ETA: Date;
+  blNumber: string;
+  etd: Date;
+  eta: Date;
   numOfGoods: number;
   weight: number;
   measurement: number;
@@ -20,10 +20,10 @@ export class Order {
   receiveOrderDate: Date;
   constructor();
   constructor(number: string, companyName: string, mark: string, containerNumber: string, destination: string,
-    dischargedPort: string, BLNumber: string, ETD: Date, ETA: Date, numOfGoods: number, weight: number,
+    dischargedPort: string, blNumber: string, etd: Date, ETA: Date, numOfGoods: number, weight: number,
     measurement: number, productDescription: string, statuses: OrderStatus[], receiveOrderDate: Date);
   constructor(number?: string, companyName?: string, mark?: string, containerNumber?: string, destination?: string,
-    dischargedPort?: string, BLNumber?: string, ETD?: Date, ETA?: Date, numOfGoods?: number, weight?: number,
+    dischargedPort?: string, blNumber?: string, etd?: Date, eta?: Date, numOfGoods?: number, weight?: number,
     measurement?: number, productDescription?: string, statuses?: OrderStatus[], receiveOrderDate?: Date) {
     this.number = number;
     this.companyName = companyName;
@@ -32,10 +32,10 @@ export class Order {
 
     this.destination = destination;
     this.dischargedPort = dischargedPort;
-    this.BLNumber = BLNumber;
-    this.ETD = ETD;
+    this.blNumber = blNumber;
+    this.etd = etd;
 
-    this.ETA = ETA;
+    this.eta = eta;
     this.numOfGoods = numOfGoods;
     this.weight = weight;
     this.measurement = measurement;

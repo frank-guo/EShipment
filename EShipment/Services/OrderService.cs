@@ -63,7 +63,7 @@ namespace EShipment.Services
         vOrder.DischargedPort = order.DischargedPort;
         vOrder.BLNumber = order.BLNumber;
         vOrder.ETD = order.ETD;
-        vOrder.ETD = order.ETA;
+        vOrder.ETA = order.ETA;
         vOrder.NumbOfGoods = order.NumbOfGoods;
         vOrder.Weight = order.Weight;
         vOrder.Measurement = order.Measurement;

@@ -19,6 +19,7 @@ export class OrderModalComponent implements OnInit {
   @Input() public userOptions: [any]
   @Input() public title: string;
   @Input() public isAdmin: boolean;
+  //ViewChild only works with children but not grandchildren
   @ViewChild('orderForm') orderForm: NgForm
   private displayValue: string;
   private windowHeight: number;

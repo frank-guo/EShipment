@@ -90,13 +90,13 @@
           {{order.dischargedProt}}
         </td>
         <td>
-          {{order.BLNumber}}
+          {{order.bLNumber}}
         </td>
         <td>
-          {{order.ETD}}
+          {{formateDate(order.etd)}}
         </td>
         <td>
-          {{order.ETA}}
+          {{formateDate(order.eta)}}
         </td>
         <td>
           {{order.numOfGoods}}
@@ -118,9 +118,7 @@
         </td>
         <td>
           {{
-          order.receiveOrderDate ? ((order.receiveOrderDate.getMonth() + 1) + "/" +
-          order.receiveOrderDate.getDate() + "/" +
-          order.receiveOrderDate.getFullYear()) : null
+            formateDate(order.receiveOrderDate)
           }}
         </td>
         <td>

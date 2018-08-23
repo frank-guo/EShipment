@@ -82,14 +82,16 @@
                 BL Number
               </label>
               <br />
-              <input type="text" class="form-control"  [(ngModel)]="order.BLNumber" name="BLNumber" />
+              <input type="text" class="form-control"  [(ngModel)]="order.bLNumber" name="bLNumber" />
             </div>
             <div class="col-md-6">
               <label>
                 ETD
               </label>
               <br />
-              <input type="text" class="form-control"  [(ngModel)]="order.ETD" name="ETD" />
+              <p-calendar [(ngModel)]="order.etd" [monthNavigator]="true" [showIcon]="true"
+                          [yearNavigator]="true" yearRange="1950:2030" name="etd">
+              </p-calendar>
             </div>
           </div>
           <br />
@@ -99,7 +101,9 @@
                 ETA
               </label>
               <br />
-              <input type="text" class="form-control"  [(ngModel)]="order.ETA" name="ETA" />
+              <p-calendar [(ngModel)]="order.eta" [monthNavigator]="true" [showIcon]="true"
+                          [yearNavigator]="true" yearRange="1950:2030" name="eta">
+              </p-calendar>
             </div>
             <div class="col-md-6">
               <label>

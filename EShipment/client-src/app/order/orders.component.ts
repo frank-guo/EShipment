@@ -64,6 +64,8 @@ export class OrdersComponent implements OnInit {
       if (Array.isArray(resp)) {
         resp.map((order, idx) => {
           this.orders[idx].receiveOrderDate = order.receiveOrderDate ? new Date(order.receiveOrderDate) : null
+          this.orders[idx].etd = order.etd ? new Date(order.etd) : null
+          this.orders[idx].eta = order.eta ? new Date(order.eta) : null
         })
       }
     });
@@ -106,7 +108,6 @@ export class OrdersComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    console.log(this.orderModal)
   }
 
   ngDoCheck() {
@@ -187,5 +188,15 @@ export class OrdersComponent implements OnInit {
 
   public onCloseStatusClick(): void {
     this.showOrderStatusesModal = false;
+  }
+
+  private formateDate(date: Date): string{
+    if (date) {
+      return date ? (("0" + (date.getMonth() + 1)).slice(-2) + "/" +
+        ("0" + date.getDate()).slice(-2) + "/" +
+        date.getFullYear()) : null
+    } else {
+      return ''
+    }
   }
 }
