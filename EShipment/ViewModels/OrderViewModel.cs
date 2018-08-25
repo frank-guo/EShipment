@@ -33,9 +33,9 @@ namespace EShipment.ViewModels
 
     public int? NumbOfGoods { get; set; }
 
-    public float? Weight { get; set; }
+    public string Weight { get; set; }
 
-    public float? Measurement { get; set; }
+    public string Measurement { get; set; }
 
     public string ProductDescription { get; set; }
 
