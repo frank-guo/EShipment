@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,12 +17,9 @@ namespace EShipment
             BuildWebHost(args).Run();
         }
 
-    public static IWebHost BuildWebHost(string[] args)
-    {
-      WebHost.CreateDefaultBuilder(args).UseSetting("https_port", "8080");
-      return WebHost.CreateDefaultBuilder(args)
-          .UseStartup<Startup>()
-          .Build();
-    }
+        public static IWebHost BuildWebHost(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>()
+                .Build();
     }
 }

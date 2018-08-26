@@ -17,7 +17,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
 
 namespace EShipment
 {
@@ -78,12 +77,6 @@ namespace EShipment
         });
       });
 
-      services.AddHttpsRedirection(options =>
-      {
-        options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
-        options.HttpsPort = 5001;
-      });
-
       services.AddTransient<IOrderService, OrderService>();
       services.AddTransient<IUserService, UserService>();
       services.AddTransient<IRepository<Order>, Repository<Order>>();
@@ -105,7 +98,6 @@ namespace EShipment
           app.UseExceptionHandler("/Home/Error");
       }
 
-      app.UseHttpsRedirection();
       app.UseDefaultFiles();
       app.UseStaticFiles();
 
